@@ -120,11 +120,17 @@ class CompletionManager {
 	}
 	
 	init() {
-		SuggestionsManager.shared.searchHandler = { query in
-			[CompletionSuggestion(title: "Test1", description: "This is Test1", code: "print(\"Test1\")", language: "swift"),
-			CompletionSuggestion(title: "Test2", description: "This is Test2", code: "print(\"Test2\")", language: "javascript"),
-			CompletionSuggestion(title: "Test3", description: "This is Test3", code: "print(\"Test3\")", language: "swift")].filter { $0.fullfills(query: query, language: "") }
+		#if DEBUG
+		var debugSuggestions = [CompletionSuggestion(title: "Test1", description: "This is Test1", code: "print(\"Test1\")", language: "swift"),
+								CompletionSuggestion(title: "Test2", description: "This is Test2", code: "console.log(\"Test2\")", language: "javascript"),
+								CompletionSuggestion(title: "Test3", description: "This is Test3", code: "NSLog(\"Test3\")", language: "swift")]
+		SuggestionsManager.shared.searchHandler = { query in debugSuggestions.filter { $0.fullfills(query: query, language: "") }
 		}
+		#else
+		SuggestionsManager.shared.searchHandler = { query in
+			SnippetsManager.shared.suggestions.filter { $0.fullfills(query: query, language: "") }
+		}
+		#endif
 		
 		codeInteraction = CodeInteraction()
 		

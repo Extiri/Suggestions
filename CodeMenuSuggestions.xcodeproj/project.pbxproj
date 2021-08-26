@@ -15,6 +15,8 @@
 		ED138D0D26CFDF2600CEE222 /* CodeInteraction.m in Sources */ = {isa = PBXBuildFile; fileRef = ED138D0C26CFDF2600CEE222 /* CodeInteraction.m */; };
 		ED30469D26D1703D003E57E1 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = ED30469C26D1703D003E57E1 /* KeyboardShortcuts */; };
 		ED6A554526D12E1200FD04C6 /* UIElementUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = ED6A554426D12E1200FD04C6 /* UIElementUtilities.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		ED8F74C226D7EA8A0043A056 /* SnippetsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8F74C126D7EA8A0043A056 /* SnippetsManager.swift */; };
+		ED8F74C426D7EAE30043A056 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8F74C326D7EAE30043A056 /* Models.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		ED6A554426D12E1200FD04C6 /* UIElementUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIElementUtilities.m; sourceTree = "<group>"; };
 		ED6A554626D12E1900FD04C6 /* UIElementUtilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UIElementUtilities.h; sourceTree = "<group>"; };
 		ED8F74BD26D7BDE10043A056 /* placeholder.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = placeholder.txt; sourceTree = "<group>"; };
+		ED8F74C126D7EA8A0043A056 /* SnippetsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnippetsManager.swift; sourceTree = "<group>"; };
+		ED8F74C326D7EAE30043A056 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +71,8 @@
 			children = (
 				ED8F74BD26D7BDE10043A056 /* placeholder.txt */,
 				ED138CF926CFB90A00CEE222 /* AppDelegate.swift */,
+				ED8F74C126D7EA8A0043A056 /* SnippetsManager.swift */,
+				ED8F74C326D7EAE30043A056 /* Models.swift */,
 				ED138D0926CFBB6C00CEE222 /* CompletionManager.swift */,
 				ED138D0E26CFDF4E00CEE222 /* CodeInteraction.h */,
 				ED138D0C26CFDF2600CEE222 /* CodeInteraction.m */,
@@ -158,7 +164,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED8F74C426D7EAE30043A056 /* Models.swift in Sources */,
 				ED138CFC26CFB90A00CEE222 /* ViewController.swift in Sources */,
+				ED8F74C226D7EA8A0043A056 /* SnippetsManager.swift in Sources */,
 				ED138D0A26CFBB6C00CEE222 /* CompletionManager.swift in Sources */,
 				ED6A554526D12E1200FD04C6 /* UIElementUtilities.m in Sources */,
 				ED138D0D26CFDF2600CEE222 /* CodeInteraction.m in Sources */,
