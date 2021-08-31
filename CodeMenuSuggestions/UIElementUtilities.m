@@ -332,7 +332,7 @@ NSString *const UIElementUtilitiesNoDescription = @"No Description";
             theValueDescString = [self stringDescriptionOfAXValue:theValue beingVerbose:beVerbose];
         }
         else if (CFGetTypeID(theValue) == CFArrayGetTypeID()) {
-            theValueDescString = [NSString stringWithFormat:@"<array of size %d>", [(NSArray *)theValue count]];
+			theValueDescString = [NSString stringWithFormat:@"<array of size %lu>", (unsigned long)[(NSArray *)theValue count]];
         }
         else if (CFGetTypeID(theValue) == AXUIElementGetTypeID()) {
             
@@ -506,7 +506,7 @@ NSString *const UIElementUtilitiesNoDescription = @"No Description";
         // No need to get the value of large arrays - we just display their size.
 		// We don't want to do this with every attribute because AXUIElementGetAttributeValueCount on non-array valued
 		// attributes will cause debug spewage.
-        theValueDescString = [NSString stringWithFormat:@"<array of size %d>", count];
+		theValueDescString = [NSString stringWithFormat:@"<array of size %ld>", (long)count];
     } else if (AXUIElementCopyAttributeValue ( uiElement, (CFStringRef)name, &theValue ) == kAXErrorSuccess && theValue) {
         theValueDescString = [self descriptionOfValue:theValue beingVerbose:beVerbose];
     }

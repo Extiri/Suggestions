@@ -18,6 +18,7 @@
 @implementation CodeInfo
 NSString *query;
 NSInteger *insertionPointerLine;
+NSRect frame;
 @end
 
 @implementation CodeInteraction
@@ -39,7 +40,28 @@ NSInteger *insertionPointerLine;
 				
 				codeInfo.insertionPointerLine = insertionPointerLine;
 				NSString *line = [code componentsSeparatedByString:@"\n"][insertionPointerLine];
-				NSArray<NSString *> *seperated = [line componentsSeparatedByString:@"@#"];
+				NSArray<NSString *> *seperated = [line componentsSeparatedByString:@"§§"];
+				
+				AXValueRef selectedRangeValue = NULL;
+				AXError getSelectedRangeError = AXUIElementCopyAttributeValue(codeArea, kAXSelectedTextRangeAttribute, (CFTypeRef *)&selectedRangeValue);
+				if (getSelectedRangeError == kAXErrorSuccess) {
+					CFRange selectedRange;
+					AXValueGetValue(selectedRangeValue, kAXValueCFRangeType, &selectedRange);
+					AXValueRef selectionBoundsValue = NULL;
+					AXError getSelectionBoundsError = AXUIElementCopyParameterizedAttributeValue(codeArea, kAXBoundsForRangeParameterizedAttribute, selectedRangeValue, (CFTypeRef *)&selectionBoundsValue);
+					CFRelease(selectedRangeValue);
+					if (getSelectionBoundsError == kAXErrorSuccess) {
+						CGRect selectionBounds;
+						AXValueGetValue(selectionBoundsValue, kAXValueCGRectType, &selectionBounds);
+						codeInfo.frame = NSRectFromCGRect(selectionBounds);
+						NSLog(@"Selection bounds: %@", NSStringFromRect(NSRectFromCGRect(selectionBounds)));
+					} else {
+						return false;
+					}
+					if (selectionBoundsValue != NULL) CFRelease(selectionBoundsValue);
+				} else {
+					return false;
+				}
 				
 				if ([seperated count] == 2) {
 					codeInfo.query = seperated[1];
@@ -68,7 +90,7 @@ NSInteger *insertionPointerLine;
 				NSInteger insertionPointerLine = [[UIElementUtilities valueOfAttribute:@"AXInsertionPointLineNumber" ofUIElement:codeArea] integerValue];
 				NSMutableArray<NSString *> *lines = (NSMutableArray<NSString *>*)[code componentsSeparatedByString:@"\n"];
 				NSString *line = lines[insertionPointerLine];
-				NSMutableArray<NSString *> *newLineSeperated = (NSMutableArray<NSString *>*)[line componentsSeparatedByString:@"@#"];
+				NSMutableArray<NSString *> *newLineSeperated = (NSMutableArray<NSString *>*)[line componentsSeparatedByString:@"§§"];
 				newLineSeperated[1] = snippet;
 				lines[insertionPointerLine] = [newLineSeperated componentsJoinedByString:@""];
 				NSString *newCode = [lines componentsJoinedByString:@"\n"];
@@ -77,5 +99,6 @@ NSInteger *insertionPointerLine;
 		}
 	}
 }
+
 @end
 

@@ -58,8 +58,8 @@ class SuggestionsTableViewDelegate: NSObject, NSTableViewDelegate {
 		text.isBordered = false
 		text.translatesAutoresizingMaskIntoConstraints = false
 		cell.addConstraint(NSLayoutConstraint(item: text, attribute: .centerY, relatedBy: .equal, toItem: cell, attribute: .centerY, multiplier: 1, constant: 0))
-		cell.addConstraint(NSLayoutConstraint(item: text, attribute: .left, relatedBy: .equal, toItem: cell, attribute: .left, multiplier: 1, constant: 13))
-		cell.addConstraint(NSLayoutConstraint(item: text, attribute: .right, relatedBy: .equal, toItem: cell, attribute: .right, multiplier: 1, constant: -13))
+		cell.addConstraint(NSLayoutConstraint(item: text, attribute: .left, relatedBy: .equal, toItem: cell, attribute: .left, multiplier: 1, constant: 5))
+		cell.addConstraint(NSLayoutConstraint(item: text, attribute: .right, relatedBy: .equal, toItem: cell, attribute: .right, multiplier: 1, constant: -5))
 		return cell
 	}
 	
@@ -83,14 +83,14 @@ class CompletionManager {
 	
 	var tableView: NSTableView = NSTableView()
 	var scrollView: NSScrollView = NSScrollView()
-	
+
 	func reloadViews() {
 		scrollView.removeFromSuperview()
 		
 		let dataSource = SuggestionsDataSource()
 		let delegate = SuggestionsTableViewDelegate()
 		
-		scrollView = NSScrollView(frame: NSRect(x: 5, y: 5, width: 195, height: 495))
+		scrollView = NSScrollView(frame: NSRect(x: 5, y: 5, width: 245, height: 195))
 		
 		tableView = NSTableView()
 		
@@ -121,7 +121,7 @@ class CompletionManager {
 	
 	init() {
 		#if DEBUG
-		var debugSuggestions = [CompletionSuggestion(title: "Test1", description: "This is Test1", code: "print(\"Test1\")", language: "swift"),
+		let debugSuggestions = [CompletionSuggestion(title: "Test1", description: "This is Test1", code: "print(\"Test1\")", language: "swift"),
 								CompletionSuggestion(title: "Test2", description: "This is Test2", code: "console.log(\"Test2\")", language: "javascript"),
 								CompletionSuggestion(title: "Test3", description: "This is Test3", code: "NSLog(\"Test3\")", language: "swift")]
 		SuggestionsManager.shared.searchHandler = { query in debugSuggestions.filter { $0.fullfills(query: query, language: "") }
@@ -134,20 +134,27 @@ class CompletionManager {
 		
 		codeInteraction = CodeInteraction()
 		
-		let backgroundVisualEffect = NSVisualEffectView(frame: NSRect(x: 0, y: 0, width: 200, height: 500))
+		let backgroundVisualEffect = NSVisualEffectView(frame: NSRect(x: 0, y: 0, width: 500, height: 200))
 		backgroundVisualEffect.blendingMode = .behindWindow
 		backgroundVisualEffect.material = .sidebar
 		backgroundVisualEffect.state = .active
 		
-		let view = NSView(frame: NSRect(x: 0, y: 0, width: 200, height: 500))
+		let lineView = NSBox(frame: NSRect(x: 250, y: -5, width: 10, height: 250))
+		lineView.fillColor = .textColor
+		
+		let view = NSView(frame: NSRect(x: 0, y: 0, width: 500, height: 200))
+		
 		view.wantsLayer = true
 		view.layer?.cornerRadius = 10.0
 		
 		view.addSubview(backgroundVisualEffect)
+		view.addSubview(lineView)
 		
 		let viewController = NSViewController()
+		
 		viewController.view = view
-		let window = NSWindow(contentRect: NSRect(x: (NSScreen.main?.frame.width ?? 0) - 250, y: 5, width: 200, height: 500), styleMask: [.fullSizeContentView, .titled], backing: .buffered, defer: true)
+		
+		let window = NSWindow(contentRect: NSRect(x: (NSScreen.main?.frame.width ?? 0) - 550, y: 5, width: 500, height: 200), styleMask: [.fullSizeContentView, .titled], backing: .buffered, defer: true)
 		window.contentViewController = viewController
 		window.isOpaque = false
 		window.titleVisibility = .hidden
@@ -166,6 +173,7 @@ class CompletionManager {
 		KeyboardShortcuts.setShortcut(.init(.v, modifiers: .option), for: .useSuggestion)
 		KeyboardShortcuts.onKeyDown(for: .useSuggestion) {
 			if let selectedSuggestion = SuggestionsManager.shared.suggestions[safely: self.currentlySelectedSuggestion] {
+				#warning("__IMPORTANT__: Make code go back to the previous frame (based on CodeInfo.frame)")
 				self.codeInteraction.useCode(selectedSuggestion.code)
 			}
 		}
@@ -217,9 +225,9 @@ class CompletionManager {
 	}
 	
 	var timer: Timer? = nil
-	
+
 	let codeInteraction: CodeInteraction
-	
+
 	var completionWindowIsVisible = false
 
 	var query: String = ""
@@ -230,13 +238,12 @@ class CompletionManager {
 			return tableView.numberOfRows
 		}
 	}
-	
+
 	func startSuggestion() {
 		self.console.message("Started suggestion")
-		timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+		timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
 			DispatchQueue.main.async {
 				let codeInfo = CodeInfo()
-				
 				let state = self.codeInteraction.getCodeInfo(codeInfo)
 				self.console.message("didSucced: \(state)")
 				
@@ -245,6 +252,14 @@ class CompletionManager {
 						self.completionWindow.makeKeyAndOrderFront(self.completionWindow)
 						self.completionWindowIsVisible = true
 					}
+					
+					var newOrigin = codeInfo.frame.origin
+					
+					newOrigin.y = NSScreen.main!.frame.height - newOrigin.y
+
+					let newFrame = NSRect(x: newOrigin.x, y: newOrigin.y - 220, width: 500, height: 200)
+					
+					self.completionWindow.setFrame(newFrame, display: true, animate: true)
 					
 					if self.query != codeInfo.query {
 						self.query = codeInfo.query
