@@ -21,7 +21,7 @@
 @interface CodeInteraction : NSObject { }
 @property (nonatomic) NSMutableArray * _Nonnull allowlist;
 - (BOOL)getCodeInfo:(CodeInfo*_Nonnull)codeInfo;
-- (void)useCode:(NSString *_Nonnull)snippet;
+- (void)useCode:(NSString *_Nonnull)snippet withFrame:(NSRect)frame;
 @end
 
 #endif /* FocusedElementInfo_h */

@@ -9,6 +9,7 @@ import Cocoa
 import Accessibility
 import Combine
 import KeyboardShortcuts
+import Highlightr
 
 extension KeyboardShortcuts.Name {
 	static let selectUpwards = KeyboardShortcuts.Name("selectUpwards")
@@ -22,7 +23,20 @@ extension Array {
 	}
 }
 
+extension String {
+	func truncate(longerThan max: Int) -> String {
+		if self.count > max {
+			let beforeMax = self.prefix(max - 3)
+			return beforeMax + "..."
+		} else {
+			return self
+		}
+	}
+}
+
 class DConsole {
+	static let shared = DConsole { message in print(message) }
+	
 	init(_ outputHandler: @escaping (String) -> ()) {
 		self.outputHandler = outputHandler
 	}
@@ -48,33 +62,17 @@ class DConsole {
 
 class SuggestionsTableViewDelegate: NSObject, NSTableViewDelegate {
 	let suggestionsManager = SuggestionsManager.shared
-	
-	func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-		let text = NSTextField()
-		text.stringValue = suggestionsManager.suggestions[row].title
-		let cell = NSTableCellView()
-		cell.addSubview(text)
-		text.drawsBackground = false
-		text.isBordered = false
-		text.translatesAutoresizingMaskIntoConstraints = false
-		cell.addConstraint(NSLayoutConstraint(item: text, attribute: .centerY, relatedBy: .equal, toItem: cell, attribute: .centerY, multiplier: 1, constant: 0))
-		cell.addConstraint(NSLayoutConstraint(item: text, attribute: .left, relatedBy: .equal, toItem: cell, attribute: .left, multiplier: 1, constant: 5))
-		cell.addConstraint(NSLayoutConstraint(item: text, attribute: .right, relatedBy: .equal, toItem: cell, attribute: .right, multiplier: 1, constant: -5))
-		return cell
-	}
-	
-	func tableView(_ tableView: NSTableView, rowViewForRow row: Int) -> NSTableRowView? {
-		let rowView = NSTableRowView()
-		rowView.isEmphasized = false
-		return rowView
-	}
 }
 
 class SuggestionsDataSource: NSObject, NSTableViewDataSource {
 	let suggestionsManager = SuggestionsManager.shared
 	
+	func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
+		return suggestionsManager.suggestions[row].title + "\n\n" + suggestionsManager.suggestions[row].description.truncate(longerThan: 90)
+	}
+	
 	func numberOfRows(in tableView: NSTableView) -> Int {
-		suggestionsManager.suggestions.count
+		return suggestionsManager.suggestions.count
 	}
 }
 
@@ -83,14 +81,50 @@ class CompletionManager {
 	
 	var tableView: NSTableView = NSTableView()
 	var scrollView: NSScrollView = NSScrollView()
+	
+	let detailsView: NSScrollView
+	
+	var detailsText: String {
+		get {
+			return (detailsView.documentView as! NSTextView).string
+		}
+		
+		set {
+			(detailsView.documentView as! NSTextView).string = newValue
+		}
+	}
+	
+	let dataSource = SuggestionsDataSource()
+	let delegate = SuggestionsTableViewDelegate()
 
-	func reloadViews() {
-		scrollView.removeFromSuperview()
+	func updateDetails() {
+		let textView = detailsView.documentView as! NSTextView
 		
-		let dataSource = SuggestionsDataSource()
-		let delegate = SuggestionsTableViewDelegate()
-		
-		scrollView = NSScrollView(frame: NSRect(x: 5, y: 5, width: 245, height: 195))
+		if let suggestion = SuggestionsManager.shared.suggestions[safely: tableView.selectedRow] {
+			detailsText = ""
+			
+			detailsText += suggestion.description
+			
+			detailsText += "\n\n"
+			
+			let highlighter = Highlightr()!
+			
+			if NSAppearance.current.name == .darkAqua {
+				highlighter.setTheme(to: "paraiso-dark")
+			} else {
+				highlighter.setTheme(to: "paraiso-light")
+			}
+			
+			detailsText += "\n"
+			
+			textView.textStorage!.append(highlighter.highlight(suggestion.code) ?? NSAttributedString(string: ""))
+		} else {
+			detailsText = "Start typing so suggestions will appear."
+		}
+	}
+	
+	func createList() {
+		scrollView = NSScrollView(frame: NSRect(x: 5, y: 5, width: 245, height: 210))
 		
 		tableView = NSTableView()
 		
@@ -99,8 +133,10 @@ class CompletionManager {
 		tableView.dataSource = dataSource
 		tableView.delegate = delegate
 		tableView.headerView = nil
-		tableView.rowHeight = 20
+		tableView.rowHeight = 50
 		tableView.wantsLayer = true
+		tableView.intercellSpacing = NSSize(width: 0, height: 10)
+		tableView.gridStyleMask = .solidHorizontalGridLineMask
 		tableView.allowsMultipleSelection = false
 		
 		let column = NSTableColumn(identifier: .init("ColumnID"))
@@ -114,25 +150,45 @@ class CompletionManager {
 		scrollView.hasHorizontalScroller = false
 		scrollView.hasVerticalScroller = true
 		
+		updateDetails()
+		
 		completionWindow.contentView?.addSubview(scrollView)
+	}
+	
+	func reloadList() {
+		tableView.reloadData()
 		
 		tableView.selectRowIndexes([0], byExtendingSelection: false)
+		tableView.scrollRowToVisible(0)
+		
+		updateDetails()
 	}
 	
 	init() {
 		#if DEBUG
-		let debugSuggestions = [CompletionSuggestion(title: "Test1", description: "This is Test1", code: "print(\"Test1\")", language: "swift"),
-								CompletionSuggestion(title: "Test2", description: "This is Test2", code: "console.log(\"Test2\")", language: "javascript"),
-								CompletionSuggestion(title: "Test3", description: "This is Test3", code: "NSLog(\"Test3\")", language: "swift")]
-		SuggestionsManager.shared.searchHandler = { query in debugSuggestions.filter { $0.fullfills(query: query, language: "") }
+		SuggestionsManager.shared.searchHandler = { query in
+			var result = [CompletionSuggestion]()
+			[CompletionSuggestion(title: "Test1", description: "This is Test1", code: "print(\"Test1\")", language: "swift"),
+			 CompletionSuggestion(title: "Test2", description: "This is Test2", code: "console.log(\"Test2\")", language: "javascript"),
+			 CompletionSuggestion(title: "Test3", description: "This is Test3", code: "NSLog(\"Test3\")", language: "swift")].forEach { if $0.fullfills(query: query) { result.append($0)} }
+			
+			return result
 		}
+		
 		#else
 		SuggestionsManager.shared.searchHandler = { query in
-			SnippetsManager.shared.suggestions.filter { $0.fullfills(query: query, language: "") }
+			SnippetsManager.shared.suggestions.filter { $0.fullfills(query: query) }
 		}
 		#endif
 		
 		codeInteraction = CodeInteraction()
+		
+		detailsView = NSTextView.scrollableTextView()
+		detailsView.frame = NSRect(x: 263, y: 5, width: 245, height: 198)
+		detailsView.drawsBackground = false
+		
+		(detailsView.documentView as! NSTextView).string = "This snippet is a example."
+		(detailsView.documentView as! NSTextView).drawsBackground = false
 		
 		let backgroundVisualEffect = NSVisualEffectView(frame: NSRect(x: 0, y: 0, width: 500, height: 200))
 		backgroundVisualEffect.blendingMode = .behindWindow
@@ -149,12 +205,14 @@ class CompletionManager {
 		
 		view.addSubview(backgroundVisualEffect)
 		view.addSubview(lineView)
+		view.addSubview(detailsView)
 		
 		let viewController = NSViewController()
 		
 		viewController.view = view
 		
 		let window = NSWindow(contentRect: NSRect(x: (NSScreen.main?.frame.width ?? 0) - 550, y: 5, width: 500, height: 200), styleMask: [.fullSizeContentView, .titled], backing: .buffered, defer: true)
+		window.center()
 		window.contentViewController = viewController
 		window.isOpaque = false
 		window.titleVisibility = .hidden
@@ -168,29 +226,29 @@ class CompletionManager {
 		
 		completionWindow = window
 		
-		reloadViews()
+		createList()
 		
 		KeyboardShortcuts.setShortcut(.init(.v, modifiers: .option), for: .useSuggestion)
 		KeyboardShortcuts.onKeyDown(for: .useSuggestion) {
 			if let selectedSuggestion = SuggestionsManager.shared.suggestions[safely: self.currentlySelectedSuggestion] {
 				#warning("__IMPORTANT__: Make code go back to the previous frame (based on CodeInfo.frame)")
-				self.codeInteraction.useCode(selectedSuggestion.code)
+				self.codeInteraction.useCode(selectedSuggestion.code, withFrame: NSRect(x: 0, y: 0, width: 0, height: 0))
 			}
 		}
 		
-		KeyboardShortcuts.setShortcut(.init(.leftBracket, modifiers: .option), for: .selectDownwards)
-		KeyboardShortcuts.onKeyDown(for: .selectDownwards) {
+		KeyboardShortcuts.setShortcut(.init(.leftBracket, modifiers: .option), for: .selectUpwards)
+		KeyboardShortcuts.onKeyDown(for: .selectUpwards) {
 			if self.currentlySelectedSuggestion == 0 {
 				self.currentlySelectedSuggestion = self.countOfSuggestions
-				self.tableView.selectRowIndexes([0], byExtendingSelection: false)
+				self.tableView.selectRowIndexes([self.currentlySelectedSuggestion], byExtendingSelection: false)
 			} else {
 				self.currentlySelectedSuggestion -= 1
 				self.tableView.selectRowIndexes([self.currentlySelectedSuggestion], byExtendingSelection: false)
 			}
 		}
 		
-		KeyboardShortcuts.setShortcut(.init(.rightBracket, modifiers: .option), for: .selectUpwards)
-		KeyboardShortcuts.onKeyDown(for: .selectUpwards) {
+		KeyboardShortcuts.setShortcut(.init(.rightBracket, modifiers: .option), for: .selectDownwards)
+		KeyboardShortcuts.onKeyDown(for: .selectDownwards) {
 			if self.currentlySelectedSuggestion == self.countOfSuggestions {
 				self.currentlySelectedSuggestion = 0
 				self.tableView.selectRowIndexes([0], byExtendingSelection: false)
@@ -227,25 +285,36 @@ class CompletionManager {
 	var timer: Timer? = nil
 
 	let codeInteraction: CodeInteraction
-
+	
 	var completionWindowIsVisible = false
-
+	
 	var query: String = ""
 	
-	var currentlySelectedSuggestion: Int = 0
+	var currentlySelectedSuggestion: Int {
+		get {
+			return tableView.selectedRow
+		}
+		
+		set {
+			tableView.selectRowIndexes([newValue], byExtendingSelection: false)
+			tableView.scrollRowToVisible(newValue)
+			
+			updateDetails()
+		}
+	}
+	
 	var countOfSuggestions: Int {
 		get {
 			return tableView.numberOfRows
 		}
 	}
-
+	
 	func startSuggestion() {
 		self.console.message("Started suggestion")
 		timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
 			DispatchQueue.main.async {
 				let codeInfo = CodeInfo()
 				let state = self.codeInteraction.getCodeInfo(codeInfo)
-				self.console.message("didSucced: \(state)")
 				
 				if state {
 					if !self.completionWindowIsVisible {
@@ -256,7 +325,7 @@ class CompletionManager {
 					var newOrigin = codeInfo.frame.origin
 					
 					newOrigin.y = NSScreen.main!.frame.height - newOrigin.y
-
+					
 					let newFrame = NSRect(x: newOrigin.x, y: newOrigin.y - 220, width: 500, height: 200)
 					
 					self.completionWindow.setFrame(newFrame, display: true, animate: true)
@@ -264,7 +333,7 @@ class CompletionManager {
 					if self.query != codeInfo.query {
 						self.query = codeInfo.query
 						SuggestionsManager.shared.load(forQuery: codeInfo.query)
-						self.reloadViews()
+						self.reloadList()
 					}
 				} else {
 					if self.completionWindowIsVisible {
@@ -296,7 +365,7 @@ class CompletionManager {
 		}
 	}
 	
-	var console: DConsole = DConsole { message in print(message) }
+	var console: DConsole = DConsole.shared
 	
 	var completionFeatureAvailable = false
 	
@@ -337,7 +406,23 @@ struct CompletionSuggestion {
 	var code: String
 	var language: String
 	
-	func fullfills(query: String, language: String) -> Bool {
-		if language == "" && query == "" { return true } else { if language != "" { if query != "" { return (title.lowercased().contains(query.lowercased()) || description.lowercased().contains(query.lowercased()) || code.lowercased().contains(query.lowercased())) && self.language == language } else { return self.language == language } } else { if query != "" { return title.lowercased().contains(query.lowercased()) || description.lowercased().contains(query.lowercased()) || code.lowercased().contains(query.lowercased()) } else if query == "" { return true } else { return true } } }
+	func fullfills(query: String) -> Bool {
+		if query.isOnlyWhitespaces() {
+			return true
+		} else {
+			return title.lowercased().contains(query.lowercased()) || description.lowercased().contains(query.lowercased()) || code.lowercased().contains(query.lowercased())
+		}
+	}
+}
+
+extension String {
+	func isOnly(_ character: Character) -> Bool {
+		var result = true
+		self.forEach { if $0 != character { result = false; return } }
+		return result
+	}
+	
+	func isOnlyWhitespaces() -> Bool {
+		return isOnly(" ") || isEmpty
 	}
 }

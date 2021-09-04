@@ -14,6 +14,7 @@
 		ED138D0A26CFBB6C00CEE222 /* CompletionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED138D0926CFBB6C00CEE222 /* CompletionManager.swift */; };
 		ED138D0D26CFDF2600CEE222 /* CodeInteraction.m in Sources */ = {isa = PBXBuildFile; fileRef = ED138D0C26CFDF2600CEE222 /* CodeInteraction.m */; };
 		ED30469D26D1703D003E57E1 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = ED30469C26D1703D003E57E1 /* KeyboardShortcuts */; };
+		ED3B987326E3AA8A00A764A1 /* Highlightr in Frameworks */ = {isa = PBXBuildFile; productRef = ED3B987226E3AA8A00A764A1 /* Highlightr */; };
 		ED6A554526D12E1200FD04C6 /* UIElementUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = ED6A554426D12E1200FD04C6 /* UIElementUtilities.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		ED8F74C226D7EA8A0043A056 /* SnippetsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8F74C126D7EA8A0043A056 /* SnippetsManager.swift */; };
 		ED8F74C426D7EAE30043A056 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8F74C326D7EAE30043A056 /* Models.swift */; };
@@ -43,6 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED3B987326E3AA8A00A764A1 /* Highlightr in Frameworks */,
 				ED30469D26D1703D003E57E1 /* KeyboardShortcuts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -106,6 +108,7 @@
 			name = CodeMenuSuggestions;
 			packageProductDependencies = (
 				ED30469C26D1703D003E57E1 /* KeyboardShortcuts */,
+				ED3B987226E3AA8A00A764A1 /* Highlightr */,
 			);
 			productName = CMCompletionFeatureExperimental;
 			productReference = ED138CF626CFB90A00CEE222 /* CodeMenuSuggestions.app */;
@@ -137,6 +140,7 @@
 			mainGroup = ED138CED26CFB90A00CEE222;
 			packageReferences = (
 				ED30469B26D1703D003E57E1 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
+				ED3B987126E3AA8A00A764A1 /* XCRemoteSwiftPackageReference "Highlightr" */,
 			);
 			productRefGroup = ED138CF726CFB90A00CEE222 /* Products */;
 			projectDirPath = "";
@@ -382,6 +386,14 @@
 				minimumVersion = 1.2.0;
 			};
 		};
+		ED3B987126E3AA8A00A764A1 /* XCRemoteSwiftPackageReference "Highlightr" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/raspu/Highlightr";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.1.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -389,6 +401,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = ED30469B26D1703D003E57E1 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */;
 			productName = KeyboardShortcuts;
+		};
+		ED3B987226E3AA8A00A764A1 /* Highlightr */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = ED3B987126E3AA8A00A764A1 /* XCRemoteSwiftPackageReference "Highlightr" */;
+			productName = Highlightr;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -54,7 +54,6 @@ NSRect frame;
 						CGRect selectionBounds;
 						AXValueGetValue(selectionBoundsValue, kAXValueCGRectType, &selectionBounds);
 						codeInfo.frame = NSRectFromCGRect(selectionBounds);
-						NSLog(@"Selection bounds: %@", NSStringFromRect(NSRectFromCGRect(selectionBounds)));
 					} else {
 						return false;
 					}
@@ -67,7 +66,7 @@ NSRect frame;
 					codeInfo.query = seperated[1];
 					return true;
 				} else {
-					codeInfo.query = @"";
+					codeInfo.query = @" ";
 					return false;
 				}
 			}
@@ -77,7 +76,7 @@ NSRect frame;
 	return false;
 };
 
-- (void)useCode:(NSString *)snippet {
+- (void)useCode:(NSString *)snippet withFrame:(NSRect)frame {
 	NSString *app = NSWorkspace.sharedWorkspace.frontmostApplication.localizedName;
 	if ([self isSupported:app]) {
 		AXUIElementRef mainElement = AXUIElementCreateApplication(NSWorkspace.sharedWorkspace.frontmostApplication.processIdentifier);
