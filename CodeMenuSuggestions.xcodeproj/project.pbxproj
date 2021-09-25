@@ -13,6 +13,7 @@
 		ED138D0126CFB91200CEE222 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ED138CFF26CFB91200CEE222 /* Main.storyboard */; };
 		ED138D0A26CFBB6C00CEE222 /* CompletionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED138D0926CFBB6C00CEE222 /* CompletionManager.swift */; };
 		ED138D0D26CFDF2600CEE222 /* CodeInteraction.m in Sources */ = {isa = PBXBuildFile; fileRef = ED138D0C26CFDF2600CEE222 /* CodeInteraction.m */; };
+		ED2459AF26FB902B0004DA58 /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2459AE26FB902B0004DA58 /* SettingsManager.swift */; };
 		ED30469D26D1703D003E57E1 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = ED30469C26D1703D003E57E1 /* KeyboardShortcuts */; };
 		ED3B987326E3AA8A00A764A1 /* Highlightr in Frameworks */ = {isa = PBXBuildFile; productRef = ED3B987226E3AA8A00A764A1 /* Highlightr */; };
 		ED6A554526D12E1200FD04C6 /* UIElementUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = ED6A554426D12E1200FD04C6 /* UIElementUtilities.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -32,6 +33,7 @@
 		ED138D0B26CFDF2600CEE222 /* CodeMenuSuggestions-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CodeMenuSuggestions-Bridging-Header.h"; sourceTree = "<group>"; };
 		ED138D0C26CFDF2600CEE222 /* CodeInteraction.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CodeInteraction.m; sourceTree = "<group>"; };
 		ED138D0E26CFDF4E00CEE222 /* CodeInteraction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CodeInteraction.h; sourceTree = "<group>"; };
+		ED2459AE26FB902B0004DA58 /* SettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
 		ED6A554426D12E1200FD04C6 /* UIElementUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIElementUtilities.m; sourceTree = "<group>"; };
 		ED6A554626D12E1900FD04C6 /* UIElementUtilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UIElementUtilities.h; sourceTree = "<group>"; };
 		ED8F74BD26D7BDE10043A056 /* placeholder.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = placeholder.txt; sourceTree = "<group>"; };
@@ -74,6 +76,7 @@
 				ED8F74BD26D7BDE10043A056 /* placeholder.txt */,
 				ED138CF926CFB90A00CEE222 /* AppDelegate.swift */,
 				ED8F74C126D7EA8A0043A056 /* SnippetsManager.swift */,
+				ED2459AE26FB902B0004DA58 /* SettingsManager.swift */,
 				ED8F74C326D7EAE30043A056 /* Models.swift */,
 				ED138D0926CFBB6C00CEE222 /* CompletionManager.swift */,
 				ED138D0E26CFDF4E00CEE222 /* CodeInteraction.h */,
@@ -169,6 +172,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED8F74C426D7EAE30043A056 /* Models.swift in Sources */,
+				ED2459AF26FB902B0004DA58 /* SettingsManager.swift in Sources */,
 				ED138CFC26CFB90A00CEE222 /* ViewController.swift in Sources */,
 				ED8F74C226D7EA8A0043A056 /* SnippetsManager.swift in Sources */,
 				ED138D0A26CFBB6C00CEE222 /* CompletionManager.swift in Sources */,

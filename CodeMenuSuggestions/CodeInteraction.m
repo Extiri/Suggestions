@@ -22,13 +22,13 @@ NSRect frame;
 @end
 
 @implementation CodeInteraction
-- (BOOL)isSupported:(NSString*)name {
-	return [name  isEqual: @"Xcode"];
+- (BOOL)isAllowed:(NSString*)name {
+	return [Settings isAllowed:[name lowercaseString]];
 }
 
 - (BOOL)getCodeInfo:(CodeInfo*)codeInfo {
 	NSString *app = NSWorkspace.sharedWorkspace.frontmostApplication.localizedName;
-	if ([self isSupported:app]) {
+	if ([self isAllowed:app]) {
 		AXUIElementRef mainElement = AXUIElementCreateApplication(NSWorkspace.sharedWorkspace.frontmostApplication.processIdentifier);
 		AXUIElementRef codeArea = NULL;
 		AXError error = AXUIElementCopyAttributeValue(mainElement, kAXFocusedUIElementAttribute, (CFTypeRef *)&codeArea);
@@ -78,7 +78,7 @@ NSRect frame;
 
 - (void)useCode:(NSString *)snippet withFrame:(NSRect)frame {
 	NSString *app = NSWorkspace.sharedWorkspace.frontmostApplication.localizedName;
-	if ([self isSupported:app]) {
+	if ([self isAllowed:app]) {
 		AXUIElementRef mainElement = AXUIElementCreateApplication(NSWorkspace.sharedWorkspace.frontmostApplication.processIdentifier);
 		AXUIElementRef codeArea = NULL;
 		AXError error = AXUIElementCopyAttributeValue(mainElement, kAXFocusedUIElementAttribute, (CFTypeRef *)&codeArea);
