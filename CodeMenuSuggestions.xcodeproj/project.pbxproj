@@ -19,6 +19,8 @@
 		ED6A554526D12E1200FD04C6 /* UIElementUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = ED6A554426D12E1200FD04C6 /* UIElementUtilities.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		ED8F74C226D7EA8A0043A056 /* SnippetsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8F74C126D7EA8A0043A056 /* SnippetsManager.swift */; };
 		ED8F74C426D7EAE30043A056 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8F74C326D7EAE30043A056 /* Models.swift */; };
+		EDCCA169272F050200A5B525 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = EDCCA168272F050200A5B525 /* Realm */; };
+		EDCCA16B272F050200A5B525 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = EDCCA16A272F050200A5B525 /* RealmSwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +48,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EDCCA16B272F050200A5B525 /* RealmSwift in Frameworks */,
+				EDCCA169272F050200A5B525 /* Realm in Frameworks */,
 				ED3B987326E3AA8A00A764A1 /* Highlightr in Frameworks */,
 				ED30469D26D1703D003E57E1 /* KeyboardShortcuts in Frameworks */,
 			);
@@ -75,8 +79,8 @@
 			children = (
 				ED8F74BD26D7BDE10043A056 /* placeholder.txt */,
 				ED138CF926CFB90A00CEE222 /* AppDelegate.swift */,
-				ED8F74C126D7EA8A0043A056 /* SnippetsManager.swift */,
 				ED2459AE26FB902B0004DA58 /* SettingsManager.swift */,
+				ED8F74C126D7EA8A0043A056 /* SnippetsManager.swift */,
 				ED8F74C326D7EAE30043A056 /* Models.swift */,
 				ED138D0926CFBB6C00CEE222 /* CompletionManager.swift */,
 				ED138D0E26CFDF4E00CEE222 /* CodeInteraction.h */,
@@ -112,6 +116,8 @@
 			packageProductDependencies = (
 				ED30469C26D1703D003E57E1 /* KeyboardShortcuts */,
 				ED3B987226E3AA8A00A764A1 /* Highlightr */,
+				EDCCA168272F050200A5B525 /* Realm */,
+				EDCCA16A272F050200A5B525 /* RealmSwift */,
 			);
 			productName = CMCompletionFeatureExperimental;
 			productReference = ED138CF626CFB90A00CEE222 /* CodeMenuSuggestions.app */;
@@ -144,6 +150,7 @@
 			packageReferences = (
 				ED30469B26D1703D003E57E1 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
 				ED3B987126E3AA8A00A764A1 /* XCRemoteSwiftPackageReference "Highlightr" */,
+				EDCCA167272F050200A5B525 /* XCRemoteSwiftPackageReference "realm-cocoa" */,
 			);
 			productRefGroup = ED138CF726CFB90A00CEE222 /* Products */;
 			projectDirPath = "";
@@ -320,14 +327,14 @@
 				CODE_SIGN_ENTITLEMENTS = CodeMenuSuggestions/CodeMenuSuggestions.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = PT7ZH88SY7;
+				DEVELOPMENT_TEAM = DNFYV2TZ3T;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = CodeMenuSuggestions/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = id.thedev.wiktor.CodeMenuSnippetsSuggestions;
+				PRODUCT_BUNDLE_IDENTIFIER = id.thedev.marcin.CodeMenuSnippetsSuggestions;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "CodeMenuSuggestions/CodeMenuSuggestions-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -344,14 +351,14 @@
 				CODE_SIGN_ENTITLEMENTS = CodeMenuSuggestions/CodeMenuSuggestions.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = PT7ZH88SY7;
+				DEVELOPMENT_TEAM = DNFYV2TZ3T;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = CodeMenuSuggestions/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = id.thedev.wiktor.CodeMenuSnippetsSuggestions;
+				PRODUCT_BUNDLE_IDENTIFIER = id.thedev.marcin.CodeMenuSnippetsSuggestions;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "CodeMenuSuggestions/CodeMenuSuggestions-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -398,6 +405,14 @@
 				minimumVersion = 2.1.2;
 			};
 		};
+		EDCCA167272F050200A5B525 /* XCRemoteSwiftPackageReference "realm-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-cocoa.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.18.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -410,6 +425,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = ED3B987126E3AA8A00A764A1 /* XCRemoteSwiftPackageReference "Highlightr" */;
 			productName = Highlightr;
+		};
+		EDCCA168272F050200A5B525 /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EDCCA167272F050200A5B525 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			productName = Realm;
+		};
+		EDCCA16A272F050200A5B525 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EDCCA167272F050200A5B525 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			productName = RealmSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

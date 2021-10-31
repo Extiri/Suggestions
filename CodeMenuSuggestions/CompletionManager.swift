@@ -165,21 +165,21 @@ class CompletionManager {
 	}
 	
 	init() {
-		#if DEBUG
-		SuggestionsManager.shared.searchHandler = { query in
-			var result = [CompletionSuggestion]()
-			[CompletionSuggestion(title: "Test1", description: "This is Test1", code: "print(\"Test1\")", language: "swift"),
-			 CompletionSuggestion(title: "Test2", description: "This is Test2", code: "console.log(\"Test2\")", language: "javascript"),
-			 CompletionSuggestion(title: "Test3", description: "This is Test3", code: "NSLog(\"Test3\")", language: "swift")].forEach { if $0.fullfills(query: query) { result.append($0)} }
-			
-			return result
-		}
-		
-		#else
+//		#if DEBUG
+//		SuggestionsManager.shared.searchHandler = { query in
+//			var result = [CompletionSuggestion]()
+//			[CompletionSuggestion(title: "Test1", description: "This is Test1", code: "print(\"Test1\")", language: "swift"),
+//			 CompletionSuggestion(title: "Test2", description: "This is Test2", code: "console.log(\"Test2\")", language: "javascript"),
+//			 CompletionSuggestion(title: "Test3", description: "This is Test3", code: "NSLog(\"Test3\")", language: "swift")].forEach { if $0.fullfills(query: query) { result.append($0)} }
+//
+//			return result
+//		}
+//
+//		#else
 		SuggestionsManager.shared.searchHandler = { query in
 			SnippetsManager.shared.suggestions.filter { $0.fullfills(query: query) }
 		}
-		#endif
+//		#endif
 		
 		codeInteraction = CodeInteraction()
 		

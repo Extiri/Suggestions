@@ -6,42 +6,32 @@
 //
 
 import Cocoa
+import RealmSwift
 
 class SnippetsManager {
 	static var shared = SnippetsManager()
 	var suggestions = [CompletionSuggestion]()
 	
-	var url: URL {
-		FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first!.appendingPathComponent("Containers/id.thedev.wiktor.CodeMenu/Data/Documents/snippets.cmsnippets")
-	}
-	
-	func parseObject(_ cardObject: CardObject) -> [CompletionSuggestion] {
-		cardObject.snippets.map { CompletionSuggestion(title: $0.title, description: $0.desc, code: $0.code, language: $0.lang) }
+	func parseObject(_ snippet: Snippet) -> CompletionSuggestion {
+		CompletionSuggestion(title: snippet.title, description: snippet.desc, code: snippet.code, language: snippet.lang)
 	}
 	
 	init() {
-		if let data = FileManager.default.contents(atPath: url.path) {
-			do {
-				let objects = try JSONDecoder().decode([CardObject].self, from: data)
-				for object in objects {
-					suggestions.append(contentsOf: parseObject(object))
-				}
-			} catch {
-				print(error.localizedDescription)
-			}
-		} else {
-			if !FileManager.default.fileExists(atPath: url.path) {
-				let alert = NSAlert()
-				alert.messageText = "CodeMenu Suggestions requires that CodeMenu is installed on this macOS."
-				alert.addButton(withTitle: "Quit app")
-				alert.addButton(withTitle: "Learn more")
-				let response = alert.runModal()
-				if response == .alertSecondButtonReturn {
-					NSWorkspace.shared.open(URL(string: "https://codemenu.herokuapp.com/")!)
-				} else {
-					exit(1)
-				}
-			}
+		Realm.Configuration.defaultConfiguration.schemaVersion = 4
+		
+		do {
+			let realm = try Realm(fileURL: URL(fileURLWithPath: SettingsManager.shared.settings.realmFilePath))
+			
+			suggestions = Array(realm.objects(SnippetsList.self).first!.snippets).map { parseObject($0) }
+		} catch {
+			NSLog("\(error)")
+			
+			let alert = NSAlert()
+			
+			alert.messageText = "Failed to start."
+			alert.informativeText = "Probably you haven't installed CodeMenu which is required."
+			
+			alert.runModal()
 		}
 	}
 }

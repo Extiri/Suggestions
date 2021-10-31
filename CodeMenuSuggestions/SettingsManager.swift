@@ -53,11 +53,13 @@ class SettingsManager {
 		}
 		
 		var isAvailable: Bool
+		var realmFilePath: String
 		var disallowlist: [String]
 		
 		init() {
 			isAvailable = false
 			disallowlist = []
+			realmFilePath = ""
 		}
 	}
 	
@@ -103,6 +105,7 @@ class SettingsManager {
 		do {
 			data = newData
 			settingsCache = try JSONDecoder().decode(Settings.self, from: data)
+			print(settingsCache.realmFilePath)
 		} catch {
 			settingsCache = Settings()
 			Debug.log(error)
@@ -113,7 +116,7 @@ class SettingsManager {
 		settingsCache = Settings()
 		
 		url = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first!
-		url.appendPathComponent("Containers/id.thedev.marcin.CodeMenu/Data/Documents")
+		url.appendPathComponent("/Containers/id.thedev.marcin.CodeMenu/Data/Library/Application Support/")
 		url.appendPathComponent("suggestions.cmsettings")
 		
 		load()
