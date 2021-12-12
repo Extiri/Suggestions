@@ -10,6 +10,25 @@ import Cocoa
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
 	var completionManager: CompletionManager? = nil
+	var statusItem: NSStatusItem?
+	
+	override func awakeFromNib() {
+		super.awakeFromNib()
+		
+		statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
+		statusItem!.button!.title = "Suggestions"
+		
+		let menu = NSMenu()
+		
+		let item = NSMenuItem()
+		item.title = "Quit"
+		item.target = self
+		item.action = #selector(quit)
+		
+		menu.addItem(item)
+		
+		statusItem?.menu = menu
+	}
 	
 	func applicationDidFinishLaunching(_ aNotification: Notification) {
 		SettingsManager.shared.settings.isAvailable = true
@@ -17,8 +36,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		completionManager = CompletionManager.shared
 	}
 	
-	func applicationWillTerminate(_ aNotification: Notification) {
-		
+	@objc func quit() {
+		NSApp.terminate(nil)
 	}
 }
 
