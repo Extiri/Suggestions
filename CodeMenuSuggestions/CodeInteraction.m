@@ -39,7 +39,14 @@ NSRect frame;
 				NSInteger insertionPointerLine = [[UIElementUtilities valueOfAttribute:@"AXInsertionPointLineNumber" ofUIElement:codeArea] integerValue];
 				
 				codeInfo.insertionPointerLine = insertionPointerLine;
-				NSString *line = [code componentsSeparatedByString:@"\n"][insertionPointerLine];
+				NSArray<NSString *> *lines = [code componentsSeparatedByString:@"\n"];
+				
+				if (!(0 <= insertionPointerLine && insertionPointerLine < [lines count])) {
+					codeInfo.query = @" ";
+					return false;
+				}
+				
+				NSString *line = lines[insertionPointerLine];
 				NSArray<NSString *> *seperated = [line componentsSeparatedByString:@"§§"];
 				
 				AXValueRef selectedRangeValue = NULL;

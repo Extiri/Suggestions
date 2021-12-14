@@ -96,7 +96,7 @@ class CompletionManager {
 	
 	let dataSource = SuggestionsDataSource()
 	let delegate = SuggestionsTableViewDelegate()
-
+	
 	func updateDetails() {
 		let textView = detailsView.documentView as! NSTextView
 		
@@ -119,7 +119,7 @@ class CompletionManager {
 			
 			textView.textStorage!.append(highlighter.highlight(suggestion.code) ?? NSAttributedString(string: ""))
 		} else {
-			detailsText = "Start typing so suggestions will appear."
+			detailsText = "There are no snippets matching this query."
 		}
 	}
 	
@@ -165,21 +165,9 @@ class CompletionManager {
 	}
 	
 	init() {
-//		#if DEBUG
-//		SuggestionsManager.shared.searchHandler = { query in
-//			var result = [CompletionSuggestion]()
-//			[CompletionSuggestion(title: "Test1", description: "This is Test1", code: "print(\"Test1\")", language: "swift"),
-//			 CompletionSuggestion(title: "Test2", description: "This is Test2", code: "console.log(\"Test2\")", language: "javascript"),
-//			 CompletionSuggestion(title: "Test3", description: "This is Test3", code: "NSLog(\"Test3\")", language: "swift")].forEach { if $0.fullfills(query: query) { result.append($0)} }
-//
-//			return result
-//		}
-//
-//		#else
 		SuggestionsManager.shared.searchHandler = { query in
 			SnippetsManager.shared.suggestions.filter { $0.fullfills(query: query) }
 		}
-//		#endif
 		
 		codeInteraction = CodeInteraction()
 		
@@ -231,7 +219,7 @@ class CompletionManager {
 		KeyboardShortcuts.setShortcut(.init(.v, modifiers: .option), for: .useSuggestion)
 		KeyboardShortcuts.onKeyDown(for: .useSuggestion) {
 			if let selectedSuggestion = SuggestionsManager.shared.suggestions[safely: self.currentlySelectedSuggestion] {
-				#warning("__IMPORTANT__: Make code go back to the previous frame (based on CodeInfo.frame)")
+#warning("__IMPORTANT__: Make code go back to the previous frame (based on CodeInfo.frame)")
 				self.codeInteraction.useCode(selectedSuggestion.code, withFrame: NSRect(x: 0, y: 0, width: 0, height: 0))
 			}
 		}
@@ -283,7 +271,7 @@ class CompletionManager {
 	}
 	
 	var timer: Timer? = nil
-
+	
 	let codeInteraction: CodeInteraction
 	
 	var completionWindowIsVisible = false

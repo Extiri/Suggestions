@@ -12,20 +12,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	var completionManager: CompletionManager? = nil
 	var statusItem: NSStatusItem?
 	
+	@IBOutlet weak var menu: NSMenu!
+	
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		
 		statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
 		statusItem!.button!.title = "Suggestions"
-		
-		let menu = NSMenu()
-		
-		let item = NSMenuItem()
-		item.title = "Quit"
-		item.target = self
-		item.action = #selector(quit)
-		
-		menu.addItem(item)
 		
 		statusItem?.menu = menu
 	}
@@ -36,7 +29,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		completionManager = CompletionManager.shared
 	}
 	
-	@objc func quit() {
+	@IBAction func quit(_ sender: NSMenuItem) {
 		NSApp.terminate(nil)
 	}
 }
