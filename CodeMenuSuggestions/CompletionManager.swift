@@ -24,7 +24,7 @@ extension Array {
 }
 
 extension String {
-	func truncate(longerThan max: Int) -> String {
+		func truncate(longerThan max: Int) -> String {
 		if self.count > max {
 			let beforeMax = self.prefix(max - 3)
 			return beforeMax + "..."

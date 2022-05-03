@@ -26,14 +26,10 @@ public class SnippetsList: Object {
 
 public class Snippet: Object, Codable, Identifiable {
 	public static func == (lhs: Snippet, rhs: Snippet) -> Bool {
-		return lhs.uuid.uuidString == rhs.uuid.uuidString
+		return lhs.id.uuidString == rhs.id.uuidString
 	}
 	
-	public var id: UUID {
-		return uuid
-	}
-	
-	@Persisted(primaryKey: true) var uuid: UUID
+	@Persisted(primaryKey: true) public var id: UUID
 	
 	@Persisted var title: String
 	@Persisted var code: String
