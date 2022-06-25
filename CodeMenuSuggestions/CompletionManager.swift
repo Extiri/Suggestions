@@ -316,7 +316,7 @@ class CompletionManager {
 		self.console.message("Started suggestions")
 		
 		// Replace timer with something more efficient, if possible.
-		timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
+		timer = Timer.scheduledTimer(withTimeInterval: SettingsManager.shared.settings.refreshRate / 10, repeats: true) { _ in
 			DispatchQueue.main.async {
 				let codeInfo = CodeInfo()
 				let state = self.codeInteraction.getCodeInfo(codeInfo)

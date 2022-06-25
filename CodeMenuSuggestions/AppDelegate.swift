@@ -17,8 +17,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		
-		statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-		statusItem!.button!.title = "Suggestions"
+		statusItem = NSStatusBar.system.statusItem(withLength: 20)
+		
+		statusItem?.button?.setAccessibilityTitle("Status icon")
+		
+		let image = NSImage(named: "StatusIcon")
+		image?.size = NSSize(width: 17, height: 17)
+		
+		statusItem?.button?.image = image
 		
 		statusItem?.menu = menu
 	}

@@ -55,11 +55,13 @@ class SettingsManager {
 		var isAvailable: Bool
 		var realmFilePath: String
 		var disallowlist: [String]
+		var refreshRate: Double
 		
 		init() {
 			isAvailable = false
 			disallowlist = []
 			realmFilePath = ""
+			refreshRate = 0.1
 		}
 	}
 	
@@ -116,7 +118,7 @@ class SettingsManager {
 		settingsCache = Settings()
 		
 		url = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first!
-		url.appendPathComponent("Containers/id.thedev.marcin.CodeMenu/Data/Library/Application Support/")
+		url.appendPathComponent("Containers/id.thedev.marcin.CodeMenu/Data/Library/")
 		url.appendPathComponent("suggestions.cmsettings")
 		
 		load()

@@ -108,7 +108,7 @@ NSRect frame;
 				range.length += newLineSeperated[1].length + 2;
 				
 				AXValueRef newValue = AXValueCreate(kAXValueTypeCFRange, &range);
-				AXError setError = AXUIElementSetAttributeValue(codeArea, kAXSelectedTextRangeAttribute, newValue);
+				AXUIElementSetAttributeValue(codeArea, kAXSelectedTextRangeAttribute, newValue);
 				
 				[UIElementUtilities setStringValue:snippet forAttribute:kAXSelectedTextAttribute ofUIElement:codeArea];
 			}

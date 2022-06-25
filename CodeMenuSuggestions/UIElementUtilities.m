@@ -1,5 +1,5 @@
 /*
-     File: UIElementUtilities.m 
+ File: UIElementUtilities.m
  Abstract: Utility methods to manage AXUIElementRef instances.
   
   Version: 1.4 
@@ -43,7 +43,6 @@
  POSSIBILITY OF SUCH DAMAGE. 
   
  Copyright (C) 2010 Apple Inc. All Rights Reserved. 
-  
  */
 
 #import "UIElementUtilities.h"
