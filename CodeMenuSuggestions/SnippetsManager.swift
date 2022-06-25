@@ -23,10 +23,10 @@ class SnippetsManager {
 		
 		do {
 			realm = try Realm(fileURL: URL(fileURLWithPath: SettingsManager.shared.settings.realmFilePath))
-			suggestions = Array(realm.objects(SnippetsList.self).first!.snippets).map { parseObject($0) }
-			print(suggestions)
+			suggestions = Array(realm.objects(Snippets.self).first!.snippets).map { parseObject($0) }
+			
 			token = realm.observe { notification, realm in
-				self.suggestions = Array(realm.objects(SnippetsList.self).first!.snippets).map { self.parseObject($0) }
+				self.suggestions = Array(realm.objects(Snippets.self).first!.snippets).map { self.parseObject($0) }
 			}
 		} catch {
 			print("\(error)")
@@ -34,7 +34,7 @@ class SnippetsManager {
 			let alert = NSAlert()
 			
 			alert.messageText = "Failed to start."
-			alert.informativeText = "Probably, you haven't installed CodeMenu, which is required, or CodeMenu Suggestions is out of date."
+			alert.informativeText = "Probably you haven't installed CodeMenu, which is required, or CodeMenu Suggestions is out of date."
 			
 			alert.runModal()
 			

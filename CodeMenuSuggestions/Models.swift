@@ -18,7 +18,7 @@ extension Array {
 	}
 }
 
-public class SnippetsList: Object {
+public class Snippets: Object {
 	@Persisted(primaryKey: true) public var id: UUID
 	@Persisted public var snippets: List<Snippet>
 }

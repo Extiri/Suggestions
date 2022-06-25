@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		ED00A385286771C50057CA70 /* SuggestionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED00A384286771C50057CA70 /* SuggestionManager.swift */; };
 		ED138CFA26CFB90A00CEE222 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED138CF926CFB90A00CEE222 /* AppDelegate.swift */; };
 		ED138CFC26CFB90A00CEE222 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED138CFB26CFB90A00CEE222 /* ViewController.swift */; };
 		ED138CFE26CFB91200CEE222 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ED138CFD26CFB91200CEE222 /* Assets.xcassets */; };
@@ -24,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		ED00A384286771C50057CA70 /* SuggestionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionManager.swift; sourceTree = "<group>"; };
 		ED138CF626CFB90A00CEE222 /* CodeMenuSuggestions.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CodeMenuSuggestions.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED138CF926CFB90A00CEE222 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ED138CFB26CFB90A00CEE222 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -83,6 +85,7 @@
 				ED8F74C126D7EA8A0043A056 /* SnippetsManager.swift */,
 				ED8F74C326D7EAE30043A056 /* Models.swift */,
 				ED138D0926CFBB6C00CEE222 /* CompletionManager.swift */,
+				ED00A384286771C50057CA70 /* SuggestionManager.swift */,
 				ED138D0E26CFDF4E00CEE222 /* CodeInteraction.h */,
 				ED138D0C26CFDF2600CEE222 /* CodeInteraction.m */,
 				ED6A554626D12E1900FD04C6 /* UIElementUtilities.h */,
@@ -184,6 +187,7 @@
 				ED8F74C226D7EA8A0043A056 /* SnippetsManager.swift in Sources */,
 				ED138D0A26CFBB6C00CEE222 /* CompletionManager.swift in Sources */,
 				ED6A554526D12E1200FD04C6 /* UIElementUtilities.m in Sources */,
+				ED00A385286771C50057CA70 /* SuggestionManager.swift in Sources */,
 				ED138D0D26CFDF2600CEE222 /* CodeInteraction.m in Sources */,
 				ED138CFA26CFB90A00CEE222 /* AppDelegate.swift in Sources */,
 			);

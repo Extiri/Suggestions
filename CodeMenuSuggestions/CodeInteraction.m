@@ -83,7 +83,7 @@ NSRect frame;
 	return false;
 };
 
-- (void)useCode:(NSString *)snippet withFrame:(NSRect)frame {
+- (void)useCode:(NSString *)snippet {
 	NSString *app = NSWorkspace.sharedWorkspace.frontmostApplication.localizedName;
 	if ([self isAllowed:app]) {
 		AXUIElementRef mainElement = AXUIElementCreateApplication(NSWorkspace.sharedWorkspace.frontmostApplication.processIdentifier);
@@ -96,15 +96,24 @@ NSRect frame;
 				NSInteger insertionPointerLine = [[UIElementUtilities valueOfAttribute:@"AXInsertionPointLineNumber" ofUIElement:codeArea] integerValue];
 				NSMutableArray<NSString *> *lines = (NSMutableArray<NSString *>*)[code componentsSeparatedByString:@"\n"];
 				NSString *line = lines[insertionPointerLine];
-				NSMutableArray<NSString *> *newLineSeperated = (NSMutableArray<NSString *>*)[line componentsSeparatedByString:@"§§"];
-				newLineSeperated[1] = snippet;
-				lines[insertionPointerLine] = [newLineSeperated componentsJoinedByString:@""];
-				NSString *newCode = [lines componentsJoinedByString:@"\n"];
-				[UIElementUtilities setStringValue:newCode forAttribute:@"AXValue" ofUIElement:codeArea];
+				NSArray<NSString *> *newLineSeperated = (NSArray<NSString *>*)[line componentsSeparatedByString:@"§§"];
+				
+				AXValueRef textValue = NULL;
+				AXUIElementCopyAttributeValue(codeArea, kAXSelectedTextRangeAttribute , (CFTypeRef *)&textValue);
+				
+				CFRange range;
+				AXValueGetValue(textValue, kAXValueTypeCFRange, &range);
+				
+				range.location -= newLineSeperated[1].length + 2;
+				range.length += newLineSeperated[1].length + 2;
+				
+				AXValueRef newValue = AXValueCreate(kAXValueTypeCFRange, &range);
+				AXError setError = AXUIElementSetAttributeValue(codeArea, kAXSelectedTextRangeAttribute, newValue);
+				
+				[UIElementUtilities setStringValue:snippet forAttribute:kAXSelectedTextAttribute ofUIElement:codeArea];
 			}
 		}
 	}
 }
 
 @end
-

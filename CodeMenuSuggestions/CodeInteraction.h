@@ -1,6 +1,6 @@
 //
 //  CodeInteraction.h
-//  CMCompletionFeatureExperimental
+//  CodeMenuSuggestions
 //
 //  Created by Wiktor Wójcik on 20/08/2021.
 //
@@ -20,8 +20,9 @@
 
 @interface CodeInteraction : NSObject { }
 @property (nonatomic) NSMutableArray * _Nonnull allowlist;
-- (BOOL)getCodeInfo:(CodeInfo*_Nonnull)codeInfo;
-- (void)useCode:(NSString *_Nonnull)snippet withFrame:(NSRect)frame;
+- (BOOL)getCodeInfo:(CodeInfo* _Nonnull)codeInfo;
+- (void)useCode:(NSString *_Nonnull)snippet;
 @end
 
 #endif /* FocusedElementInfo_h */
+

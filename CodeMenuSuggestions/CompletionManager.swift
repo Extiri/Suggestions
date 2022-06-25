@@ -11,6 +11,23 @@ import Combine
 import KeyboardShortcuts
 import Highlightr
 
+func showAlert(message: String, informative: String, buttons: [String] = [], showDontRepeat: Bool = false, completionHandler: @escaping (NSApplication.ModalResponse) -> () = { _ in }) {
+	DispatchQueue.main.async {
+		let alert = NSAlert()
+		
+		alert.messageText = message
+		alert.informativeText = informative
+		
+		buttons.forEach { alert.addButton(withTitle: $0) }
+		alert.buttons.forEach { $0.setAccessibilityTitle($0.title) }
+		
+		alert.showsSuppressionButton = showDontRepeat
+		
+		let result = alert.runModal()
+		completionHandler(result)
+	}
+}
+
 extension KeyboardShortcuts.Name {
 	static let selectUpwards = KeyboardShortcuts.Name("selectUpwards")
 	static let selectDownwards = KeyboardShortcuts.Name("selectDownwards")
@@ -153,6 +170,10 @@ class CompletionManager {
 		updateDetails()
 		
 		completionWindow.contentView?.addSubview(scrollView)
+		
+		SuggestionsManager.shared.load(forQuery: "")
+		
+		reloadList()
 	}
 	
 	func reloadList() {
@@ -165,10 +186,6 @@ class CompletionManager {
 	}
 	
 	init() {
-		SuggestionsManager.shared.searchHandler = { query in
-			SnippetsManager.shared.suggestions.filter { $0.fullfills(query: query) }
-		}
-		
 		codeInteraction = CodeInteraction()
 		
 		detailsView = NSTextView.scrollableTextView()
@@ -220,7 +237,7 @@ class CompletionManager {
 		KeyboardShortcuts.onKeyDown(for: .useSuggestion) {
 			if let selectedSuggestion = SuggestionsManager.shared.suggestions[safely: self.currentlySelectedSuggestion] {
 #warning("__IMPORTANT__: Make code go back to the previous frame (based on CodeInfo.frame)")
-				self.codeInteraction.useCode(selectedSuggestion.code, withFrame: NSRect(x: 0, y: 0, width: 0, height: 0))
+				self.codeInteraction.useCode(selectedSuggestion.code)
 			}
 		}
 		
@@ -266,8 +283,6 @@ class CompletionManager {
 			startSuggestion()
 			console.success("Accessibility API enabled")
 		}
-		
-		openAccessiblityPreferencesPane()
 	}
 	
 	var timer: Timer? = nil
@@ -298,7 +313,9 @@ class CompletionManager {
 	}
 	
 	func startSuggestion() {
-		self.console.message("Started suggestion")
+		self.console.message("Started suggestions")
+		
+		// Replace timer with something more efficient, if possible.
 		timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
 			DispatchQueue.main.async {
 				let codeInfo = CodeInfo()
@@ -367,50 +384,5 @@ class CompletionManager {
 	
 	var apiIsEnabled: Bool {
 		return AXIsProcessTrustedWithOptions([kAXTrustedCheckOptionPrompt.takeUnretainedValue() as NSString: true] as CFDictionary?)
-	}
-}
-
-class SuggestionsManager: NSObject {
-	static var shared = SuggestionsManager()
-	
-	var debugSuggestions = [CompletionSuggestion]()
-	var searchHandler: (String) -> ([CompletionSuggestion]) = { _ in return [] }
-	
-	var suggestions = [CompletionSuggestion]()
-	var query = ""
-	var language = ""
-	
-	func load(forQuery query: String) {
-		if query != self.query {
-			self.query = query
-			suggestions = searchHandler(query)
-		}
-	}
-}
-
-struct CompletionSuggestion {
-	var title: String
-	var description: String
-	var code: String
-	var language: String
-	
-	func fullfills(query: String) -> Bool {
-		if query.isOnlyWhitespaces() {
-			return true
-		} else {
-			return title.lowercased().contains(query.lowercased()) || description.lowercased().contains(query.lowercased()) || code.lowercased().contains(query.lowercased())
-		}
-	}
-}
-
-extension String {
-	func isOnly(_ character: Character) -> Bool {
-		var result = true
-		self.forEach { if $0 != character { result = false; return } }
-		return result
-	}
-	
-	func isOnlyWhitespaces() -> Bool {
-		return isOnly(" ") || isEmpty
 	}
 }
