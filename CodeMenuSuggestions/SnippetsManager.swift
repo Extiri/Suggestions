@@ -8,6 +8,7 @@
 import Cocoa
 import RealmSwift
 
+// This will be replaced with a XPC call.
 class SnippetsManager {
 	static var shared = SnippetsManager()
 	var realm: Realm!
