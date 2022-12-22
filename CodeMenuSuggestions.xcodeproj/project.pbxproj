@@ -16,13 +16,13 @@
 		ED138D0A26CFBB6C00CEE222 /* CompletionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED138D0926CFBB6C00CEE222 /* CompletionManager.swift */; };
 		ED138D0D26CFDF2600CEE222 /* CodeInteraction.m in Sources */ = {isa = PBXBuildFile; fileRef = ED138D0C26CFDF2600CEE222 /* CodeInteraction.m */; };
 		ED2459AF26FB902B0004DA58 /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2459AE26FB902B0004DA58 /* SettingsManager.swift */; };
-		ED30469D26D1703D003E57E1 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = ED30469C26D1703D003E57E1 /* KeyboardShortcuts */; };
-		ED3B987326E3AA8A00A764A1 /* Highlightr in Frameworks */ = {isa = PBXBuildFile; productRef = ED3B987226E3AA8A00A764A1 /* Highlightr */; };
 		ED6A554526D12E1200FD04C6 /* UIElementUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = ED6A554426D12E1200FD04C6 /* UIElementUtilities.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		ED8F74C226D7EA8A0043A056 /* SnippetsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8F74C126D7EA8A0043A056 /* SnippetsManager.swift */; };
 		ED8F74C426D7EAE30043A056 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8F74C326D7EAE30043A056 /* Models.swift */; };
-		EDCCA169272F050200A5B525 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = EDCCA168272F050200A5B525 /* Realm */; };
-		EDCCA16B272F050200A5B525 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = EDCCA16A272F050200A5B525 /* RealmSwift */; };
+		ED94E4452954ACD60017595F /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = ED94E4442954ACD60017595F /* KeyboardShortcuts */; };
+		ED94E4482954B6710017595F /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = ED94E4472954B6710017595F /* Realm */; };
+		ED94E44A2954B6710017595F /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = ED94E4492954B6710017595F /* RealmSwift */; };
+		ED94E44D2954B71F0017595F /* Highlightr in Frameworks */ = {isa = PBXBuildFile; productRef = ED94E44C2954B71F0017595F /* Highlightr */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,7 +42,6 @@
 		ED2459AE26FB902B0004DA58 /* SettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
 		ED6A554426D12E1200FD04C6 /* UIElementUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIElementUtilities.m; sourceTree = "<group>"; };
 		ED6A554626D12E1900FD04C6 /* UIElementUtilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UIElementUtilities.h; sourceTree = "<group>"; };
-		ED8F74BD26D7BDE10043A056 /* placeholder.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = placeholder.txt; sourceTree = "<group>"; };
 		ED8F74C126D7EA8A0043A056 /* SnippetsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnippetsManager.swift; sourceTree = "<group>"; };
 		ED8F74C326D7EAE30043A056 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -52,10 +51,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EDCCA16B272F050200A5B525 /* RealmSwift in Frameworks */,
-				EDCCA169272F050200A5B525 /* Realm in Frameworks */,
-				ED3B987326E3AA8A00A764A1 /* Highlightr in Frameworks */,
-				ED30469D26D1703D003E57E1 /* KeyboardShortcuts in Frameworks */,
+				ED94E44D2954B71F0017595F /* Highlightr in Frameworks */,
+				ED94E44A2954B6710017595F /* RealmSwift in Frameworks */,
+				ED94E4482954B6710017595F /* Realm in Frameworks */,
+				ED94E4452954ACD60017595F /* KeyboardShortcuts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,7 +80,6 @@
 		ED138CF826CFB90A00CEE222 /* CodeMenuSuggestions */ = {
 			isa = PBXGroup;
 			children = (
-				ED8F74BD26D7BDE10043A056 /* placeholder.txt */,
 				ED138CF926CFB90A00CEE222 /* AppDelegate.swift */,
 				ED2459AE26FB902B0004DA58 /* SettingsManager.swift */,
 				ED8F74C126D7EA8A0043A056 /* SnippetsManager.swift */,
@@ -120,10 +118,10 @@
 			);
 			name = CodeMenuSuggestions;
 			packageProductDependencies = (
-				ED30469C26D1703D003E57E1 /* KeyboardShortcuts */,
-				ED3B987226E3AA8A00A764A1 /* Highlightr */,
-				EDCCA168272F050200A5B525 /* Realm */,
-				EDCCA16A272F050200A5B525 /* RealmSwift */,
+				ED94E4442954ACD60017595F /* KeyboardShortcuts */,
+				ED94E4472954B6710017595F /* Realm */,
+				ED94E4492954B6710017595F /* RealmSwift */,
+				ED94E44C2954B71F0017595F /* Highlightr */,
 			);
 			productName = CMCompletionFeatureExperimental;
 			productReference = ED138CF626CFB90A00CEE222 /* CodeMenuSuggestions.app */;
@@ -136,7 +134,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1250;
-				LastUpgradeCheck = 1250;
+				LastUpgradeCheck = 1330;
 				TargetAttributes = {
 					ED138CF526CFB90A00CEE222 = {
 						CreatedOnToolsVersion = 12.5.1;
@@ -154,9 +152,9 @@
 			);
 			mainGroup = ED138CED26CFB90A00CEE222;
 			packageReferences = (
-				ED30469B26D1703D003E57E1 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
-				ED3B987126E3AA8A00A764A1 /* XCRemoteSwiftPackageReference "Highlightr" */,
-				EDCCA167272F050200A5B525 /* XCRemoteSwiftPackageReference "realm-cocoa" */,
+				ED94E4432954ACD60017595F /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
+				ED94E4462954B6710017595F /* XCRemoteSwiftPackageReference "realm-swift" */,
+				ED94E44B2954B71F0017595F /* XCRemoteSwiftPackageReference "Highlightr" */,
 			);
 			productRefGroup = ED138CF726CFB90A00CEE222 /* Products */;
 			projectDirPath = "";
@@ -333,6 +331,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = CodeMenuSuggestions/CodeMenuSuggestions.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = DNFYV2TZ3T;
@@ -342,6 +341,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				PRODUCT_BUNDLE_IDENTIFIER = id.thedev.marcin.CodeMenuSnippetsSuggestions;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "CodeMenuSuggestions/CodeMenuSuggestions-Bridging-Header.h";
@@ -357,6 +357,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = CodeMenuSuggestions/CodeMenuSuggestions.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = DNFYV2TZ3T;
@@ -366,6 +367,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				PRODUCT_BUNDLE_IDENTIFIER = id.thedev.marcin.CodeMenuSnippetsSuggestions;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "CodeMenuSuggestions/CodeMenuSuggestions-Bridging-Header.h";
@@ -397,52 +399,52 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		ED30469B26D1703D003E57E1 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */ = {
+		ED94E4432954ACD60017595F /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/sindresorhus/KeyboardShortcuts";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.2.0;
+				kind = upToNextMinorVersion;
+				minimumVersion = 1.1.0;
 			};
 		};
-		ED3B987126E3AA8A00A764A1 /* XCRemoteSwiftPackageReference "Highlightr" */ = {
+		ED94E4462954B6710017595F /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 10.33.0;
+			};
+		};
+		ED94E44B2954B71F0017595F /* XCRemoteSwiftPackageReference "Highlightr" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/raspu/Highlightr";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.1.2;
-			};
-		};
-		EDCCA167272F050200A5B525 /* XCRemoteSwiftPackageReference "realm-cocoa" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/realm/realm-cocoa.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 10.18.0;
+				branch = master;
+				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		ED30469C26D1703D003E57E1 /* KeyboardShortcuts */ = {
+		ED94E4442954ACD60017595F /* KeyboardShortcuts */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = ED30469B26D1703D003E57E1 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */;
+			package = ED94E4432954ACD60017595F /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */;
 			productName = KeyboardShortcuts;
 		};
-		ED3B987226E3AA8A00A764A1 /* Highlightr */ = {
+		ED94E4472954B6710017595F /* Realm */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = ED3B987126E3AA8A00A764A1 /* XCRemoteSwiftPackageReference "Highlightr" */;
-			productName = Highlightr;
-		};
-		EDCCA168272F050200A5B525 /* Realm */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = EDCCA167272F050200A5B525 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			package = ED94E4462954B6710017595F /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = Realm;
 		};
-		EDCCA16A272F050200A5B525 /* RealmSwift */ = {
+		ED94E4492954B6710017595F /* RealmSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = EDCCA167272F050200A5B525 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			package = ED94E4462954B6710017595F /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
+		};
+		ED94E44C2954B71F0017595F /* Highlightr */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = ED94E44B2954B71F0017595F /* XCRemoteSwiftPackageReference "Highlightr" */;
+			productName = Highlightr;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

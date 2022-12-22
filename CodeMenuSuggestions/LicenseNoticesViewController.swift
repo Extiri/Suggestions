@@ -14,7 +14,7 @@ class LicenseNoticesViewController: NSViewController {
         super.viewDidLoad()
 		
 		let acknowledgments = """
-Here are license notices for dependencies that CodeMenu uses.
+Here are license notices for dependencies that CodeMenu Suggestions uses.
 
 -----------------------------------------------------------------------------
 Realm

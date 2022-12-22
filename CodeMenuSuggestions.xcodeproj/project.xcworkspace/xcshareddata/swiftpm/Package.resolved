@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/raspu/Highlightr",
       "state" : {
-        "revision" : "93199b9e434f04bda956a613af8f571933f9f037",
-        "version" : "2.1.2"
+        "branch" : "master",
+        "revision" : "d3850a69acb6cd14f915f8763ab9a794e00ce782"
       }
     },
     {
@@ -14,26 +14,26 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/sindresorhus/KeyboardShortcuts",
       "state" : {
-        "revision" : "660c11ee4d30f3df50a546a6cd1b6a56376796d4",
-        "version" : "1.7.0"
-      }
-    },
-    {
-      "identity" : "realm-cocoa",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/realm/realm-cocoa.git",
-      "state" : {
-        "revision" : "9f43d0da902c55b493d6c8bb63203764caa8acbe",
-        "version" : "10.18.0"
+        "revision" : "01f89033f8492c2ee581720e2d391dec6b279b85",
+        "version" : "1.1.0"
       }
     },
     {
       "identity" : "realm-core",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/realm/realm-core",
+      "location" : "https://github.com/realm/realm-core.git",
       "state" : {
-        "revision" : "23f60515a00f076a9e3f2dc672fe1ae07601ee90",
-        "version" : "11.4.1"
+        "revision" : "b77443ca7fa25407869ca537bf3ae912b1427bff",
+        "version" : "12.13.0"
+      }
+    },
+    {
+      "identity" : "realm-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/realm/realm-swift",
+      "state" : {
+        "revision" : "b442ee3e9caa1abab26fd9b23f060f6f0815ff48",
+        "version" : "10.33.0"
       }
     }
   ],
