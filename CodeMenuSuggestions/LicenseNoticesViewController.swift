@@ -8,12 +8,12 @@
 import Cocoa
 
 class LicenseNoticesViewController: NSViewController {
-	@IBOutlet weak var textView: NSScrollView!
-	
-    override func viewDidLoad() {
-        super.viewDidLoad()
-		
-		let acknowledgments = """
+  @IBOutlet weak var textView: NSScrollView!
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    
+    let acknowledgments = """
 Here are license notices for dependencies that CodeMenu Suggestions uses.
 
 -----------------------------------------------------------------------------
@@ -303,9 +303,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   
  Copyright (C) 2010 Apple Inc. All Rights Reserved.
 """
-		
-		(textView.contentView.documentView as! NSTextView).textStorage!.append(NSAttributedString(string: acknowledgments))
-		(textView.contentView.documentView as! NSTextView).textStorage!.foregroundColor = .textColor
-		(textView.contentView.documentView as! NSTextView).isEditable = false
-    }
+    
+    (textView.contentView.documentView as! NSTextView).textStorage!.append(NSAttributedString(string: acknowledgments))
+    (textView.contentView.documentView as! NSTextView).textStorage!.foregroundColor = .textColor
+    (textView.contentView.documentView as! NSTextView).isEditable = false
+  }
 }
