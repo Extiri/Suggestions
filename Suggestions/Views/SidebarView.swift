@@ -1,6 +1,6 @@
 //
 //  SidebarView.swift
-//  CodeMenuSuggestions
+//  Suggestions
 //
 //  Created by Wiktor Wójcik on 28/01/2023.
 //

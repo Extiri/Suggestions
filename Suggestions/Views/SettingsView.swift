@@ -36,7 +36,6 @@ struct SettingsView: View {
             }
             
             Button(action: {
-              print(dissalowedApps)
               dissalowedApps.append(selectedApp)
             }, label: {
               Image(systemName: "plus.circle.fill")

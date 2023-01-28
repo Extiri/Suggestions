@@ -12,9 +12,9 @@
                 <application id="hnw-xV-0zn" sceneMemberID="viewController">
                     <menu key="mainMenu" title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
                         <items>
-                            <menuItem title="CodeMenuSuggestions" id="1Xt-HY-uBw">
+                            <menuItem title="Suggestions" id="1Xt-HY-uBw">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="CodeMenuSuggestions" systemMenu="apple" id="uQy-DD-JDr">
+                                <menu key="submenu" title="Suggestions" systemMenu="apple" id="uQy-DD-JDr">
                                     <items>
                                         <menuItem title="About" id="5kV-Vb-QxS">
                                             <modifierMask key="keyEquivalentModifierMask"/>
@@ -50,7 +50,7 @@
                         <outlet property="delegate" destination="Voe-Tx-rLC" id="PrD-fu-P6m"/>
                     </connections>
                 </application>
-                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="CodeMenuSuggestions" customModuleProvider="target">
+                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Suggestions" customModuleProvider="target">
                     <connections>
                         <outlet property="menu" destination="uQy-DD-JDr" id="Wpd-2n-zU3"/>
                     </connections>
@@ -113,7 +113,7 @@
         <!--License Notices View Controller-->
         <scene sceneID="nSH-f2-wgF">
             <objects>
-                <viewController id="ZP9-bQ-mpv" customClass="LicenseNoticesViewController" customModule="CodeMenuSuggestions" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="ZP9-bQ-mpv" customClass="LicenseNoticesViewController" customModule="Suggestions" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="Mf9-I4-U90">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="416"/>
                         <autoresizingMask key="autoresizingMask"/>

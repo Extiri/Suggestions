@@ -2,7 +2,7 @@
 #import "CodeInteraction.h"
 #import <Accessibility/Accessibility.h>
 #import "UIElementUtilities.h"
-#import <CodeMenuSuggestions-Swift.h>
+#import <Suggestions-Swift.h>
 
 @implementation CodeInfo
 NSString *query;

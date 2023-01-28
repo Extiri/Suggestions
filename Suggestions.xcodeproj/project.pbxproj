@@ -31,14 +31,14 @@
 /* Begin PBXFileReference section */
 		ED00A384286771C50057CA70 /* SuggestionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionManager.swift; sourceTree = "<group>"; };
 		ED00A386286794E60057CA70 /* LicenseNoticesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseNoticesViewController.swift; sourceTree = "<group>"; };
-		ED138CF626CFB90A00CEE222 /* CodeMenuSuggestions.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CodeMenuSuggestions.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED138CF626CFB90A00CEE222 /* Suggestions.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Suggestions.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED138CF926CFB90A00CEE222 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ED138CFD26CFB91200CEE222 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ED138D0026CFB91200CEE222 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		ED138D0226CFB91200CEE222 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		ED138D0326CFB91200CEE222 /* CodeMenuSuggestions.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CodeMenuSuggestions.entitlements; sourceTree = "<group>"; };
+		ED138D0326CFB91200CEE222 /* Suggestions.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Suggestions.entitlements; sourceTree = "<group>"; };
 		ED138D0926CFBB6C00CEE222 /* CompletionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletionManager.swift; sourceTree = "<group>"; };
-		ED138D0B26CFDF2600CEE222 /* CodeMenuSuggestions-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CodeMenuSuggestions-Bridging-Header.h"; sourceTree = "<group>"; };
+		ED138D0B26CFDF2600CEE222 /* Suggestions-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Suggestions-Bridging-Header.h"; sourceTree = "<group>"; };
 		ED138D0C26CFDF2600CEE222 /* CodeInteraction.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CodeInteraction.m; sourceTree = "<group>"; };
 		ED138D0E26CFDF4E00CEE222 /* CodeInteraction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CodeInteraction.h; sourceTree = "<group>"; };
 		ED2459AE26FB902B0004DA58 /* SettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
@@ -70,7 +70,7 @@
 		ED138CED26CFB90A00CEE222 = {
 			isa = PBXGroup;
 			children = (
-				ED138CF826CFB90A00CEE222 /* CodeMenuSuggestions */,
+				ED138CF826CFB90A00CEE222 /* Suggestions */,
 				ED138CF726CFB90A00CEE222 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -78,12 +78,12 @@
 		ED138CF726CFB90A00CEE222 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				ED138CF626CFB90A00CEE222 /* CodeMenuSuggestions.app */,
+				ED138CF626CFB90A00CEE222 /* Suggestions.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		ED138CF826CFB90A00CEE222 /* CodeMenuSuggestions */ = {
+		ED138CF826CFB90A00CEE222 /* Suggestions */ = {
 			isa = PBXGroup;
 			children = (
 				ED138CF926CFB90A00CEE222 /* AppDelegate.swift */,
@@ -101,10 +101,10 @@
 				ED138CFD26CFB91200CEE222 /* Assets.xcassets */,
 				ED138CFF26CFB91200CEE222 /* Main.storyboard */,
 				ED138D0226CFB91200CEE222 /* Info.plist */,
-				ED138D0326CFB91200CEE222 /* CodeMenuSuggestions.entitlements */,
-				ED138D0B26CFDF2600CEE222 /* CodeMenuSuggestions-Bridging-Header.h */,
+				ED138D0326CFB91200CEE222 /* Suggestions.entitlements */,
+				ED138D0B26CFDF2600CEE222 /* Suggestions-Bridging-Header.h */,
 			);
-			path = CodeMenuSuggestions;
+			path = Suggestions;
 			sourceTree = "<group>";
 		};
 		ED56010D29854BE100F7E21E /* Views */ = {
@@ -121,9 +121,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		ED138CF526CFB90A00CEE222 /* CodeMenuSuggestions */ = {
+		ED138CF526CFB90A00CEE222 /* Suggestions */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = ED138D0626CFB91200CEE222 /* Build configuration list for PBXNativeTarget "CodeMenuSuggestions" */;
+			buildConfigurationList = ED138D0626CFB91200CEE222 /* Build configuration list for PBXNativeTarget "Suggestions" */;
 			buildPhases = (
 				ED138CF226CFB90A00CEE222 /* Sources */,
 				ED138CF326CFB90A00CEE222 /* Frameworks */,
@@ -133,7 +133,7 @@
 			);
 			dependencies = (
 			);
-			name = CodeMenuSuggestions;
+			name = Suggestions;
 			packageProductDependencies = (
 				ED94E4442954ACD60017595F /* KeyboardShortcuts */,
 				ED94E4472954B6710017595F /* Realm */,
@@ -141,7 +141,7 @@
 				ED94E44C2954B71F0017595F /* Highlightr */,
 			);
 			productName = CMCompletionFeatureExperimental;
-			productReference = ED138CF626CFB90A00CEE222 /* CodeMenuSuggestions.app */;
+			productReference = ED138CF626CFB90A00CEE222 /* Suggestions.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -159,7 +159,7 @@
 					};
 				};
 			};
-			buildConfigurationList = ED138CF126CFB90A00CEE222 /* Build configuration list for PBXProject "CodeMenuSuggestions" */;
+			buildConfigurationList = ED138CF126CFB90A00CEE222 /* Build configuration list for PBXProject "Suggestions" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -177,7 +177,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				ED138CF526CFB90A00CEE222 /* CodeMenuSuggestions */,
+				ED138CF526CFB90A00CEE222 /* Suggestions */,
 			);
 		};
 /* End PBXProject section */
@@ -350,13 +350,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = CodeMenuSuggestions/CodeMenuSuggestions.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Suggestions/Suggestions.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = DNFYV2TZ3T;
 				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = CodeMenuSuggestions/Info.plist;
+				INFOPLIST_FILE = Suggestions/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Suggestions;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -364,7 +365,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				PRODUCT_BUNDLE_IDENTIFIER = id.thedev.marcin.Suggestions;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "CodeMenuSuggestions/CodeMenuSuggestions-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Suggestions/Suggestions-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
@@ -376,13 +377,14 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = CodeMenuSuggestions/CodeMenuSuggestions.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Suggestions/Suggestions.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = DNFYV2TZ3T;
 				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = CodeMenuSuggestions/Info.plist;
+				INFOPLIST_FILE = Suggestions/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Suggestions;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -390,7 +392,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				PRODUCT_BUNDLE_IDENTIFIER = id.thedev.marcin.Suggestions;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "CodeMenuSuggestions/CodeMenuSuggestions-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Suggestions/Suggestions-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -398,7 +400,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		ED138CF126CFB90A00CEE222 /* Build configuration list for PBXProject "CodeMenuSuggestions" */ = {
+		ED138CF126CFB90A00CEE222 /* Build configuration list for PBXProject "Suggestions" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				ED138D0426CFB91200CEE222 /* Debug */,
@@ -407,7 +409,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		ED138D0626CFB91200CEE222 /* Build configuration list for PBXNativeTarget "CodeMenuSuggestions" */ = {
+		ED138D0626CFB91200CEE222 /* Build configuration list for PBXNativeTarget "Suggestions" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				ED138D0726CFB91200CEE222 /* Debug */,
