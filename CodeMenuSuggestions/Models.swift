@@ -1,10 +1,3 @@
-//
-//  Models.swift
-//  CodeMenuSuggestions
-//
-//  Created by Wiktor Wójcik on 26/08/2021.
-//
-
 import Cocoa
 import RealmSwift
 

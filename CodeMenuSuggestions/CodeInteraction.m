@@ -1,14 +1,3 @@
-//
-//  CodeInteraction.m
-//  CMCompletionFeatureExperimental
-//
-//  Created by Wiktor Wójcik on 20/08/2021.
-//
-
-// Thank you Neha Gupta very much!
-// I was unable to understand Accesibility API and you helped me a lot!
-// https://macdevelopers.wordpress.com/2014/02/05/how-to-get-selected-text-and-its-coordinates-from-any-system-wide-application-using-accessibility-api/comment-page-1/
-
 #import <Cocoa/Cocoa.h>
 #import "CodeInteraction.h"
 #import <Accessibility/Accessibility.h>

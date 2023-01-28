@@ -1,10 +1,3 @@
-//
-//  ViewController.swift
-//  CMCompletionFeatureExperimental
-//
-//  Created by Wiktor Wójcik on 20/08/2021.
-//
-
 import Cocoa
 
 class ViewController: NSViewController {

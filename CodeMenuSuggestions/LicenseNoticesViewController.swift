@@ -1,10 +1,3 @@
-//
-//  LicenseNoticesViewController.swift
-//  CodeMenuSuggestions
-//
-//  Created by Wiktor Wójcik on 25/06/2022.
-//
-
 import Cocoa
 
 class LicenseNoticesViewController: NSViewController {

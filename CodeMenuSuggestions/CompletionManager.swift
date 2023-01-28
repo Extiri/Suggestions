@@ -1,10 +1,3 @@
-//
-//  CompletionManager.swift
-//  CMCompletionFeatureExperimental
-//
-//  Created by Wiktor Wójcik on 20/08/2021.
-//
-
 import Cocoa
 import Accessibility
 import Combine

@@ -1,10 +1,3 @@
-//
-//  CodeInteraction.h
-//  CodeMenuSuggestions
-//
-//  Created by Wiktor Wójcik on 20/08/2021.
-//
-
 #ifndef CodeInteraction_h
 #define CodeInteraction_h
 

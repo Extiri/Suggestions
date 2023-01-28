@@ -1,10 +1,3 @@
-//
-//  ControlPanelView.swift
-//  CodeMenuSuggestions
-//
-//  Created by Wiktor Wójcik on 28/01/2023.
-//
-
 import SwiftUI
 
 struct ControlPanelView: View {
