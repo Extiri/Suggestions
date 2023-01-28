@@ -48,7 +48,7 @@ struct SettingsView: View {
           if dissalowedApps.isEmpty {
             Text("No dissalowed apps")
           } else {
-            VStack {
+            ScrollView {
               ForEach(Array(dissalowedApps.enumerated()), id: \.offset) { enumeration in
                 HStack(alignment: .bottom) {
                   Button(action: {
@@ -70,7 +70,7 @@ struct SettingsView: View {
             }
             .padding()
             .border(.gray, width: 0.4)
-            .frame(width: 400)
+            .frame(width: 400, height: 300)
             .padding(6)
           }
         }
