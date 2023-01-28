@@ -1,3 +1,3 @@
-# CodeMenuSuggestions
+# Suggestions
 
-An app that allows you to get suggestions of snippets directly in your editor.
+An app that allows you to get text suggestions everywhere. It currently support CodeMenu.
