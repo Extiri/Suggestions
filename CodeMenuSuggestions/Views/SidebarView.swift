@@ -11,6 +11,10 @@ struct SidebarView: View {
   var body: some View {
     List {
       NavigationLink(
+        destination: SettingsView(),
+        label: { Label("Settings", systemImage: "gear") }
+      )
+      NavigationLink(
         destination: HelpView(),
         label: { Label("Help", systemImage: "questionmark.circle") }
       )

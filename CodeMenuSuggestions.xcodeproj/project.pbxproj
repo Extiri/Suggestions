@@ -18,6 +18,7 @@
 		ED56011029854C2400F7E21E /* ControlPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED56010F29854C2400F7E21E /* ControlPanelView.swift */; };
 		ED5601142985804200F7E21E /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5601132985804200F7E21E /* SidebarView.swift */; };
 		ED5601162985815300F7E21E /* HelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5601152985815300F7E21E /* HelpView.swift */; };
+		ED560118298584C800F7E21E /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED560117298584C800F7E21E /* SettingsView.swift */; };
 		ED6A554526D12E1200FD04C6 /* UIElementUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = ED6A554426D12E1200FD04C6 /* UIElementUtilities.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		ED8F74C226D7EA8A0043A056 /* SnippetsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8F74C126D7EA8A0043A056 /* SnippetsManager.swift */; };
 		ED8F74C426D7EAE30043A056 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8F74C326D7EAE30043A056 /* Models.swift */; };
@@ -44,6 +45,7 @@
 		ED56010F29854C2400F7E21E /* ControlPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlPanelView.swift; sourceTree = "<group>"; };
 		ED5601132985804200F7E21E /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
 		ED5601152985815300F7E21E /* HelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpView.swift; sourceTree = "<group>"; };
+		ED560117298584C800F7E21E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		ED6A554426D12E1200FD04C6 /* UIElementUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIElementUtilities.m; sourceTree = "<group>"; };
 		ED6A554626D12E1900FD04C6 /* UIElementUtilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UIElementUtilities.h; sourceTree = "<group>"; };
 		ED8F74C126D7EA8A0043A056 /* SnippetsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnippetsManager.swift; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 			isa = PBXGroup;
 			children = (
 				ED56010F29854C2400F7E21E /* ControlPanelView.swift */,
+				ED560117298584C800F7E21E /* SettingsView.swift */,
 				ED5601152985815300F7E21E /* HelpView.swift */,
 				ED5601132985804200F7E21E /* SidebarView.swift */,
 			);
@@ -208,6 +211,7 @@
 				ED138D0D26CFDF2600CEE222 /* CodeInteraction.m in Sources */,
 				ED00A387286794E60057CA70 /* LicenseNoticesViewController.swift in Sources */,
 				ED138CFA26CFB90A00CEE222 /* AppDelegate.swift in Sources */,
+				ED560118298584C800F7E21E /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -358,7 +362,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				PRODUCT_BUNDLE_IDENTIFIER = id.thedev.marcin.CodeMenuSnippetsSuggestions;
+				PRODUCT_BUNDLE_IDENTIFIER = id.thedev.marcin.Suggestions;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "CodeMenuSuggestions/CodeMenuSuggestions-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -384,7 +388,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				PRODUCT_BUNDLE_IDENTIFIER = id.thedev.marcin.CodeMenuSnippetsSuggestions;
+				PRODUCT_BUNDLE_IDENTIFIER = id.thedev.marcin.Suggestions;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "CodeMenuSuggestions/CodeMenuSuggestions-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;

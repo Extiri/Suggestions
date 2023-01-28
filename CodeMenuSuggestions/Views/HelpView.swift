@@ -20,9 +20,3 @@ struct HelpView: View {
     .padding()
   }
 }
-
-struct HelpView_Previews: PreviewProvider {
-  static var previews: some View {
-    HelpView()
-  }
-}
