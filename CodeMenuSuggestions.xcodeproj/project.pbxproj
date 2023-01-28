@@ -10,7 +10,6 @@
 		ED00A385286771C50057CA70 /* SuggestionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED00A384286771C50057CA70 /* SuggestionManager.swift */; };
 		ED00A387286794E60057CA70 /* LicenseNoticesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED00A386286794E60057CA70 /* LicenseNoticesViewController.swift */; };
 		ED138CFA26CFB90A00CEE222 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED138CF926CFB90A00CEE222 /* AppDelegate.swift */; };
-		ED138CFC26CFB90A00CEE222 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED138CFB26CFB90A00CEE222 /* ViewController.swift */; };
 		ED138CFE26CFB91200CEE222 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ED138CFD26CFB91200CEE222 /* Assets.xcassets */; };
 		ED138D0126CFB91200CEE222 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ED138CFF26CFB91200CEE222 /* Main.storyboard */; };
 		ED138D0A26CFBB6C00CEE222 /* CompletionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED138D0926CFBB6C00CEE222 /* CompletionManager.swift */; };
@@ -31,7 +30,6 @@
 		ED00A386286794E60057CA70 /* LicenseNoticesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseNoticesViewController.swift; sourceTree = "<group>"; };
 		ED138CF626CFB90A00CEE222 /* CodeMenuSuggestions.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CodeMenuSuggestions.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED138CF926CFB90A00CEE222 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		ED138CFB26CFB90A00CEE222 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		ED138CFD26CFB91200CEE222 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ED138D0026CFB91200CEE222 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		ED138D0226CFB91200CEE222 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -94,7 +92,6 @@
 				ED138D0C26CFDF2600CEE222 /* CodeInteraction.m */,
 				ED6A554626D12E1900FD04C6 /* UIElementUtilities.h */,
 				ED6A554426D12E1200FD04C6 /* UIElementUtilities.m */,
-				ED138CFB26CFB90A00CEE222 /* ViewController.swift */,
 				ED138CFD26CFB91200CEE222 /* Assets.xcassets */,
 				ED138CFF26CFB91200CEE222 /* Main.storyboard */,
 				ED138D0226CFB91200CEE222 /* Info.plist */,
@@ -196,7 +193,6 @@
 				ED8F74C426D7EAE30043A056 /* Models.swift in Sources */,
 				ED2459AF26FB902B0004DA58 /* SettingsManager.swift in Sources */,
 				ED56011029854C2400F7E21E /* ControlPanelView.swift in Sources */,
-				ED138CFC26CFB90A00CEE222 /* ViewController.swift in Sources */,
 				ED8F74C226D7EA8A0043A056 /* SnippetsManager.swift in Sources */,
 				ED138D0A26CFBB6C00CEE222 /* CompletionManager.swift in Sources */,
 				ED6A554526D12E1200FD04C6 /* UIElementUtilities.m in Sources */,
