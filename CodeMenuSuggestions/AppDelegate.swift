@@ -29,8 +29,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     completionManager = CompletionManager.shared
     
-    let windowWidth = 1100.0
-    let windowHeight = 800.0
+    let windowWidth = 900.0
+    let windowHeight = 500.0
     
     let origin = CGPoint.zero
     let size = CGSize(width: windowWidth, height: windowHeight)
