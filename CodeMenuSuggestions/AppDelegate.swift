@@ -6,11 +6,13 @@
 //
 
 import Cocoa
+import SwiftUI
 
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
   var completionManager: CompletionManager? = nil
-  var statusItem: NSStatusItem?
+  var statusItem: NSStatusItem!
+  var controlWindow: NSWindow!
   
   @IBOutlet weak var menu: NSMenu!
   
@@ -30,9 +32,35 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   }
   
   func applicationDidFinishLaunching(_ aNotification: Notification) {
-    		SettingsManager.shared.settings.isAvailable = true
+    SettingsManager.shared.settings.isAvailable = true
     
-    		completionManager = CompletionManager.shared
+    completionManager = CompletionManager.shared
+    
+    let windowWidth = 1100.0
+    let windowHeight = 800.0
+    
+    let origin = CGPoint.zero
+    let size = CGSize(width: windowWidth, height: windowHeight)
+    
+    let controller = NSHostingController(rootView: ControlPanelView())
+    
+    controlWindow = NSWindow(contentRect: NSRect(origin: origin, size: size), styleMask: [.titled, .closable, .fullSizeContentView, .resizable], backing: .buffered, defer: false)
+    controlWindow.title = "Control Panel"
+    controlWindow.minSize = NSSize(width: windowWidth, height: windowHeight)
+    controlWindow.contentViewController = controller
+    controlWindow.isReleasedWhenClosed = false
+    controlWindow.setAccessibilityTitle("Control Panel")
+    controlWindow.setFrame(NSRect(x: 0, y: 0, width: windowWidth, height: windowHeight), display: true, animate: false)
+  }
+  
+  
+  
+  @IBAction func toggleControlWindow(_ sender: NSMenuItem) {
+    if controlWindow.isVisible {
+      controlWindow.close()
+    } else {
+      controlWindow.makeKeyAndOrderFront(nil)
+    }
   }
   
   @IBAction func quit(_ sender: NSMenuItem) {
