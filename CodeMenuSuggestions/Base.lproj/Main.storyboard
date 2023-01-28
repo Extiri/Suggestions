@@ -28,12 +28,6 @@
                                                 <action selector="toggleControlWindow:" target="Voe-Tx-rLC" id="STi-iJ-1f1"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Help" id="Ly1-qV-PJr">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
-                                            <connections>
-                                                <segue destination="iFU-X2-N1s" kind="show" id="5Fw-L7-u7s"/>
-                                            </connections>
-                                        </menuItem>
                                         <menuItem title="License notices" id="kCr-Oe-qMI">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
@@ -169,115 +163,6 @@
                 <customObject id="i9p-Iq-QB6" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-629" y="278"/>
-        </scene>
-        <!--Window Controller-->
-        <scene sceneID="0A3-j4-fpk">
-            <objects>
-                <windowController id="iFU-X2-N1s" sceneMemberID="viewController">
-                    <window key="window" title="Help" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" titlebarAppearsTransparent="YES" id="fH7-ze-KIc">
-                        <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
-                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-                        <rect key="contentRect" x="320" y="406" width="323" height="359"/>
-                        <rect key="screenRect" x="0.0" y="0.0" width="2048" height="1280"/>
-                        <view key="contentView" id="bEt-26-p5f">
-                            <rect key="frame" x="0.0" y="0.0" width="323" height="359"/>
-                            <autoresizingMask key="autoresizingMask"/>
-                        </view>
-                        <connections>
-                            <outlet property="delegate" destination="iFU-X2-N1s" id="Toz-wv-2eg"/>
-                        </connections>
-                    </window>
-                    <connections>
-                        <segue destination="BoC-7u-Em1" kind="relationship" relationship="window.shadowedContentViewController" id="LS8-9w-LVc"/>
-                    </connections>
-                </windowController>
-                <customObject id="JEH-wD-zjV" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-104.5" y="556.5"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="oIU-td-K4J">
-            <objects>
-                <viewController id="BoC-7u-Em1" sceneMemberID="viewController">
-                    <view key="view" id="Muw-vu-Cfg">
-                        <rect key="frame" x="0.0" y="0.0" width="475" height="359"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wca-59-HZ7">
-                                <rect key="frame" x="7" y="311" width="462" height="34"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="CodeMenu Suggestions Help" id="9Zu-CG-ZVs">
-                                    <font key="font" metaFont="systemSemibold" size="22"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nir-ad-sv2">
-                                <rect key="frame" x="13" y="221" width="450" height="48"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" selectable="YES" alignment="justified" title="You can change settings of CodeMenu Suggestions in Suggestions tab in CodeMenu's preferences." id="fS7-OZ-8F4">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="43w-32-d4f">
-                                <rect key="frame" x="15" y="300" width="446" height="5"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                            </box>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zSj-ic-0Yk">
-                                <rect key="frame" x="13" y="275" width="450" height="20"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="Where can I change settings?" id="y1h-Fc-ZBB">
-                                    <font key="font" metaFont="systemSemibold" size="17"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CC5-n9-Eur">
-                                <rect key="frame" x="13" y="43" width="450" height="48"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" selectable="YES" alignment="justified" id="oEy-c7-mcb">
-                                    <font key="font" metaFont="system"/>
-                                    <string key="title">In suggestions window, you can move upwards using ⌥ (Option) + [ key combination and downwards using ⌥ (Option) + ]. You choose snippet to enter using ⌥ (Option) + v.</string>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0aC-p9-zQd">
-                                <rect key="frame" x="13" y="97" width="450" height="20"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="What are the shortcuts to control suggestions window?" id="t4j-4l-tBe">
-                                    <font key="font" metaFont="systemSemibold" size="17"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vIX-Z0-oQT">
-                                <rect key="frame" x="13" y="132" width="450" height="57"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" selectable="YES" alignment="justified" id="Kd3-If-MgV">
-                                    <font key="font" metaFont="system"/>
-                                    <string key="title">All you have to do is enter §§ signs on the line where you want to show suggestions, then a suggestions window will appear. You enter query after §§ signs. Suggestions window will update automatically.</string>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4dA-6t-f9z">
-                                <rect key="frame" x="13" y="197" width="450" height="20"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="How to make suggestions appear?" id="RXC-69-IKs">
-                                    <font key="font" metaFont="systemSemibold" size="17"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                        </subviews>
-                    </view>
-                </viewController>
-                <customObject id="qcI-ZV-rmT" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="386.5" y="547.5"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="dK3-WT-o4F">
