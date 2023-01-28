@@ -87,7 +87,6 @@ struct SettingsView: View {
   }
   
   func fillCurrentData() {
-    print(1)
     let settings = SettingsManager.shared.settings
     
     refreshRate = settings.refreshRate
