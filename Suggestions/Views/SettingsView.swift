@@ -1,10 +1,12 @@
 import SwiftUI
+import Highlightr
 
 struct SettingsView: View {
   @State var refreshRate = 1.0
   
   @State var dissalowedApps = [String]()
   @State var selectedApp = ""
+  @State var highlightingTheme = "Default"
   
   var body: some View {
     ScrollView {
@@ -19,6 +21,26 @@ struct SettingsView: View {
             Text("\(Int(refreshRate))")
           }
         }
+        
+        Group {
+          Text("Code highlighting theme")
+            .font(.title3.bold())
+          Text("By default, it's either paraiso-dark or paraiso-light for current macOS apperance (dark or light).")
+          
+          Picker("Theme:", selection: $highlightingTheme) {
+            Text("Default")
+              .tag("Default")
+            
+            Divider()
+            
+            ForEach(Highlightr()!.availableThemes(), id: \.self) { theme in
+              Text(theme)
+                .tag(theme)
+            }
+          }
+        }
+        
+        Divider()
         
         Divider()
         
@@ -90,6 +112,7 @@ struct SettingsView: View {
     
     refreshRate = settings.refreshRate
     dissalowedApps = settings.disallowlist
+    highlightingTheme = settings.highlightingTheme ?? "Default"
   }
   
   func save() {
@@ -97,6 +120,7 @@ struct SettingsView: View {
     
     settings.refreshRate = refreshRate
     settings.disallowlist = dissalowedApps
+    settings.highlightingTheme = highlightingTheme == "Default" ? nil : highlightingTheme
     
     SettingsManager.shared.settings = settings
   }

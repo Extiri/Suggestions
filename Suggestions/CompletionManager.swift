@@ -119,11 +119,7 @@ class CompletionManager {
       
       let highlighter = Highlightr()!
       
-      if NSAppearance.current.name == .darkAqua {
-        highlighter.setTheme(to: "paraiso-dark")
-      } else {
-        highlighter.setTheme(to: "paraiso-light")
-      }
+      highlighter.setTheme(to: SettingsManager.shared.settings.highlightingTheme ?? (NSAppearance.current.name == .darkAqua ? "paraiso-dark" : "paraiso-light"))
       
       detailsText += "\n"
       
@@ -229,7 +225,6 @@ class CompletionManager {
     KeyboardShortcuts.setShortcut(.init(.v, modifiers: .option), for: .useSuggestion)
     KeyboardShortcuts.onKeyDown(for: .useSuggestion) {
       if let selectedSuggestion = SuggestionsManager.shared.suggestions[safely: self.currentlySelectedSuggestion] {
-#warning("__IMPORTANT__: Make code go back to the previous frame (based on CodeInfo.frame)")
         self.codeInteraction.useCode(selectedSuggestion.code)
       }
     }
@@ -256,25 +251,8 @@ class CompletionManager {
       }
     }
     
-    if !apiIsEnabled {
-      accessibilityPrompt { status in
-        if status {
-          openAccessiblityPreferencesPane()
-        }
-      }
-      
-      if !apiIsEnabled {
-        completionFeatureAvailable = false
-        console.error("Accessibility API not enabled")
-      } else {
-        completionFeatureAvailable = true
-        startSuggestion()
-        console.success("Accessibility API enabled")
-      }
-    } else {
-      completionFeatureAvailable = true
+    if checkAvailability() {
       startSuggestion()
-      console.success("Accessibility API enabled")
     }
   }
   
@@ -284,7 +262,7 @@ class CompletionManager {
   
   var completionWindowIsVisible = false
   
-  var query: String = ""
+  var query = ""
   
   var currentlySelectedSuggestion: Int {
     get {
@@ -345,32 +323,36 @@ class CompletionManager {
     timer?.fire()
   }
   
-  func checkAvailability() {
+  func checkAvailability() -> Bool {
     if !apiIsEnabled {
-      accessibilityPrompt { status in
-        if status {
-          openAccessiblityPreferencesPane()
+      showAlert(message: "Accessibility permission not enabled.", informative: "Suggestions requires Accessibility permission to access text in other apps. Go to Settings > Privacy and Security > Accessibility and click the toggle next to Suggestions. Then run Suggestions again.", buttons: ["Quit Suggestions", "Open settings and quit Suggestions"]) { button in
+        if button == .alertSecondButtonReturn {
+          self.openAccessiblityPreferencesPane()
+          exit(0)
+        } else if button == .alertFirstButtonReturn {
+          exit(0)
         }
       }
       
-      if !apiIsEnabled {
-        completionFeatureAvailable = false
-        console.error("Accessibility API not enabled")
-      } else {
-        completionFeatureAvailable = true
-        console.success("Accessibility API enabled")
-      }
+      completionFeatureAvailable = false
+      console.error("Accessibility API not enabled")
+      
+      
+      return false
+    } else {
+      completionFeatureAvailable = true
+      console.success("Accessibility API enabled")
+      
+      return true
     }
   }
   
-  var console: DConsole = DConsole.shared
+  var console = DConsole.shared
   
   var completionFeatureAvailable = false
   
-  var accessibilityPrompt: ((Bool) -> ()) -> () = { handler in handler(true) }
-  
   func openAccessiblityPreferencesPane() {
-    NSWorkspace.shared.open(URL(fileURLWithPath: "/System/Library/PreferencePanes/x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility.prefPane"))
+    NSWorkspace.shared.open(URL(fileURLWithPath: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility.prefPane"))
   }
   
   var completionWindow: NSWindow

@@ -48,12 +48,14 @@ class SettingsManager {
     var realmFilePath: String
     var disallowlist: [String]
     var refreshRate: Double
+    var highlightingTheme: String?
     
     init() {
       isAvailable = false
       disallowlist = []
       realmFilePath = ""
       refreshRate = 0.1
+      highlightingTheme = nil
     }
   }
   
