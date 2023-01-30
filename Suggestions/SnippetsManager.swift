@@ -1,7 +1,6 @@
 import Cocoa
 import RealmSwift
 
-// This will be replaced with a XPC call.
 class SnippetsManager {
   static var shared = SnippetsManager()
   var realm: Realm!
@@ -14,14 +13,12 @@ class SnippetsManager {
   
   init() {
     Realm.Configuration.defaultConfiguration.schemaVersion = 5
+    Realm.Configuration.defaultConfiguration.readOnly = true
     
     do {
       realm = try Realm(fileURL: URL(fileURLWithPath: SettingsManager.shared.settings.realmFilePath))
       suggestions = Array(realm.objects(Snippets.self).first!.snippets).map { parseObject($0) }
-      
-      token = realm.observe { notification, realm in
-        self.suggestions = Array(realm.objects(Snippets.self).first!.snippets).map { self.parseObject($0) }
-      }
+
     } catch {
       print("\(error)")
       
