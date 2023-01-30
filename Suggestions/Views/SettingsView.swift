@@ -5,7 +5,7 @@ struct SettingsView: View {
   @State var refreshRate = 1.0
   
   @State var dissalowedApps = [String]()
-  @State var selectedApp = ""
+  @State var selectedApp = NSWorkspace.shared.runningApplications[0].localizedName ?? "Unknown app"
   @State var highlightingTheme = "Default"
   
   var body: some View {
