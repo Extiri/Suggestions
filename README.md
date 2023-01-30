@@ -1,3 +1,3 @@
 # Suggestions
 
-An app that allows you to get text suggestions everywhere. It currently support CodeMenu.
+An app that allows you to get code suggestions everywhere. It currently supports CodeMenu.
