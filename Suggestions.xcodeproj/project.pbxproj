@@ -26,6 +26,8 @@
 		ED94E4482954B6710017595F /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = ED94E4472954B6710017595F /* Realm */; };
 		ED94E44A2954B6710017595F /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = ED94E4492954B6710017595F /* RealmSwift */; };
 		ED94E44D2954B71F0017595F /* Highlightr in Frameworks */ = {isa = PBXBuildFile; productRef = ED94E44C2954B71F0017595F /* Highlightr */; };
+		EDEB9BB12997C11E0032C67D /* PlaceholdersManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEB9BB02997C11E0032C67D /* PlaceholdersManager.swift */; };
+		EDEB9BB32997C40F0032C67D /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEB9BB22997C40F0032C67D /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +52,8 @@
 		ED6A554626D12E1900FD04C6 /* UIElementUtilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UIElementUtilities.h; sourceTree = "<group>"; };
 		ED8F74C126D7EA8A0043A056 /* SnippetsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnippetsManager.swift; sourceTree = "<group>"; };
 		ED8F74C326D7EAE30043A056 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		EDEB9BB02997C11E0032C67D /* PlaceholdersManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholdersManager.swift; sourceTree = "<group>"; };
+		EDEB9BB22997C40F0032C67D /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +97,8 @@
 				ED8F74C326D7EAE30043A056 /* Models.swift */,
 				ED56010D29854BE100F7E21E /* Views */,
 				ED00A386286794E60057CA70 /* LicenseNoticesViewController.swift */,
+				EDEB9BB02997C11E0032C67D /* PlaceholdersManager.swift */,
+				EDEB9BB22997C40F0032C67D /* Extensions.swift */,
 				ED00A384286771C50057CA70 /* SuggestionManager.swift */,
 				ED138D0E26CFDF4E00CEE222 /* CodeInteraction.h */,
 				ED138D0C26CFDF2600CEE222 /* CodeInteraction.m */,
@@ -206,8 +212,10 @@
 				ED8F74C226D7EA8A0043A056 /* SnippetsManager.swift in Sources */,
 				ED138D0A26CFBB6C00CEE222 /* CompletionManager.swift in Sources */,
 				ED6A554526D12E1200FD04C6 /* UIElementUtilities.m in Sources */,
+				EDEB9BB12997C11E0032C67D /* PlaceholdersManager.swift in Sources */,
 				ED00A385286771C50057CA70 /* SuggestionManager.swift in Sources */,
 				ED5601142985804200F7E21E /* SidebarView.swift in Sources */,
+				EDEB9BB32997C40F0032C67D /* Extensions.swift in Sources */,
 				ED138D0D26CFDF2600CEE222 /* CodeInteraction.m in Sources */,
 				ED00A387286794E60057CA70 /* LicenseNoticesViewController.swift in Sources */,
 				ED138CFA26CFB90A00CEE222 /* AppDelegate.swift in Sources */,

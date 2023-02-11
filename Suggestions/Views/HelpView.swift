@@ -13,7 +13,7 @@ struct HelpView: View {
       Text("How to select and choose suggestions?")
         .font(.title3.bold())
       
-      Text("In suggestions window, you can move upwards using ⌥ (Option) + [ key combination and downwards using ⌥ (Option) + ]. You choose snippet to enter using ⌥ (Option) + v.")
+      Text("In suggestions window, you can move upwards using ⌥ (Option) + [ key combination and downwards using ⌥ (Option) + ]. You choose snippet to enter using ⌥ (Option) + v. If snippet contains placeholders, query will be replaced with a special placeholder query which denotes placeholders using @name=#\"\"# pattern. Fill values between #\" and \"# next to proper placeholder name and then use  ⌥ (Option) + v keyboard shortcut again.")
       
       Spacer()
     }

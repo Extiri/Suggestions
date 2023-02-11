@@ -12,13 +12,12 @@ class SnippetsManager {
   }
   
   init() {
-    Realm.Configuration.defaultConfiguration.schemaVersion = 5
+    Realm.Configuration.defaultConfiguration.schemaVersion = 9
     Realm.Configuration.defaultConfiguration.readOnly = true
     
     do {
       realm = try Realm(fileURL: URL(fileURLWithPath: SettingsManager.shared.settings.realmFilePath))
       suggestions = Array(realm.objects(Snippets.self).first!.snippets).map { parseObject($0) }
-
     } catch {
       print("\(error)")
       

@@ -30,7 +30,8 @@ public class Snippet: Object, Codable, Identifiable {
   @Persisted var lang: String
   @Persisted var tagIDs: List<UUID>
   @Persisted var groupID: UUID?
-  
+  @Persisted var isDeleted: Bool
+
   var isEmpty = false
   
   func fullfills(_ query: String) -> Bool {
@@ -88,7 +89,7 @@ public class CodableColor: Object, Codable, Identifiable {
     return lhs.id.uuidString == rhs.id.uuidString
   }
   
-  public var id: UUID = UUID()
+  @Persisted(primaryKey: true) public var id: UUID = UUID()
   
   @Persisted public var red: Float = 0.0
   @Persisted public var green: Float = 0.0

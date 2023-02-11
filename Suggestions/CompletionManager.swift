@@ -94,6 +94,11 @@ class CompletionManager {
   
   let detailsView: NSScrollView
   
+  var placeholderSnippet: String? = nil
+  var isFillingPlaceholders: Bool {
+    placeholderSnippet != nil
+  }
+  
   var detailsText: String {
     get {
       return (detailsView.documentView as! NSTextView).string
@@ -110,7 +115,7 @@ class CompletionManager {
   func updateDetails() {
     let textView = detailsView.documentView as! NSTextView
     
-    if let suggestion = SuggestionsManager.shared.suggestions[safely: tableView.selectedRow] {
+    if let suggestion = SuggestionsManager.shared.suggestions[safely: tableView.selectedRow], !isFillingPlaceholders {
       detailsText = ""
       
       detailsText += suggestion.description
@@ -124,6 +129,16 @@ class CompletionManager {
       detailsText += "\n"
       
       textView.textStorage!.append(highlighter.highlight(suggestion.code) ?? NSAttributedString(string: ""))
+    } else if isFillingPlaceholders {
+      detailsText = "Enter values in between #\" and \"# in proper places next to placeholder names and then press ⌥ (Option) + v again. To cancel, delete all placeholders after §§ signs.\n\n"
+      
+      let highlighter = Highlightr()!
+      
+      highlighter.setTheme(to: SettingsManager.shared.settings.highlightingTheme ?? (NSAppearance.current.name == .darkAqua ? "paraiso-dark" : "paraiso-light"))
+      
+      detailsText += "\n"
+      
+      textView.textStorage!.append(highlighter.highlight(placeholderSnippet!) ?? NSAttributedString(string: ""))
     } else {
       detailsText = "There are no snippets matching this query."
     }
@@ -178,7 +193,7 @@ class CompletionManager {
     codeInteraction = CodeInteraction()
     
     detailsView = NSTextView.scrollableTextView()
-    detailsView.frame = NSRect(x: 263, y: 5, width: 245, height: 198)
+    detailsView.frame = NSRect(x: 263, y: 5, width: 240, height: 198)
     detailsView.drawsBackground = false
     
     (detailsView.documentView as! NSTextView).string = "This snippet is a example."
@@ -221,11 +236,22 @@ class CompletionManager {
     completionWindow = window
     
     createList()
-    
+
     KeyboardShortcuts.setShortcut(.init(.v, modifiers: .option), for: .useSuggestion)
     KeyboardShortcuts.onKeyDown(for: .useSuggestion) {
-      if let selectedSuggestion = SuggestionsManager.shared.suggestions[safely: self.currentlySelectedSuggestion] {
-        self.codeInteraction.useCode(selectedSuggestion.code)
+      if self.isFillingPlaceholders {
+        let code = PlaceholdersManager.parseAndSetPlaceholders(query: self.query, code: self.placeholderSnippet!)
+        self.codeInteraction.useCode(code)
+        self.placeholderSnippet = nil
+      } else {
+        if let selectedSuggestion = SuggestionsManager.shared.suggestions[safely: self.currentlySelectedSuggestion] {
+          if PlaceholdersManager.hasPlaceholders(code: selectedSuggestion.code) {
+            self.placeholderSnippet = selectedSuggestion.code
+            self.codeInteraction.useCode("§§" + PlaceholdersManager.createPlaceholdersQuery(code: selectedSuggestion.code))
+          } else {
+            self.codeInteraction.useCode(PlaceholdersManager.setSpecialPlaceholders(code: selectedSuggestion.code))
+          }
+        }
       }
     }
     
@@ -307,6 +333,10 @@ class CompletionManager {
           self.completionWindow.setFrame(newFrame, display: true, animate: true)
           
           if self.query != codeInfo.query {
+            if codeInfo.query == "" {
+              self.placeholderSnippet = nil
+            }
+            
             self.query = codeInfo.query
             SuggestionsManager.shared.load(forQuery: codeInfo.query)
             self.reloadList()
