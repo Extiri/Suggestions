@@ -5,8 +5,8 @@ Currently in Beta.
 
 An app that allows you to get code suggestions everywhere. It currently supports CodeMenu.
 
-## Installation
-You can download the prebuilt binary from releases [here]().
+## Download
+You can download the prebuilt binary from releases [here](https://github.com/Extiri/Suggestions/releases/latest).
 
 ## Help
 - How to make suggestions appear?
