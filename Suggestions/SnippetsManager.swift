@@ -15,6 +15,17 @@ class SnippetsManager {
   
   var lastCacheId = ""
   var suggestionsCache = [CompletionSuggestion]()
+  var abbreviationsDictionary: [String: CompletionSuggestion] {
+    suggestions.reduce([String: CompletionSuggestion]()) { result, element in
+      var result = result
+      
+      if !element.abbreviation.isEmpty {
+        result[element.abbreviation] = element
+      }
+      
+      return result
+    }
+  }
   
   var suggestions: [CompletionSuggestion] {
     do {
@@ -37,7 +48,7 @@ class SnippetsManager {
   }
   
   func parseObject(_ snippet: SCSnippet) -> CompletionSuggestion {
-    CompletionSuggestion(title: snippet.title, description: snippet.desc, code: snippet.code, language: snippet.lang, placeholders: snippet.placeholders)
+        CompletionSuggestion(title: snippet.title, description: snippet.desc, code: snippet.code, language: snippet.lang, abbreviation: snippet.abbreviation, placeholders: snippet.placeholders)
   }
   
   struct SCSnippet: Codable {

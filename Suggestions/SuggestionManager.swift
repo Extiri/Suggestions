@@ -1,5 +1,7 @@
 import Foundation
 
+typealias PlaceholdersDictionary = [String: CompletionSuggestion.PlaceholderAction]
+
 class SuggestionsManager: NSObject {
   static var shared = SuggestionsManager()
   
@@ -24,6 +26,7 @@ struct CompletionSuggestion {
   var description: String
   var code: String
   var language: String
+  var abbreviation: String
   var placeholders: [String: PlaceholderAction]
   
   enum PlaceholderAction: Codable, Equatable {

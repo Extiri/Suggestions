@@ -8,6 +8,7 @@
 NSString *query;
 NSInteger *insertionPointerLine;
 NSRect frame;
+bool isAbbreviation;
 @end
 
 @implementation CodeInteraction
@@ -36,7 +37,18 @@ NSRect frame;
         }
         
         NSString *line = lines[insertionPointerLine];
-        NSArray<NSString *> *seperated = [line componentsSeparatedByString:@"§§"];
+        
+        NSString *separator = NULL;
+        
+        if ([line containsString:@"§§"]) {
+          codeInfo.isAbbreviation = false;
+          separator = @"§§";
+        } else {
+          codeInfo.isAbbreviation = true;
+          separator = @"§";
+        }
+        
+        NSArray<NSString *> *seperated = [line componentsSeparatedByString:separator];
         
         AXValueRef selectedRangeValue = NULL;
         AXError getSelectedRangeError = AXUIElementCopyAttributeValue(codeArea, kAXSelectedTextRangeAttribute, (CFTypeRef *)&selectedRangeValue);
@@ -72,7 +84,7 @@ NSRect frame;
   return false;
 };
 
-- (void)useCode:(NSString *)snippet {
+- (void)useCode:(NSString *)snippet isAbbreviation:(bool)isAbbreviation {
   NSString *app = NSWorkspace.sharedWorkspace.frontmostApplication.localizedName;
   if ([self isAllowed:app]) {
     AXUIElementRef mainElement = AXUIElementCreateApplication(NSWorkspace.sharedWorkspace.frontmostApplication.processIdentifier);
@@ -85,7 +97,16 @@ NSRect frame;
         NSInteger insertionPointerLine = [[UIElementUtilities valueOfAttribute:@"AXInsertionPointLineNumber" ofUIElement:codeArea] integerValue];
         NSMutableArray<NSString *> *lines = (NSMutableArray<NSString *>*)[code componentsSeparatedByString:@"\n"];
         NSString *line = lines[insertionPointerLine];
-        NSArray<NSString *> *newLineSeperated = (NSArray<NSString *>*)[line componentsSeparatedByString:@"§§"];
+        
+        NSString *separator = NULL;
+        
+        if (!isAbbreviation) {
+          separator = @"§§";
+        } else {
+          separator = @"§";
+        }
+        
+        NSArray<NSString *> *newLineSeperated = (NSArray<NSString *>*)[line componentsSeparatedByString:separator];
         
         AXValueRef textValue = NULL;
         AXUIElementCopyAttributeValue(codeArea, kAXSelectedTextRangeAttribute , (CFTypeRef *)&textValue);

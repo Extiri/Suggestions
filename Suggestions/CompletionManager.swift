@@ -95,6 +95,7 @@ class CompletionManager {
   let detailsView: NSScrollView
   
   var placeholderSnippet: String? = nil
+  var placeholderSnippetsPlaceholders: PlaceholdersDictionary? = nil
   var isFillingPlaceholders: Bool {
     placeholderSnippet != nil
   }
@@ -240,16 +241,18 @@ class CompletionManager {
     KeyboardShortcuts.setShortcut(.init(.v, modifiers: .option), for: .useSuggestion)
     KeyboardShortcuts.onKeyDown(for: .useSuggestion) {
       if self.isFillingPlaceholders {
-        let code = PlaceholdersManager.parseAndSetPlaceholders(query: self.query, code: self.placeholderSnippet!)
-        self.codeInteraction.useCode(code)
+        let code = PlaceholdersManager.parseAndSetPlaceholders(query: self.query, code: self.placeholderSnippet!, placeholders: self.placeholderSnippetsPlaceholders!)
+        self.codeInteraction.useCode(code, isAbbreviation: false)
         self.placeholderSnippet = nil
+        self.placeholderSnippetsPlaceholders = nil
       } else {
         if let selectedSuggestion = SuggestionsManager.shared.suggestions[safely: self.currentlySelectedSuggestion] {
-          if PlaceholdersManager.hasPlaceholders(code: selectedSuggestion.code) {
+          if PlaceholdersManager.hasPlaceholdersToFill(placeholders: selectedSuggestion.placeholders) {
             self.placeholderSnippet = selectedSuggestion.code
-            self.codeInteraction.useCode("§§" + PlaceholdersManager.createPlaceholdersQuery(code: selectedSuggestion.code))
+            self.placeholderSnippetsPlaceholders = selectedSuggestion.placeholders
+            self.codeInteraction.useCode("§§" + PlaceholdersManager.createPlaceholdersQuery(code: selectedSuggestion.code, placeholders: selectedSuggestion.placeholders), isAbbreviation: false)
           } else {
-            self.codeInteraction.useCode(PlaceholdersManager.setSpecialPlaceholders(code: selectedSuggestion.code))
+            self.codeInteraction.useCode(PlaceholdersManager.setPlaceholders(code: selectedSuggestion.code, values: [:]), isAbbreviation: false)
           }
         }
       }
@@ -317,6 +320,26 @@ class CompletionManager {
       DispatchQueue.main.async {
         let codeInfo = CodeInfo()
         let state = self.codeInteraction.getCodeInfo(codeInfo)
+
+        if codeInfo.isAbbreviation {
+          // Is an abbreviation
+          self.query = codeInfo.query
+          self.completionWindowIsVisible = false
+          self.completionWindow.close()
+          if let snippet = SnippetsManager.shared.abbreviationsDictionary[self.query] {
+            if PlaceholdersManager.hasPlaceholdersToFill(placeholders: snippet.placeholders) {
+              self.codeInteraction.useCode(PlaceholdersManager.setPlaceholders(code: snippet.code), isAbbreviation: true)
+              return
+            }
+            
+            if let code = PlaceholdersManager.askForPlaceholderSetting(title: snippet.title, code: snippet.code, placeholdersToFill: snippet.placeholders) {
+              self.codeInteraction.useCode(code, isAbbreviation: true)
+            } else {
+              self.codeInteraction.useCode(PlaceholdersManager.setPlaceholders(code: snippet.code), isAbbreviation: true)
+            }
+          }
+          return
+        }
         
         if state {
           if !self.completionWindowIsVisible {
