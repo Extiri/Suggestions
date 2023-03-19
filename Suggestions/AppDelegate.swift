@@ -46,8 +46,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     controlWindow.setFrame(NSRect(x: 0, y: 0, width: windowWidth, height: windowHeight), display: true, animate: false)
   }
   
-  
-  
   @IBAction func toggleControlWindow(_ sender: NSMenuItem) {
     if controlWindow.isVisible {
       controlWindow.close()

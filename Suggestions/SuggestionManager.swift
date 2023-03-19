@@ -24,6 +24,16 @@ struct CompletionSuggestion {
   var description: String
   var code: String
   var language: String
+  var placeholders: [String: PlaceholderAction]
+  
+  enum PlaceholderAction: Codable, Equatable {
+    case Shell(String)
+    case None
+    
+    var isAutoFilled: Bool {
+      self != .None
+    }
+  }
   
   func fullfills(query: String) -> Bool {
     if query.isOnlyWhitespaces() {

@@ -21,7 +21,6 @@
 		ED560118298584C800F7E21E /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED560117298584C800F7E21E /* SettingsView.swift */; };
 		ED6A554526D12E1200FD04C6 /* UIElementUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = ED6A554426D12E1200FD04C6 /* UIElementUtilities.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		ED8F74C226D7EA8A0043A056 /* SnippetsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8F74C126D7EA8A0043A056 /* SnippetsManager.swift */; };
-		ED8F74C426D7EAE30043A056 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8F74C326D7EAE30043A056 /* Models.swift */; };
 		ED94E4452954ACD60017595F /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = ED94E4442954ACD60017595F /* KeyboardShortcuts */; };
 		ED94E4482954B6710017595F /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = ED94E4472954B6710017595F /* Realm */; };
 		ED94E44A2954B6710017595F /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = ED94E4492954B6710017595F /* RealmSwift */; };
@@ -51,7 +50,6 @@
 		ED6A554426D12E1200FD04C6 /* UIElementUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIElementUtilities.m; sourceTree = "<group>"; };
 		ED6A554626D12E1900FD04C6 /* UIElementUtilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UIElementUtilities.h; sourceTree = "<group>"; };
 		ED8F74C126D7EA8A0043A056 /* SnippetsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnippetsManager.swift; sourceTree = "<group>"; };
-		ED8F74C326D7EAE30043A056 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		EDEB9BB02997C11E0032C67D /* PlaceholdersManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholdersManager.swift; sourceTree = "<group>"; };
 		EDEB9BB22997C40F0032C67D /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -94,7 +92,6 @@
 				ED2459AE26FB902B0004DA58 /* SettingsManager.swift */,
 				ED138D0926CFBB6C00CEE222 /* CompletionManager.swift */,
 				ED8F74C126D7EA8A0043A056 /* SnippetsManager.swift */,
-				ED8F74C326D7EAE30043A056 /* Models.swift */,
 				ED56010D29854BE100F7E21E /* Views */,
 				ED00A386286794E60057CA70 /* LicenseNoticesViewController.swift */,
 				EDEB9BB02997C11E0032C67D /* PlaceholdersManager.swift */,
@@ -205,7 +202,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ED8F74C426D7EAE30043A056 /* Models.swift in Sources */,
 				ED5601162985815300F7E21E /* HelpView.swift in Sources */,
 				ED2459AF26FB902B0004DA58 /* SettingsManager.swift in Sources */,
 				ED56011029854C2400F7E21E /* ControlPanelView.swift in Sources */,
@@ -360,6 +356,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Suggestions/Suggestions.entitlements;
 				CODE_SIGN_IDENTITY = "-";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = DNFYV2TZ3T;
@@ -387,6 +384,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Suggestions/Suggestions.entitlements;
 				CODE_SIGN_IDENTITY = "-";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = DNFYV2TZ3T;
