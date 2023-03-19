@@ -18,6 +18,22 @@ struct SidebarView: View {
         destination: HelpView(),
         label: { Label("Help", systemImage: "questionmark.circle") }
       )
+      
+      Spacer()
+      
+      Button(action: {
+        NSWorkspace.shared.open(URL(string: "https://github.com/Extiri/Suggestions")!)
+      }, label: {
+        Label(title: {
+          Text("GitHub repository")
+        }, icon: {
+          Image("gitHubIcon")
+            .renderingMode(.template)
+            .resizable()
+            .frame(width: 15, height: 15, alignment: .leading)
+        })
+      })
+      .buttonStyle(PlainButtonStyle())
     }
     .listStyle(SidebarListStyle())
     .background(Color.clear)
