@@ -1,3 +1,4 @@
+![Suggestions icon](icon.png)
 # Suggestions
 
 Currently in Beta.
@@ -5,7 +6,7 @@ Currently in Beta.
 An app that allows you to get code suggestions everywhere. It currently supports CodeMenu.
 
 ## Installation
-You can download the prebuilt binary from releases ().
+You can download the prebuilt binary from releases [here]().
 
 ## Help
 - How to make suggestions appear?

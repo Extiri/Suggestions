@@ -33,7 +33,7 @@ struct SettingsView: View {
             
             Divider()
             
-            ForEach(Highlightr()!.availableThemes(), id: \.self) { theme in
+            ForEach(Highlightr()!.availableThemes().sorted(), id: \.self) { theme in
               Text(theme)
                 .tag(theme)
             }
