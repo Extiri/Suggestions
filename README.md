@@ -1,4 +1,5 @@
-![Suggestions icon](icon.png)
+<img src="icon.png" width="200px"/>
+
 # Suggestions
 
 Currently in Beta.
