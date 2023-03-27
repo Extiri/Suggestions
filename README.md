@@ -6,10 +6,32 @@ Currently in Beta.
 
 An app that allows you to get code suggestions everywhere. It currently supports CodeMenu.
 
+## Support for editors
+
+At this moment Suggestions works properly on all editors that follow similar accessibility behaviour (AXRole is AXTextArea, text is in AXValue and cursor position is in AXInsertionPointLineNumber) to Xcode. This means that native apps will usually work correctly. 
+
+Known working IDEs:
+
+- Xcode
+- JetBrains IDEs
+
+Known not working IDEs:
+
+- Zed
+- Visual Studio Code
+
+If you find an issue with some editor or want to report whether it's supported, feel free to file an issue with editor's name and webpage.
+
+## Sources
+
+Suggestions is supposed to be an universal app for access to data directly from editors. It currently only supports CodeMenu. In the future a provider system will be added which will help in adding support for other sources.
+
 ## Download
+
 You can download the prebuilt binary from releases [here](https://github.com/Extiri/Suggestions/releases/latest).
 
 ## Help
+
 - How to make suggestions appear?
 
 All you have to do is enter §§ signs on the line where you want to show suggestions, then a suggestions window will appear. You enter query after §§ signs. Suggestions window will update automatically.
