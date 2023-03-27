@@ -8,14 +8,16 @@ An app that allows you to get code suggestions everywhere. It currently supports
 
 ## Support for editors
 
-At this moment Suggestions works properly on all editors that follow similar accessibility behaviour (AXRole is AXTextArea, text is in AXValue and cursor position is in AXInsertionPointLineNumber) to Xcode. This means that native apps will usually work correctly. 
+At this moment Suggestions works properly on all editors that follow similar accessibility behaviour (AXRole is AXTextArea, text is in AXValue and cursor position is in AXInsertionPointLineNumber) to Xcode. This means that native apps will usually work correctly. Support for other editors is planned.
 
-Known working IDEs:
+IDEs fully working:
 
 - Xcode
+
+IDEs working, but with issues:
 - JetBrains IDEs
 
-Known not working IDEs:
+IDEs not working:
 
 - Zed
 - Visual Studio Code
