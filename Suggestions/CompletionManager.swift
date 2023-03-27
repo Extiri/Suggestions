@@ -328,17 +328,17 @@ class CompletionManager {
           self.completionWindow.close()
           if let snippet = SnippetsManager.shared.abbreviationsDictionary[self.query] {
             if PlaceholdersManager.hasPlaceholdersToFill(placeholders: snippet.placeholders) {
-              self.codeInteraction.useCode(PlaceholdersManager.setPlaceholders(code: snippet.code), isAbbreviation: true)
+              if let code = PlaceholdersManager.askForPlaceholderSetting(title: snippet.title, code: snippet.code, placeholdersToFill: snippet.placeholders) {
+                self.codeInteraction.useCode(code, isAbbreviation: true)
+              } else {
+                self.codeInteraction.useCode(PlaceholdersManager.setPlaceholders(code: snippet.code), isAbbreviation: true)
+              }
               return
             }
             
-            if let code = PlaceholdersManager.askForPlaceholderSetting(title: snippet.title, code: snippet.code, placeholdersToFill: snippet.placeholders) {
-              self.codeInteraction.useCode(code, isAbbreviation: true)
-            } else {
-              self.codeInteraction.useCode(PlaceholdersManager.setPlaceholders(code: snippet.code), isAbbreviation: true)
-            }
+            self.codeInteraction.useCode(PlaceholdersManager.setPlaceholders(code: snippet.code), isAbbreviation: true)
+            return
           }
-          return
         }
         
         if state {
