@@ -110,10 +110,22 @@ class SettingsManager {
   
   init() {
     settingsCache = Settings()
+    url = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
+    url.appendPathComponent("suggestions.json")
     
-    url = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first!
-    url.appendPathComponent("Containers/id.thedev.marcin.CodeMenu/Data/Library/")
-    url.appendPathComponent("suggestions.cmsettings")
+    if UserDefaults.standard.integer(forKey: "previouslyRunBuild") < 2 {
+      UserDefaults.standard.setValue(Int(Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "0")!, forKey: "previouslyRunBuild")
+      
+      var oldUrl = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first!
+      oldUrl.appendPathComponent("Containers/id.thedev.marcin.CodeMenu/Data/Library/")
+      oldUrl.appendPathComponent("suggestions.cmsettings")
+      
+      do {
+        try FileManager.default.copyItem(at: oldUrl, to: url)
+      } catch {
+        showAlert(message: "Failed to migrate old settings.", informative: error.localizedDescription)
+      }
+    }
     
     load()
   }
