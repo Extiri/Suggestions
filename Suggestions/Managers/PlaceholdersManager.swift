@@ -114,7 +114,7 @@ class PlaceholdersManager {
     return placeholdersList.placeholders
   }
   
-  static func askForPlaceholderSetting(title: String, code: String, placeholdersToFill: [String: CompletionSuggestion.PlaceholderAction]) -> String? {
+  static func askForPlaceholderSetting(title: String, code: String, placeholdersToFill: [String: Suggestion.PlaceholderAction]) -> String? {
     let msg = NSAlert()
     
     msg.addButton(withTitle: "Done")
@@ -162,7 +162,7 @@ class PlaceholdersManager {
   
   struct PlaceholderSettingView: View {
     @StateObject var placeholders: Placeholders
-    var specialPlaceholders: [String: CompletionSuggestion.PlaceholderAction]
+    var specialPlaceholders: [String: Suggestion.PlaceholderAction]
     @State var widestNameWidth: CGFloat = 1
     
     var body: some View {

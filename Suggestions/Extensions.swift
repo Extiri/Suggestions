@@ -7,6 +7,24 @@
 
 import Foundation
 
+extension NSColor {
+  static var cardBackgroundColor: NSColor {
+    return NSColor(named: "CardBackgroundColor")!
+  }
+  
+  static var cardShadowColor: NSColor {
+    return NSColor(named: "CardShadowColor")!
+  }
+  
+  static var systemThemeColor: NSColor {
+    if UserDefaults.standard.string(forKey: "AppleInterfaceStyle") != nil {
+      return .black
+    } else {
+      return .white
+    }
+  }
+}
+
 extension String {
   func fullfills(regexPattern: String) throws -> Bool {
     let regex = try NSRegularExpression(pattern: regexPattern)

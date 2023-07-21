@@ -7,16 +7,17 @@ extension UserDefaults {
   }
 }
 
-class SnippetsManager {
-  static var shared = SnippetsManager()
+/// This manager is responsible for getting snippets from CodeMenu.
+class CodeMenuProvider {
+  static var shared = CodeMenuProvider()
   var realm: Realm!
   
-  var didShowErrorMessage = false
+  private var didShowErrorMessage = false
   
   var lastCacheId = ""
-  var suggestionsCache = [CompletionSuggestion]()
-  var abbreviationsDictionary: [String: CompletionSuggestion] {
-    suggestions.reduce([String: CompletionSuggestion]()) { result, element in
+  var suggestionsCache = [Suggestion]()
+  var abbreviationsDictionary: [String: Suggestion] {
+    suggestions.reduce([String: Suggestion]()) { result, element in
       var result = result
       
       if !element.abbreviation.isEmpty {
@@ -27,7 +28,7 @@ class SnippetsManager {
     }
   }
   
-  var suggestions: [CompletionSuggestion] {
+  var suggestions: [Suggestion] {
     do {
       guard lastCacheId != UserDefaults.codeMenuGroup.string(forKey: "snippetsId") ?? "" else { return suggestionsCache }
       lastCacheId = UserDefaults.codeMenuGroup.string(forKey: "snippetsId") ?? ""
@@ -47,8 +48,8 @@ class SnippetsManager {
     }
   }
   
-  func parseObject(_ snippet: SCSnippet) -> CompletionSuggestion {
-        CompletionSuggestion(title: snippet.title, description: snippet.desc, code: snippet.code, language: snippet.lang, abbreviation: snippet.abbreviation, placeholders: snippet.placeholders)
+  func parseObject(_ snippet: SCSnippet) -> Suggestion {
+        Suggestion(title: snippet.title, description: snippet.desc, code: snippet.code, language: snippet.lang, abbreviation: snippet.abbreviation, placeholders: snippet.placeholders)
   }
   
   struct SCSnippet: Codable {
@@ -58,11 +59,6 @@ class SnippetsManager {
     var code: String
     var desc: String
     var lang: String
-    var placeholders: [String: CompletionSuggestion.PlaceholderAction]
-  }
-
-  
-  init() {
-    
+    var placeholders: [String: Suggestion.PlaceholderAction]
   }
 }

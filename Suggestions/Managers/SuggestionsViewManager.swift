@@ -4,90 +4,9 @@ import Combine
 import KeyboardShortcuts
 import Highlightr
 
-func showAlert(message: String, informative: String, buttons: [String] = [], showDontRepeat: Bool = false, completionHandler: @escaping (NSApplication.ModalResponse) -> () = { _ in }) {
-  DispatchQueue.main.async {
-    let alert = NSAlert()
-    
-    alert.messageText = message
-    alert.informativeText = informative
-    
-    buttons.forEach { alert.addButton(withTitle: $0) }
-    alert.buttons.forEach { $0.setAccessibilityTitle($0.title) }
-    
-    alert.showsSuppressionButton = showDontRepeat
-    
-    let result = alert.runModal()
-    completionHandler(result)
-  }
-}
-
-extension KeyboardShortcuts.Name {
-  static let selectUpwards = KeyboardShortcuts.Name("selectUpwards")
-  static let selectDownwards = KeyboardShortcuts.Name("selectDownwards")
-  static let useSuggestion = KeyboardShortcuts.Name("useSuggestion")
-}
-
-extension Array {
-  subscript(safely index: Int) -> ArrayLiteralElement? {
-    if index >= startIndex && index < endIndex { return self[index] } else { return nil }
-  }
-}
-
-extension String {
-  func truncate(longerThan max: Int) -> String {
-    if self.count > max {
-      let beforeMax = self.prefix(max - 3)
-      return beforeMax + "..."
-    } else {
-      return self
-    }
-  }
-}
-
-class DConsole {
-  static let shared = DConsole { message in print(message) }
-  
-  init(_ outputHandler: @escaping (String) -> ()) {
-    self.outputHandler = outputHandler
-  }
-  
-  var outputHandler: (String) -> ()
-  
-  func message(_ message: String) {
-    outputHandler(message)
-  }
-  
-  func success(_ message: String) {
-    self.message("[SUCCESS] \(message)")
-  }
-  
-  func warning(_ message: String) {
-    self.message("[WARNING] \(message)")
-  }
-  
-  func error(_ message: String) {
-    self.message("[ERROR] \(message)")
-  }
-}
-
-class SuggestionsTableViewDelegate: NSObject, NSTableViewDelegate {
-  let suggestionsManager = SuggestionsManager.shared
-}
-
-class SuggestionsDataSource: NSObject, NSTableViewDataSource {
-  let suggestionsManager = SuggestionsManager.shared
-  
-  func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
-    return suggestionsManager.suggestions[row].title + "\n\n" + suggestionsManager.suggestions[row].description.truncate(longerThan: 90)
-  }
-  
-  func numberOfRows(in tableView: NSTableView) -> Int {
-    return suggestionsManager.suggestions.count
-  }
-}
-
-class CompletionManager {
-  static let shared = CompletionManager()
+  /// Manager responsible for presenting the suggestion view and updating it.
+class SuggestionsViewManager {
+  static let shared = SuggestionsViewManager()
   
   var tableView: NSTableView = NSTableView()
   var scrollView: NSScrollView = NSScrollView()
@@ -326,7 +245,7 @@ class CompletionManager {
           self.query = codeInfo.query
           self.completionWindowIsVisible = false
           self.completionWindow.close()
-          if let snippet = SnippetsManager.shared.abbreviationsDictionary[self.query] {
+          if let snippet = CodeMenuProvider.shared.abbreviationsDictionary[self.query] {
             if PlaceholdersManager.hasPlaceholdersToFill(placeholders: snippet.placeholders) {
               if let code = PlaceholdersManager.askForPlaceholderSetting(title: snippet.title, code: snippet.code, placeholdersToFill: snippet.placeholders) {
                 self.codeInteraction.useCode(code, isAbbreviation: true)

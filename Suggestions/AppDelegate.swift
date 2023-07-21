@@ -3,7 +3,7 @@ import SwiftUI
 
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
-  var completionManager: CompletionManager? = nil
+  var suggestionsViewManager: SuggestionsViewManager! = nil
   var statusItem: NSStatusItem!
   var controlWindow: NSWindow!
   
@@ -27,8 +27,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   func applicationDidFinishLaunching(_ aNotification: Notification) {
     SettingsManager.shared.settings.isAvailable = true
     
-    completionManager = CompletionManager.shared
+    suggestionsViewManager = SuggestionsViewManager.shared
     
+    setupControlWindow()
+  }
+  
+  func setupControlWindow() {
     let windowWidth = 900.0
     let windowHeight = 500.0
     
@@ -58,11 +62,3 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     NSApp.terminate(nil)
   }
 }
-
-extension NSStoryboard {
-  subscript(_ identifier: String) -> Any {
-    return instantiateController(withIdentifier: identifier)
-  }
-}
-
-
