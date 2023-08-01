@@ -8,7 +8,11 @@
 import Foundation
 
 extension Array {
-  subscript(safely index: Int) -> ArrayLiteralElement? {
-    if index >= startIndex && index < endIndex { return self[index] } else { return nil }
+  subscript(safely index: Int) -> Element? {
+    if index < self.endIndex && index >= 0  {
+      return self[index]
+    } else {
+      return nil
+    }
   }
 }

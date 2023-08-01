@@ -37,18 +37,23 @@ class SuggestionsViewManager {
     
     if let suggestion = SuggestionsManager.shared.suggestions[safely: tableView.selectedRow], !isFillingPlaceholders {
       detailsText = ""
-      
-      detailsText += suggestion.description
-      
-      detailsText += "\n\n"
+
+      if !suggestion.description.isEmpty {
+        detailsText += suggestion.description
+        
+        detailsText += "\n\n\n"
+      }
       
       let highlighter = Highlightr()!
-      
+
       highlighter.setTheme(to: SettingsManager.shared.settings.highlightingTheme ?? (NSAppearance.current.name == .darkAqua ? "paraiso-dark" : "paraiso-light"))
       
-      detailsText += "\n"
+      if highlighter.supportedLanguages().contains(suggestion.language) {
+        textView.textStorage!.append(highlighter.highlight(suggestion.code, as: suggestion.language) ?? NSAttributedString(string: ""))
+      } else {
+        textView.textStorage!.append(highlighter.highlight(suggestion.code) ?? NSAttributedString(string: ""))
+      }
       
-      textView.textStorage!.append(highlighter.highlight(suggestion.code) ?? NSAttributedString(string: ""))
     } else if isFillingPlaceholders {
       detailsText = "Enter values in between #\" and \"# in proper places next to placeholder names and then press ⌥ (Option) + v again. To cancel, delete all placeholders after §§ signs.\n\n"
       
@@ -65,12 +70,10 @@ class SuggestionsViewManager {
   }
   
   func createList() {
-    scrollView = NSScrollView(frame: NSRect(x: 5, y: 5, width: 245, height: 210))
+    scrollView = NSScrollView(frame: NSRect(x: 0, y: 0, width: 251, height: 220))
     
     tableView = NSTableView()
-    
     tableView.bounds = scrollView.frame
-    tableView.backgroundColor = .clear
     tableView.dataSource = dataSource
     tableView.delegate = delegate
     tableView.headerView = nil
@@ -86,8 +89,6 @@ class SuggestionsViewManager {
     tableView.addTableColumn(column)
     
     scrollView.documentView = tableView
-    scrollView.drawsBackground = false
-    scrollView.backgroundColor = .clear
     scrollView.hasHorizontalScroller = false
     scrollView.hasVerticalScroller = true
     
@@ -119,11 +120,6 @@ class SuggestionsViewManager {
     (detailsView.documentView as! NSTextView).string = "This snippet is a example."
     (detailsView.documentView as! NSTextView).drawsBackground = false
     
-    let backgroundVisualEffect = NSVisualEffectView(frame: NSRect(x: 0, y: 0, width: 500, height: 200))
-    backgroundVisualEffect.blendingMode = .behindWindow
-    backgroundVisualEffect.material = .sidebar
-    backgroundVisualEffect.state = .active
-    
     let lineView = NSBox(frame: NSRect(x: 250, y: -5, width: 10, height: 250))
     lineView.fillColor = .textColor
     
@@ -132,7 +128,6 @@ class SuggestionsViewManager {
     view.wantsLayer = true
     view.layer?.cornerRadius = 10.0
     
-    view.addSubview(backgroundVisualEffect)
     view.addSubview(lineView)
     view.addSubview(detailsView)
     
