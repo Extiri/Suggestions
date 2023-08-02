@@ -116,7 +116,7 @@ class SuggestionsViewManager {
     detailsView = NSTextView.scrollableTextView()
     detailsView.frame = NSRect(x: 263, y: 5, width: 240, height: 198)
     detailsView.drawsBackground = false
-    
+
     (detailsView.documentView as! NSTextView).string = "This snippet is a example."
     (detailsView.documentView as! NSTextView).drawsBackground = false
     
