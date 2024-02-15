@@ -16,7 +16,7 @@ bool isAbbreviation;
   return [Settings isAllowed:[name lowercaseString]];
 }
 
-- (BOOL)getCodeInfo:(CodeInfo*)codeInfo {
+- (BOOL)getCodeInfo:(CodeInfo*)codeInfo callsign:(NSString*) callsign {
   NSString *app = NSWorkspace.sharedWorkspace.frontmostApplication.localizedName;
   if ([self isAllowed:app]) {
     AXUIElementRef mainElement = AXUIElementCreateApplication(NSWorkspace.sharedWorkspace.frontmostApplication.processIdentifier);
@@ -40,12 +40,12 @@ bool isAbbreviation;
         
         NSString *separator = NULL;
         
-        if ([line containsString:@"§§"]) {
+        if ([line containsString: [callsign stringByAppendingString:callsign]]) {
           codeInfo.isAbbreviation = false;
-          separator = @"§§";
+          separator = [callsign stringByAppendingString:callsign];
         } else {
           codeInfo.isAbbreviation = true;
-          separator = @"§";
+          separator = callsign;
         }
         
         NSArray<NSString *> *seperated = [line componentsSeparatedByString:separator];
@@ -84,7 +84,7 @@ bool isAbbreviation;
   return false;
 };
 
-- (void)useCode:(NSString *)snippet isAbbreviation:(bool)isAbbreviation {
+- (void)useCode:(NSString *)snippet isAbbreviation:(bool)isAbbreviation callsign:(NSString*)callsign {
   NSString *app = NSWorkspace.sharedWorkspace.frontmostApplication.localizedName;
   if ([self isAllowed:app]) {
     AXUIElementRef mainElement = AXUIElementCreateApplication(NSWorkspace.sharedWorkspace.frontmostApplication.processIdentifier);
@@ -101,9 +101,9 @@ bool isAbbreviation;
         NSString *separator = NULL;
         
         if (!isAbbreviation) {
-          separator = @"§§";
+          separator = [callsign stringByAppendingString:callsign];
         } else {
-          separator = @"§";
+          separator = callsign;
         }
         
         NSArray<NSString *> *newLineSeperated = (NSArray<NSString *>*)[line componentsSeparatedByString:separator];

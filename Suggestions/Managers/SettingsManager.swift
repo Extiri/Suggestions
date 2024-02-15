@@ -49,6 +49,7 @@ class SettingsManager {
     var disallowlist: [String]
     var refreshRate: Double
     var highlightingTheme: String?
+    var callsign: String = "§"
     
     init() {
       isAvailable = false

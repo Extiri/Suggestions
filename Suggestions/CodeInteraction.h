@@ -14,8 +14,8 @@
 
 @interface CodeInteraction : NSObject { }
 @property (nonatomic) NSMutableArray * _Nonnull allowlist;
-- (BOOL)getCodeInfo:(CodeInfo* _Nonnull)codeInfo;
-- (void)useCode:(NSString *_Nonnull)snippet isAbbreviation:(bool)isAbbreviation;
+- (BOOL)getCodeInfo:(CodeInfo* _Nonnull)codeInfo callsign:(NSString* _Nonnull) callsign;
+- (void)useCode:(NSString *_Nonnull)snippet isAbbreviation:(bool)isAbbreviation callsign:(NSString* _Nonnull) callsign;
 @end
 
 #endif /* FocusedElementInfo_h */

@@ -156,7 +156,7 @@ class SuggestionsViewManager {
     KeyboardShortcuts.onKeyDown(for: .useSuggestion) {
       if self.isFillingPlaceholders {
         let code = PlaceholdersManager.parseAndSetPlaceholders(query: self.query, code: self.placeholderSnippet!, placeholders: self.placeholderSnippetsPlaceholders!)
-        self.codeInteraction.useCode(code, isAbbreviation: false)
+        self.codeInteraction.useCode(code, isAbbreviation: false, callsign: SettingsManager.shared.settings.callsign)
         self.placeholderSnippet = nil
         self.placeholderSnippetsPlaceholders = nil
       } else {
@@ -164,9 +164,9 @@ class SuggestionsViewManager {
           if PlaceholdersManager.hasPlaceholdersToFill(placeholders: selectedSuggestion.placeholders) {
             self.placeholderSnippet = selectedSuggestion.code
             self.placeholderSnippetsPlaceholders = selectedSuggestion.placeholders
-            self.codeInteraction.useCode("§§" + PlaceholdersManager.createPlaceholdersQuery(code: selectedSuggestion.code, placeholders: selectedSuggestion.placeholders), isAbbreviation: false)
+            self.codeInteraction.useCode(SettingsManager.shared.settings.callsign + SettingsManager.shared.settings.callsign + PlaceholdersManager.createPlaceholdersQuery(code: selectedSuggestion.code, placeholders: selectedSuggestion.placeholders), isAbbreviation: false, callsign: SettingsManager.shared.settings.callsign)
           } else {
-            self.codeInteraction.useCode(PlaceholdersManager.setPlaceholders(code: selectedSuggestion.code, values: [:]), isAbbreviation: false)
+            self.codeInteraction.useCode(PlaceholdersManager.setPlaceholders(code: selectedSuggestion.code, values: [:]), isAbbreviation: false, callsign: SettingsManager.shared.settings.callsign)
           }
         }
       }
@@ -233,7 +233,7 @@ class SuggestionsViewManager {
     timer = Timer.scheduledTimer(withTimeInterval: SettingsManager.shared.settings.refreshRate / 10, repeats: true) { _ in
       DispatchQueue.main.async {
         let codeInfo = CodeInfo()
-        let state = self.codeInteraction.getCodeInfo(codeInfo)
+        let state = self.codeInteraction.getCodeInfo(codeInfo, callsign: SettingsManager.shared.settings.callsign)
 
         if codeInfo.isAbbreviation {
           // Is an abbreviation
@@ -243,19 +243,19 @@ class SuggestionsViewManager {
           if let snippet = CodeMenuProvider.shared.abbreviationsDictionary[self.query] {
             if PlaceholdersManager.hasPlaceholdersToFill(placeholders: snippet.placeholders) {
               if let code = PlaceholdersManager.askForPlaceholderSetting(title: snippet.title, code: snippet.code, placeholdersToFill: snippet.placeholders) {
-                self.codeInteraction.useCode(code, isAbbreviation: true)
+                self.codeInteraction.useCode(code, isAbbreviation: true, callsign: SettingsManager.shared.settings.callsign)
               } else {
-                self.codeInteraction.useCode(PlaceholdersManager.setPlaceholders(code: snippet.code), isAbbreviation: true)
+                self.codeInteraction.useCode(PlaceholdersManager.setPlaceholders(code: snippet.code), isAbbreviation: true, callsign: SettingsManager.shared.settings.callsign)
               }
               return
             }
             
-            self.codeInteraction.useCode(PlaceholdersManager.setPlaceholders(code: snippet.code), isAbbreviation: true)
+            self.codeInteraction.useCode(PlaceholdersManager.setPlaceholders(code: snippet.code), isAbbreviation: true, callsign: SettingsManager.shared.settings.callsign)
             return
           }
         }
         
-        if state {
+        if state && !codeInfo.isAbbreviation {
           if !self.completionWindowIsVisible {
             self.completionWindow.makeKeyAndOrderFront(self.completionWindow)
             self.completionWindowIsVisible = true
@@ -292,11 +292,8 @@ class SuggestionsViewManager {
   
   func checkAvailability() -> Bool {
     if !apiIsEnabled {
-      showAlert(message: "Accessibility permission not enabled.", informative: "Suggestions requires Accessibility permission to access text in other apps. Go to Settings > Privacy and Security > Accessibility and click the toggle next to Suggestions. Then run Suggestions again.", buttons: ["Quit Suggestions", "Open settings and quit Suggestions"]) { button in
-        if button == .alertSecondButtonReturn {
-          self.openAccessiblityPreferencesPane()
-          exit(0)
-        } else if button == .alertFirstButtonReturn {
+      showAlert(message: "Accessibility permission not enabled.", informative: "Suggestions requires Accessibility permission to access text in other apps. Go to Settings > Privacy and Security > Accessibility (or click the open settings button in the second alert) and click the toggle next to Suggestions. Then quit and start Suggestions again. If that doesn't work, in the same settings panel, select Suggestions then delete using the - button at the bottom and readd Suggestions using the + button.", buttons: ["Quit Suggestions"]) { button in
+        if button == .alertFirstButtonReturn {
           exit(0)
         }
       }
@@ -317,10 +314,6 @@ class SuggestionsViewManager {
   var console = DConsole.shared
   
   var completionFeatureAvailable = false
-  
-  func openAccessiblityPreferencesPane() {
-    NSWorkspace.shared.open(URL(fileURLWithPath: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility.prefPane"))
-  }
   
   var completionWindow: NSWindow
   
