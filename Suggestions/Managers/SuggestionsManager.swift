@@ -1,11 +1,16 @@
 import Foundation
+import Defaults
 
 /// This manager is responsible for storing suggestions for current query.
 class SuggestionsManager: NSObject {
   static var shared = SuggestionsManager()
   
   var searchHandler: (String) -> ([Suggestion]) = { query in
-    CodeMenuProvider.shared.suggestions.filter { query == "" ? true : $0.fullfills(query: query) }
+    if Defaults[.codeMenuProviderIsEnabled] {
+      return CodeMenuProvider.shared.suggestions.filter { query == "" ? true : $0.fullfills(query: query) }
+    } else {
+      return []
+    }
   }
   
   var suggestions = [Suggestion]()

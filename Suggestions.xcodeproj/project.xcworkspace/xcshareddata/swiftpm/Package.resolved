@@ -1,5 +1,15 @@
 {
+  "originHash" : "2da410c91da8d153279591ad59d00ffaa88078e6c376d5d05708da4f19470c6f",
   "pins" : [
+    {
+      "identity" : "defaults",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/sindresorhus/Defaults",
+      "state" : {
+        "revision" : "38925e3cfacf3fb89a81a35b1cd44fd5a5b7e0fa",
+        "version" : "8.2.0"
+      }
+    },
     {
       "identity" : "highlightr",
       "kind" : "remoteSourceControl",
@@ -17,25 +27,7 @@
         "revision" : "01f89033f8492c2ee581720e2d391dec6b279b85",
         "version" : "1.1.0"
       }
-    },
-    {
-      "identity" : "realm-core",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/realm/realm-core.git",
-      "state" : {
-        "revision" : "b77443ca7fa25407869ca537bf3ae912b1427bff",
-        "version" : "12.13.0"
-      }
-    },
-    {
-      "identity" : "realm-swift",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/realm/realm-swift",
-      "state" : {
-        "revision" : "b442ee3e9caa1abab26fd9b23f060f6f0815ff48",
-        "version" : "10.33.0"
-      }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

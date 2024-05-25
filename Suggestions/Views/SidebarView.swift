@@ -19,6 +19,17 @@ struct SidebarView: View {
         label: { Label("Help", systemImage: "questionmark.circle") }
       )
       
+      NavigationLink(
+        destination: 
+          NavigationView {
+            ProvidersListView()
+              .frame(minWidth: 220, maxHeight: .infinity)
+            CodeMenuProviderSettingsView()
+        }
+        .navigationViewStyle(DoubleColumnNavigationViewStyle()),
+        label: { Label("Providers", systemImage: "server.rack") }
+      )
+      
       Spacer()
       
       Button(action: {

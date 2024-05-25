@@ -3,10 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6DD17B532C00870500575C9D /* ProvidersListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD17B522C00870500575C9D /* ProvidersListView.swift */; };
+		6DD17B562C008AFC00575C9D /* CodeMenuProviderSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD17B552C008AFC00575C9D /* CodeMenuProviderSettingsView.swift */; };
+		6DD17B592C020ED000575C9D /* Defaults in Frameworks */ = {isa = PBXBuildFile; productRef = 6DD17B582C020ED000575C9D /* Defaults */; };
+		6DD17B5B2C020F3B00575C9D /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DD17B5A2C020F3B00575C9D /* Defaults.swift */; };
 		ED00A385286771C50057CA70 /* SuggestionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED00A384286771C50057CA70 /* SuggestionsManager.swift */; };
 		ED00A387286794E60057CA70 /* LicenseNoticesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED00A386286794E60057CA70 /* LicenseNoticesViewController.swift */; };
 		ED0E1B7429C77B5300187ED5 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = ED0E1B7329C77B5200187ED5 /* README.md */; };
@@ -20,8 +24,6 @@
 		ED6A554526D12E1200FD04C6 /* UIElementUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = ED6A554426D12E1200FD04C6 /* UIElementUtilities.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		ED8F74C226D7EA8A0043A056 /* CodeMenuProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8F74C126D7EA8A0043A056 /* CodeMenuProvider.swift */; };
 		ED94E4452954ACD60017595F /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = ED94E4442954ACD60017595F /* KeyboardShortcuts */; };
-		ED94E4482954B6710017595F /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = ED94E4472954B6710017595F /* Realm */; };
-		ED94E44A2954B6710017595F /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = ED94E4492954B6710017595F /* RealmSwift */; };
 		ED94E44D2954B71F0017595F /* Highlightr in Frameworks */ = {isa = PBXBuildFile; productRef = ED94E44C2954B71F0017595F /* Highlightr */; };
 		EDC51A292A62AB8F002330BE /* ShowAlertFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC51A282A62AB8F002330BE /* ShowAlertFunction.swift */; };
 		EDC51A2C2A62ABAD002330BE /* KeyboardShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC51A2B2A62ABAD002330BE /* KeyboardShortcuts.swift */; };
@@ -40,6 +42,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6DD17B522C00870500575C9D /* ProvidersListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProvidersListView.swift; sourceTree = "<group>"; };
+		6DD17B552C008AFC00575C9D /* CodeMenuProviderSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeMenuProviderSettingsView.swift; sourceTree = "<group>"; };
+		6DD17B5A2C020F3B00575C9D /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 		ED00A384286771C50057CA70 /* SuggestionsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestionsManager.swift; sourceTree = "<group>"; };
 		ED00A386286794E60057CA70 /* LicenseNoticesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseNoticesViewController.swift; sourceTree = "<group>"; };
 		ED0E1B7329C77B5200187ED5 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -80,15 +85,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED94E44D2954B71F0017595F /* Highlightr in Frameworks */,
-				ED94E44A2954B6710017595F /* RealmSwift in Frameworks */,
-				ED94E4482954B6710017595F /* Realm in Frameworks */,
 				ED94E4452954ACD60017595F /* KeyboardShortcuts in Frameworks */,
+				6DD17B592C020ED000575C9D /* Defaults in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6DD17B542C008AA800575C9D /* Provider settings views */ = {
+			isa = PBXGroup;
+			children = (
+				6DD17B552C008AFC00575C9D /* CodeMenuProviderSettingsView.swift */,
+			);
+			path = "Provider settings views";
+			sourceTree = "<group>";
+		};
 		ED138CED26CFB90A00CEE222 = {
 			isa = PBXGroup;
 			children = (
@@ -138,6 +150,7 @@
 			children = (
 				EDC51A2D2A62ABC4002330BE /* Array.swift */,
 				EDC51A3B2A62B302002330BE /* NSStoryboard.swift */,
+				6DD17B5A2C020F3B00575C9D /* Defaults.swift */,
 				EDC51A2B2A62ABAD002330BE /* KeyboardShortcuts.swift */,
 				EDC51A2F2A62ABD4002330BE /* String.swift */,
 			);
@@ -171,6 +184,8 @@
 				EDC51A442A62B9B3002330BE /* HelpView.swift */,
 				EDC51A4A2A62B9CB002330BE /* SidebarView.swift */,
 				EDC51A452A62B9B3002330BE /* SettingsView.swift */,
+				6DD17B522C00870500575C9D /* ProvidersListView.swift */,
+				6DD17B542C008AA800575C9D /* Provider settings views */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -193,9 +208,8 @@
 			name = Suggestions;
 			packageProductDependencies = (
 				ED94E4442954ACD60017595F /* KeyboardShortcuts */,
-				ED94E4472954B6710017595F /* Realm */,
-				ED94E4492954B6710017595F /* RealmSwift */,
 				ED94E44C2954B71F0017595F /* Highlightr */,
+				6DD17B582C020ED000575C9D /* Defaults */,
 			);
 			productName = CMCompletionFeatureExperimental;
 			productReference = ED138CF626CFB90A00CEE222 /* Suggestions.app */;
@@ -227,8 +241,8 @@
 			mainGroup = ED138CED26CFB90A00CEE222;
 			packageReferences = (
 				ED94E4432954ACD60017595F /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
-				ED94E4462954B6710017595F /* XCRemoteSwiftPackageReference "realm-swift" */,
 				ED94E44B2954B71F0017595F /* XCRemoteSwiftPackageReference "Highlightr" */,
+				6DD17B572C020ECF00575C9D /* XCRemoteSwiftPackageReference "Defaults" */,
 			);
 			productRefGroup = ED138CF726CFB90A00CEE222 /* Products */;
 			projectDirPath = "";
@@ -270,13 +284,16 @@
 				EDC51A2C2A62ABAD002330BE /* KeyboardShortcuts.swift in Sources */,
 				EDC51A302A62ABD4002330BE /* String.swift in Sources */,
 				ED00A385286771C50057CA70 /* SuggestionsManager.swift in Sources */,
+				6DD17B5B2C020F3B00575C9D /* Defaults.swift in Sources */,
 				EDEB9BB32997C40F0032C67D /* Extensions.swift in Sources */,
 				ED138D0D26CFDF2600CEE222 /* CodeInteraction.m in Sources */,
+				6DD17B532C00870500575C9D /* ProvidersListView.swift in Sources */,
 				ED00A387286794E60057CA70 /* LicenseNoticesViewController.swift in Sources */,
 				EDC51A292A62AB8F002330BE /* ShowAlertFunction.swift in Sources */,
 				EDC51A372A62AD0D002330BE /* Suggestion.swift in Sources */,
 				EDC51A322A62ABEA002330BE /* Console.swift in Sources */,
 				EDC51A4B2A62B9CB002330BE /* SidebarView.swift in Sources */,
+				6DD17B562C008AFC00575C9D /* CodeMenuProviderSettingsView.swift in Sources */,
 				EDC51A472A62B9B3002330BE /* ControlPanelView.swift in Sources */,
 				ED138CFA26CFB90A00CEE222 /* AppDelegate.swift in Sources */,
 				EDC51A342A62AC08002330BE /* SuggestionsTableView.swift in Sources */,
@@ -497,20 +514,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		6DD17B572C020ECF00575C9D /* XCRemoteSwiftPackageReference "Defaults" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sindresorhus/Defaults";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.0.0;
+			};
+		};
 		ED94E4432954ACD60017595F /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/sindresorhus/KeyboardShortcuts";
 			requirement = {
 				kind = upToNextMinorVersion;
 				minimumVersion = 1.1.0;
-			};
-		};
-		ED94E4462954B6710017595F /* XCRemoteSwiftPackageReference "realm-swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/realm/realm-swift";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 10.33.0;
 			};
 		};
 		ED94E44B2954B71F0017595F /* XCRemoteSwiftPackageReference "Highlightr" */ = {
@@ -524,20 +541,15 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		6DD17B582C020ED000575C9D /* Defaults */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6DD17B572C020ECF00575C9D /* XCRemoteSwiftPackageReference "Defaults" */;
+			productName = Defaults;
+		};
 		ED94E4442954ACD60017595F /* KeyboardShortcuts */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = ED94E4432954ACD60017595F /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */;
 			productName = KeyboardShortcuts;
-		};
-		ED94E4472954B6710017595F /* Realm */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = ED94E4462954B6710017595F /* XCRemoteSwiftPackageReference "realm-swift" */;
-			productName = Realm;
-		};
-		ED94E4492954B6710017595F /* RealmSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = ED94E4462954B6710017595F /* XCRemoteSwiftPackageReference "realm-swift" */;
-			productName = RealmSwift;
 		};
 		ED94E44C2954B71F0017595F /* Highlightr */ = {
 			isa = XCSwiftPackageProductDependency;
