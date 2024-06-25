@@ -13,9 +13,9 @@ At this moment Suggestions works properly on all editors that follow similar acc
 IDEs fully working:
 
 - Xcode
+- JetBrains IDEs (tested on IntelliJ IDEA 2024.1.2 and RustRover 2024.1)
 
 IDEs working, but with issues:
-- JetBrains IDEs
 
 IDEs not working:
 
