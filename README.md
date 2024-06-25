@@ -16,11 +16,10 @@ IDEs fully working:
 - JetBrains IDEs (tested on IntelliJ IDEA 2024.1.2 and RustRover 2024.1)
 
 IDEs working, but with issues:
+- Visual Studio Code (part of the query still remains after pasting)
 
 IDEs not working:
-
 - Zed
-- Visual Studio Code
 
 If you find an issue with some editor or want to report whether it's supported, feel free to file an issue with editor's name and webpage.
 

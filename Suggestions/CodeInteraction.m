@@ -86,6 +86,7 @@ bool isAbbreviation;
 
 - (void)useCode:(NSString *)snippet isAbbreviation:(bool)isAbbreviation callsign:(NSString*)callsign {
   NSString *app = NSWorkspace.sharedWorkspace.frontmostApplication.localizedName;
+
   if ([self isAllowed:app]) {
     AXUIElementRef mainElement = AXUIElementCreateApplication(NSWorkspace.sharedWorkspace.frontmostApplication.processIdentifier);
     AXUIElementRef codeArea = NULL;
@@ -105,22 +106,35 @@ bool isAbbreviation;
         } else {
           separator = callsign;
         }
-        
+      
         NSArray<NSString *> *newLineSeperated = (NSArray<NSString *>*)[line componentsSeparatedByString:separator];
         
         AXValueRef textValue = NULL;
         AXUIElementCopyAttributeValue(codeArea, kAXSelectedTextRangeAttribute , (CFTypeRef *)&textValue);
         
         CFRange range;
+        range.location = 0;
+        range.length = 0;
+        
         AXValueGetValue(textValue, kAXValueTypeCFRange, &range);
-        
-        range.location -= newLineSeperated[1].length + 2;
-        range.length += newLineSeperated[1].length + 2;
-        
-        AXValueRef newValue = AXValueCreate(kAXValueTypeCFRange, &range);
-        AXUIElementSetAttributeValue(codeArea, kAXSelectedTextRangeAttribute, newValue);
-        
-        [UIElementUtilities setStringValue:snippet forAttribute:kAXSelectedTextAttribute ofUIElement:codeArea];
+
+        if ([app isEqual: @"Code"]) {
+          range.location -= newLineSeperated[1].length;
+          range.length += newLineSeperated[1].length;
+
+          AXValueRef newValue = AXValueCreate(kAXValueTypeCFRange, &range);
+          AXUIElementSetAttributeValue(codeArea, kAXSelectedTextRangeAttribute, newValue);
+          
+          [UIElementUtilities setStringValue:snippet forAttribute:kAXValueAttribute ofUIElement:codeArea];
+        } else {
+          range.location -= newLineSeperated[1].length + 2;
+          range.length += newLineSeperated[1].length + 2;
+          
+          AXValueRef newValue = AXValueCreate(kAXValueTypeCFRange, &range);
+          AXUIElementSetAttributeValue(codeArea, kAXSelectedTextRangeAttribute, newValue);
+          
+          [UIElementUtilities setStringValue:snippet forAttribute:kAXSelectedTextAttribute ofUIElement:codeArea];
+        }
       }
     }
   }

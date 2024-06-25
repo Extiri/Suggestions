@@ -65,7 +65,7 @@ class PlaceholdersManager {
   
   static func createPlaceholdersQuery(code: String, placeholders: PlaceholdersDictionary) -> String {
     // The sequnce for a placeholder argument is @name=#"value"#
-    return placeholders.filter { !specialPlaceholders.contains($0.key) || !$0.value.isAutoFilled }.map { "@\($0)=#\"\"#" }.joined(separator: " ")
+    return placeholders.filter { !specialPlaceholders.contains($0.key) || !$0.value.isAutoFilled }.map { "@\($0.key)=#\"\"#" }.joined(separator: " ")
   }
   
   static func hasPlaceholdersToFill(placeholders: PlaceholdersDictionary) -> Bool {
