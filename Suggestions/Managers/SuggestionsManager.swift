@@ -7,7 +7,7 @@ class SuggestionsManager: NSObject {
   
   var searchHandler: (String) -> ([Suggestion]) = { query in
     if Defaults[.codeMenuProviderIsEnabled] {
-      return CodeMenuProvider.shared.suggestions.filter { query == "" ? true : $0.fullfills(query: query) }
+      return CodeMenuProvider.shared.suggestions.filter { (query == "" ? true : $0.fullfills(query: query)) && !["image"].contains($0.language) }
     } else {
       return []
     }
@@ -24,3 +24,4 @@ class SuggestionsManager: NSObject {
     }
   }
 }
+
