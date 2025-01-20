@@ -4,7 +4,7 @@
 
 Currently in Beta.
 
-An app that allows you to get code suggestions everywhere. It currently supports CodeMenu.
+An app that allows you to get code suggestions everywhere. It currently supports [CodeMenu](https://extiri.com/codemenu.html) snippets manager.
 
 ## Support for editors
 
