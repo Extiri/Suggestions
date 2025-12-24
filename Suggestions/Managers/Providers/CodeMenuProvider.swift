@@ -52,6 +52,14 @@ class CodeMenuProvider {
           
           guard let data = data else { if !self.didShowErrorMessage { showAlert(message: "Failed to retrieve snippets", informative: "No data returned by CodeMenu.") }; return }
 
+          if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode != 200 {
+             if !self.didShowErrorMessage {
+               showAlert(message: "Failed to retrieve snippets", informative: "Server returned status code \(httpResponse.statusCode). Check your key and port.")
+             }
+             self.didShowErrorMessage = true
+             return
+          }
+
           do {
             let snippets = try JSONDecoder().decode([SCSnippet].self, from: data)
             self.suggestionsCache = snippets.map { self.parseObject($0) }

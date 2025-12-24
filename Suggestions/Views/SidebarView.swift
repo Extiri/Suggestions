@@ -20,33 +20,23 @@ struct SidebarView: View {
       )
       
       NavigationLink(
-        destination: 
-          NavigationView {
-            ProvidersListView()
-              .frame(minWidth: 220, maxHeight: .infinity)
-            CodeMenuProviderSettingsView()
-        }
-        .navigationViewStyle(DoubleColumnNavigationViewStyle()),
+        destination: ProvidersListView(),
         label: { Label("Providers", systemImage: "server.rack") }
       )
       
       Spacer()
       
-      Button(action: {
-        NSWorkspace.shared.open(URL(string: "https://github.com/Extiri/Suggestions")!)
-      }, label: {
-        Label(title: {
-          Text("GitHub repository")
-        }, icon: {
+      Link(destination: URL(string: "https://github.com/Extiri/Suggestions")!) {
+        Label {
+          Text("GitHub Repository")
+        } icon: {
           Image("gitHubIcon")
-            .renderingMode(.template)
             .resizable()
-            .frame(width: 15, height: 15, alignment: .leading)
-        })
-      })
-      .buttonStyle(PlainButtonStyle())
+            .frame(width: 16, height: 16)
+        }
+      }
+      .padding(.vertical, 8)
     }
     .listStyle(SidebarListStyle())
-    .background(Color.clear)
   }
 }

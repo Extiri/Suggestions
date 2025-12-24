@@ -17,57 +17,78 @@ struct CodeMenuProviderSettingsView: View {
   @State var newKey = ""
   
   var body: some View {
-    VStack(alignment: .leading) {
-      Toggle(isOn: $isEnabled) {
-        Text("Enable CodeMenu provider")
-      }
-      .toggleStyle(.checkbox)
-      .padding(.bottom, 10)
-      
-      Group {
-        Text("Port")
-          .font(.title3.bold())
-        Text("Enter the port set in CodeMenu.")
-        TextField("Port", text: $newPort)
-          .disabled(!isEnabled)
-      }
-      .padding(.bottom, 10)
-      
-      Divider()
-      
-      Group {
-        Text("Access key")
-          .font(.title3.bold())
-        Text("Enter the access key set in CodeMenu. If the server is unprotected, leave the field empty.")
-        TextField("Access key (if none, leave empty)", text: $newKey)
-          .disabled(!isEnabled)
-      }
-      .padding(.bottom, 10)
-      
-      Divider()
-      
-      Button("Save") {
-        if newPort.contains(where: { !"0123456789".contains($0) }) {
-          showAlert(message: "Invalid port", informative: "Port must be made of numbers only.")
-          return
+    ScrollView {
+      VStack(alignment: .leading, spacing: 20) {
+        GroupBox(label: Text("Status").font(.headline)) {
+          Toggle("Enable CodeMenu Provider", isOn: $isEnabled)
+            .padding(8)
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
         
-        if newPort.isEmpty {
-          showAlert(message: "Invalid port", informative: "Port must not be empty.")
-          return
+        GroupBox(label: Text("Connection Details").font(.headline)) {
+          VStack(alignment: .leading, spacing: 12) {
+            HStack {
+              Text("Port:")
+                .frame(width: 80, alignment: .trailing)
+              TextField("1300", text: $newPort)
+                .frame(width: 80)
+                .disabled(!isEnabled)
+              Text("(Default: 1300)")
+                .foregroundColor(.secondary)
+              Spacer()
+            }
+            
+            HStack {
+              Text("Access Key:")
+                .frame(width: 80, alignment: .trailing)
+              SecureField("Optional", text: $newKey)
+                .frame(maxWidth: 250)
+                .disabled(!isEnabled)
+              Spacer()
+            }
+            
+            HStack {
+              Spacer()
+                .frame(width: 88)
+              Text("Leave empty if the server is unprotected.")
+                .font(.caption)
+                .foregroundColor(.secondary)
+            }
+          }
+          .padding(8)
+          .frame(maxWidth: .infinity, alignment: .leading)
         }
         
-        key = newKey
-        port = Int(newPort)!
+        HStack {
+          Spacer()
+          Button("Save Connection Settings") {
+            save()
+          }
+          .disabled(!isEnabled)
+          Spacer()
+        }
       }
-      .disabled(!isEnabled)
-      .onAppear {
-        newKey = key
-        newPort = String(port)
-      }
-      
-      Spacer()
+      .padding()
+      .frame(maxWidth: .infinity, alignment: .topLeading)
     }
-    .padding()
+    .onAppear {
+      newKey = key
+      newPort = String(port)
+    }
+  }
+  
+  func save() {
+    if newPort.contains(where: { !"0123456789".contains($0) }) {
+      showAlert(message: "Invalid port", informative: "Port must be made of numbers only.")
+      return
+    }
+    
+    if newPort.isEmpty {
+      showAlert(message: "Invalid port", informative: "Port must not be empty.")
+      return
+    }
+    
+    key = newKey
+    port = Int(newPort)!
   }
 }

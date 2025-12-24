@@ -5,125 +5,143 @@ struct SettingsView: View {
   @State var refreshRate = 1.0
   
   @State var dissalowedApps = [String]()
-  @State var selectedApp = NSWorkspace.shared.runningApplications[0].localizedName ?? "Unknown app"
+  @State var selectedApp = NSWorkspace.shared.runningApplications.first(where: { $0.activationPolicy == .regular })?.localizedName ?? "Unknown app"
   @State var highlightingTheme = "Default"
   @State var callsign: String = SettingsManager.shared.settings.callsign
   
   var body: some View {
     ScrollView {
-      VStack(alignment: .leading) {
-        Group {
-          Text("Refresh rate")
-            .font(.title3.bold())
-          Text("Refresh rate defines how often Suggestions will check for the \(callsign) sign and analyze your search text (eg. text after the \(callsign) sign) and update results. The default is 1 (refresh every 0.1 second). The higher this number is, the smoother the results will be, but it will also be more intensive for the CPU. You have to restart Suggestions to update the refresh rate.")
-          
-          HStack {
-            Slider(value: $refreshRate, in: 1...10, step: 1)
-            Text("\(Int(refreshRate))")
-          }
-        }
-        
-        Divider()
-        
-        Group {
-          Text("Callsign")
-            .font(.title3.bold())
-          Text("Callsign is the sign that you use to invoke Suggestions (before search query (double callsign) or abbreviation (single callsign)). § sign is the default. It must be a single character.")
-          
-          HStack {
-            TextField("Sign", text: $callsign)
-              .onChange(of: callsign) { changedCallsign in
-                if changedCallsign.count > 1 {
-                  callsign = String(changedCallsign[changedCallsign.startIndex])
-                }
-              }
-              .frame(width: 20)
-            
-            Button("Default") {
-              callsign = "§"
+      VStack(alignment: .leading, spacing: 20) {
+        GroupBox(label: Text("General").font(.headline)) {
+          VStack(alignment: .leading, spacing: 12) {
+            HStack {
+              Text("Refresh Rate:")
+                .frame(width: 100, alignment: .trailing)
+              Slider(value: $refreshRate, in: 1...10, step: 1)
+              Text("\(Int(refreshRate))")
+                .frame(width: 30)
+              Text("(every \(String(format: "%.1f", 1.0/refreshRate))s)")
+                .foregroundColor(.secondary)
             }
-          }
-        }
-        
-        Divider()
-        
-        Group {
-          Text("Code highlighting theme")
-            .font(.title3.bold())
-          Text("By default, it's either paraiso-dark or paraiso-light for current macOS apperance (dark or light).")
-          
-          Picker("Theme:", selection: $highlightingTheme) {
-            Text("Default")
-              .tag("Default")
+            
+            HStack {
+              Spacer()
+                .frame(width: 108)
+              Text("Higher values are smoother but use more CPU.")
+                .font(.caption)
+                .foregroundColor(.secondary)
+            }
             
             Divider()
             
-            ForEach(Highlightr()!.availableThemes().sorted(), id: \.self) { theme in
-              Text(theme)
-                .tag(theme)
+            HStack {
+              Text("Callsign:")
+                .frame(width: 100, alignment: .trailing)
+              TextField("", text: $callsign)
+                .frame(width: 40)
+                .multilineTextAlignment(.center)
+                .onChange(of: callsign) { changedCallsign in
+                  if changedCallsign.count > 1 {
+                    callsign = String(changedCallsign[changedCallsign.startIndex])
+                  }
+                }
+              
+              if callsign != "§" {
+                Button("Reset") {
+                  callsign = "§"
+                }
+              }
+              Spacer()
+            }
+            
+            HStack {
+              Spacer()
+                .frame(width: 108)
+              Text("The character used to invoke Suggestions (e.g. §§).")
+                .font(.caption)
+                .foregroundColor(.secondary)
             }
           }
+          .padding(8)
         }
         
-        Divider()
+        GroupBox(label: Text("Appearance").font(.headline)) {
+          VStack(alignment: .leading, spacing: 12) {
+            HStack {
+              Text("Theme:")
+                .frame(width: 100, alignment: .trailing)
+              Picker("", selection: $highlightingTheme) {
+                Text("Default").tag("Default")
+                Divider()
+                ForEach(Highlightr()!.availableThemes().sorted(), id: \.self) { theme in
+                  Text(theme).tag(theme)
+                }
+              }
+              .labelsHidden()
+              .frame(maxWidth: 250)
+              Spacer()
+            }
+          }
+          .padding(8)
+        }
         
-        Group {
-          Text("Disallow list")
-            .font(.title3.bold())
-          Text("Choose apps where Suggestions should not work.")
-          
-          HStack {
-            Picker("App:", selection: $selectedApp) {
-              ForEach(NSWorkspace.shared.runningApplications, id: \.processIdentifier) { app in
-                Text(app.localizedName ?? "Unknown app name")
-                  .tag(app.localizedName ?? "Unknown app name")
+        GroupBox(label: Text("Disallowed Apps").font(.headline)) {
+          VStack(alignment: .leading, spacing: 12) {
+            HStack {
+              Text("Add App:")
+                .frame(width: 100, alignment: .trailing)
+              Picker("", selection: $selectedApp) {
+                ForEach(NSWorkspace.shared.runningApplications.filter { $0.activationPolicy == .regular }, id: \.processIdentifier) { app in
+                  Text(app.localizedName ?? "Unknown").tag(app.localizedName ?? "Unknown")
+                }
+              }
+              .labelsHidden()
+              .frame(maxWidth: 250)
+              
+              Button(action: {
+                if !dissalowedApps.contains(selectedApp) {
+                  dissalowedApps.append(selectedApp)
+                }
+              }) {
+                Image(systemName: "plus")
               }
             }
             
-            Button(action: {
-              dissalowedApps.append(selectedApp)
-            }, label: {
-              Image(systemName: "plus.circle.fill")
-                .foregroundColor(.green)
-            })
-            .buttonStyle(PlainButtonStyle())
-          }
-          
-          if dissalowedApps.isEmpty {
-            Text("No disallowed apps")
-          } else {
-            ScrollView {
-              ForEach(Array(dissalowedApps.enumerated()), id: \.offset) { enumeration in
-                HStack(alignment: .bottom) {
-                  Button(action: {
-                    dissalowedApps.remove(at: enumeration.offset)
-                  }, label: {
-                    Image(systemName: "minus.circle.fill")
-                      .foregroundColor(.red)
-                  })
-                  .buttonStyle(PlainButtonStyle())
-                  
-                  Text(enumeration.element)
-                  
-                  Spacer()
+            if dissalowedApps.isEmpty {
+              Text("No disallowed apps")
+                .foregroundColor(.secondary)
+                .italic()
+                .frame(maxWidth: .infinity, alignment: .center)
+                .padding()
+            } else {
+              List {
+                ForEach(Array(dissalowedApps.enumerated()), id: \.offset) { index, appName in
+                  HStack {
+                    Text(appName)
+                    Spacer()
+                    Button(action: {
+                      dissalowedApps.remove(at: index)
+                    }) {
+                      Image(systemName: "trash")
+                        .foregroundColor(.red)
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                  }
                 }
-                .frame(alignment: .leading)
-                
-                Divider()
               }
+              .frame(height: 150)
+              .border(Color.secondary.opacity(0.2))
             }
-            .padding()
-            .border(.gray, width: 0.4)
-            .frame(width: 400, height: 300)
-            .padding(6)
           }
+          .padding(8)
         }
         
-        Divider()
-        
-        Button("Save", action: save)
-        
-        Spacer()
+        HStack {
+          Spacer()
+          Button("Save Settings", action: save)
+            .controlSize(.large)
+          Spacer()
+        }
       }
       .padding()
     }
