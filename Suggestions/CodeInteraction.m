@@ -5,10 +5,10 @@
 #import <Suggestions-Swift.h>
 
 @implementation CodeInfo
-NSString *query;
-NSInteger *insertionPointerLine;
-NSRect frame;
-bool isAbbreviation;
+@synthesize query;
+@synthesize insertionPointerLine;
+@synthesize frame;
+@synthesize isAbbreviation;
 @end
 
 @implementation CodeInteraction
@@ -20,65 +20,142 @@ bool isAbbreviation;
   NSString *app = NSWorkspace.sharedWorkspace.frontmostApplication.localizedName;
   if ([self isAllowed:app]) {
     AXUIElementRef mainElement = AXUIElementCreateApplication(NSWorkspace.sharedWorkspace.frontmostApplication.processIdentifier);
-    AXUIElementRef codeArea = NULL;
-    AXError error = AXUIElementCopyAttributeValue(mainElement, kAXFocusedUIElementAttribute, (CFTypeRef *)&codeArea);
+    AXUIElementRef focusedElement = NULL;
+    AXError error = AXUIElementCopyAttributeValue(mainElement, kAXFocusedUIElementAttribute, (CFTypeRef *)&focusedElement);
     
-    if (error == kAXErrorSuccess) {
-      if ([[UIElementUtilities valueOfAttribute:@"AXRole" ofUIElement:codeArea]  isEqual: @"AXTextArea"]) {
-        NSString *code = [UIElementUtilities valueOfAttribute:@"AXValue" ofUIElement:codeArea];
-        NSInteger insertionPointerLine = [[UIElementUtilities valueOfAttribute:@"AXInsertionPointLineNumber" ofUIElement:codeArea] integerValue];
+    if (error == kAXErrorSuccess && focusedElement) {
+      // 1. Try Range-based approach (Universal)
+      BOOL rangeSuccess = NO;
+      AXValueRef selectedRangeValue = NULL;
+      AXError getSelectedRangeError = AXUIElementCopyAttributeValue(focusedElement, kAXSelectedTextRangeAttribute, (CFTypeRef *)&selectedRangeValue);
+      
+      if (getSelectedRangeError == kAXErrorSuccess && selectedRangeValue) {
+        CFRange selectedRange;
+        AXValueGetValue(selectedRangeValue, kAXValueTypeCFRange, &selectedRange);
+        
+        CFIndex lengthToRead = 100;
+        CFIndex location = selectedRange.location;
+        CFIndex startLocation = (location > lengthToRead) ? (location - lengthToRead) : 0;
+        CFIndex actualLength = location - startLocation;
+        
+        NSString *textBeforeCursor = nil;
+        
+        CFRange rangeToRead = CFRangeMake(startLocation, actualLength);
+        AXValueRef rangeToReadValue = AXValueCreate(kAXValueTypeCFRange, &rangeToRead);
+        CFTypeRef textRef = NULL;
+        AXError getTextError = AXUIElementCopyParameterizedAttributeValue(focusedElement, kAXStringForRangeParameterizedAttribute, rangeToReadValue, &textRef);
+        if (getTextError == kAXErrorSuccess && textRef) {
+          textBeforeCursor = (__bridge NSString *)textRef;
+        }
+        CFRelease(rangeToReadValue);
+        
+        if (!textBeforeCursor) {
+          NSString *fullText = [UIElementUtilities valueOfAttribute:@"AXValue" ofUIElement:focusedElement];
+          if (fullText && [fullText isKindOfClass:[NSString class]]) {
+            if (location <= [fullText length]) {
+              textBeforeCursor = [fullText substringWithRange:NSMakeRange(startLocation, actualLength)];
+            }
+          }
+        }
+        
+        if (textBeforeCursor) {
+          NSString *doubleCallsign = [callsign stringByAppendingString:callsign];
+          
+          NSRange rangeOfDouble = [textBeforeCursor rangeOfString:doubleCallsign options:NSBackwardsSearch];
+          NSRange rangeOfSingle = [textBeforeCursor rangeOfString:callsign options:NSBackwardsSearch];
+          
+          NSString *separator = nil;
+          NSRange foundRange = NSMakeRange(NSNotFound, 0);
+          
+          if (rangeOfDouble.location != NSNotFound) {
+            codeInfo.isAbbreviation = false;
+            separator = doubleCallsign;
+            foundRange = rangeOfDouble;
+          } else if (rangeOfSingle.location != NSNotFound) {
+            codeInfo.isAbbreviation = true;
+            separator = callsign;
+            foundRange = rangeOfSingle;
+          }
+          
+          if (separator) {
+            NSString *potentialQuery = [textBeforeCursor substringFromIndex:NSMaxRange(foundRange)];
+            
+            NSRange lastNewline = [potentialQuery rangeOfString:@"\n"];
+            if (lastNewline.location == NSNotFound) {
+              codeInfo.query = potentialQuery;
+              
+              AXValueRef selectionBoundsValue = NULL;
+              AXError getSelectionBoundsError = AXUIElementCopyParameterizedAttributeValue(focusedElement, kAXBoundsForRangeParameterizedAttribute, selectedRangeValue, (CFTypeRef *)&selectionBoundsValue);
+              
+              if (getSelectionBoundsError == kAXErrorSuccess && selectionBoundsValue) {
+                CGRect selectionBounds;
+                AXValueGetValue(selectionBoundsValue, kAXValueCGRectType, &selectionBounds);
+                codeInfo.frame = NSRectFromCGRect(selectionBounds);
+                CFRelease(selectionBoundsValue);
+                rangeSuccess = YES;
+              }
+            }
+          }
+        }
+        if (textRef) CFRelease(textRef);
+        CFRelease(selectedRangeValue);
+      }
+      
+      if (rangeSuccess) {
+        CFRelease(focusedElement);
+        CFRelease(mainElement);
+        return true;
+      }
+
+      // 2. Fallback: Line-based approach (Legacy support for VS Code / AXTextArea)
+      if ([[UIElementUtilities valueOfAttribute:@"AXRole" ofUIElement:focusedElement] isEqual: @"AXTextArea"]) {
+        NSString *code = [UIElementUtilities valueOfAttribute:@"AXValue" ofUIElement:focusedElement];
+        NSInteger insertionPointerLine = [[UIElementUtilities valueOfAttribute:@"AXInsertionPointLineNumber" ofUIElement:focusedElement] integerValue];
         
         codeInfo.insertionPointerLine = insertionPointerLine;
         NSArray<NSString *> *lines = [code componentsSeparatedByString:@"\n"];
         
-        if (!(0 <= insertionPointerLine && insertionPointerLine < [lines count])) {
-          codeInfo.query = @" ";
-          return false;
-        }
-        
-        NSString *line = lines[insertionPointerLine];
-        
-        NSString *separator = NULL;
-        
-        if ([line containsString: [callsign stringByAppendingString:callsign]]) {
-          codeInfo.isAbbreviation = false;
-          separator = [callsign stringByAppendingString:callsign];
-        } else {
-          codeInfo.isAbbreviation = true;
-          separator = callsign;
-        }
-        
-        NSArray<NSString *> *seperated = [line componentsSeparatedByString:separator];
-        
-        AXValueRef selectedRangeValue = NULL;
-        AXError getSelectedRangeError = AXUIElementCopyAttributeValue(codeArea, kAXSelectedTextRangeAttribute, (CFTypeRef *)&selectedRangeValue);
-        if (getSelectedRangeError == kAXErrorSuccess) {
-          CFRange selectedRange;
-          AXValueGetValue(selectedRangeValue, kAXValueCFRangeType, &selectedRange);
-          AXValueRef selectionBoundsValue = NULL;
-          AXError getSelectionBoundsError = AXUIElementCopyParameterizedAttributeValue(codeArea, kAXBoundsForRangeParameterizedAttribute, selectedRangeValue, (CFTypeRef *)&selectionBoundsValue);
-          CFRelease(selectedRangeValue);
-          if (getSelectionBoundsError == kAXErrorSuccess) {
-            CGRect selectionBounds;
-            AXValueGetValue(selectionBoundsValue, kAXValueCGRectType, &selectionBounds);
-            codeInfo.frame = NSRectFromCGRect(selectionBounds);
+        if (0 <= insertionPointerLine && insertionPointerLine < [lines count]) {
+          NSString *line = lines[insertionPointerLine];
+          NSString *separator = NULL;
+          
+          if ([line containsString: [callsign stringByAppendingString:callsign]]) {
+            codeInfo.isAbbreviation = false;
+            separator = [callsign stringByAppendingString:callsign];
           } else {
-            return false;
+             codeInfo.isAbbreviation = true;
+             separator = callsign;
           }
-          if (selectionBoundsValue != NULL) CFRelease(selectionBoundsValue);
-        } else {
-          return false;
-        }
-        
-        if ([seperated count] == 2) {
-          codeInfo.query = seperated[1];
-          return true;
-        } else {
-          codeInfo.query = @" ";
-          return false;
+          
+          NSArray<NSString *> *seperated = [line componentsSeparatedByString:separator];
+          if ([seperated count] == 2) {
+            codeInfo.query = seperated[1];
+            
+            // We still need the frame. Try to get it via selected range again.
+            AXValueRef selectedRangeValue = NULL;
+            AXError getSelectedRangeError = AXUIElementCopyAttributeValue(focusedElement, kAXSelectedTextRangeAttribute, (CFTypeRef *)&selectedRangeValue);
+            if (getSelectedRangeError == kAXErrorSuccess) {
+              AXValueRef selectionBoundsValue = NULL;
+              AXError getSelectionBoundsError = AXUIElementCopyParameterizedAttributeValue(focusedElement, kAXBoundsForRangeParameterizedAttribute, selectedRangeValue, (CFTypeRef *)&selectionBoundsValue);
+              CFRelease(selectedRangeValue);
+              if (getSelectionBoundsError == kAXErrorSuccess) {
+                CGRect selectionBounds;
+                AXValueGetValue(selectionBoundsValue, kAXValueCGRectType, &selectionBounds);
+                codeInfo.frame = NSRectFromCGRect(selectionBounds);
+                CFRelease(selectionBoundsValue);
+                
+                CFRelease(focusedElement);
+                CFRelease(mainElement);
+                return true;
+              }
+            }
+          }
         }
       }
+      
+      CFRelease(focusedElement);
     }
+    CFRelease(mainElement);
   }
   
   return false;
@@ -89,54 +166,71 @@ bool isAbbreviation;
 
   if ([self isAllowed:app]) {
     AXUIElementRef mainElement = AXUIElementCreateApplication(NSWorkspace.sharedWorkspace.frontmostApplication.processIdentifier);
-    AXUIElementRef codeArea = NULL;
-    AXError error = AXUIElementCopyAttributeValue(mainElement, kAXFocusedUIElementAttribute, (CFTypeRef *)&codeArea);
+    AXUIElementRef focusedElement = NULL;
+    AXError error = AXUIElementCopyAttributeValue(mainElement, kAXFocusedUIElementAttribute, (CFTypeRef *)&focusedElement);
     
-    if (error == kAXErrorSuccess) {
-      if ([[UIElementUtilities valueOfAttribute:@"AXRole" ofUIElement:codeArea]  isEqual: @"AXTextArea"]) {
-        NSString *code = [UIElementUtilities valueOfAttribute:@"AXValue" ofUIElement:codeArea];
-        NSInteger insertionPointerLine = [[UIElementUtilities valueOfAttribute:@"AXInsertionPointLineNumber" ofUIElement:codeArea] integerValue];
-        NSMutableArray<NSString *> *lines = (NSMutableArray<NSString *>*)[code componentsSeparatedByString:@"\n"];
-        NSString *line = lines[insertionPointerLine];
-        
-        NSString *separator = NULL;
-        
-        if (!isAbbreviation) {
-          separator = [callsign stringByAppendingString:callsign];
-        } else {
-          separator = callsign;
-        }
+    if (error == kAXErrorSuccess && focusedElement) {
+      AXValueRef selectedRangeValue = NULL;
+      AXError getSelectedRangeError = AXUIElementCopyAttributeValue(focusedElement, kAXSelectedTextRangeAttribute, (CFTypeRef *)&selectedRangeValue);
       
-        NSArray<NSString *> *newLineSeperated = (NSArray<NSString *>*)[line componentsSeparatedByString:separator];
+      if (getSelectedRangeError == kAXErrorSuccess && selectedRangeValue) {
+        CFRange selectedRange;
+        AXValueGetValue(selectedRangeValue, kAXValueTypeCFRange, &selectedRange);
         
-        AXValueRef textValue = NULL;
-        AXUIElementCopyAttributeValue(codeArea, kAXSelectedTextRangeAttribute , (CFTypeRef *)&textValue);
+        CFIndex lengthToRead = 100;
+        CFIndex location = selectedRange.location;
+        CFIndex startLocation = (location > lengthToRead) ? (location - lengthToRead) : 0;
+        CFIndex actualLength = location - startLocation;
         
-        CFRange range;
-        range.location = 0;
-        range.length = 0;
+        NSString *textBeforeCursor = nil;
         
-        AXValueGetValue(textValue, kAXValueTypeCFRange, &range);
-
-        if ([app isEqual: @"Code"]) {
-          range.location -= newLineSeperated[1].length;
-          range.length += newLineSeperated[1].length;
-
-          AXValueRef newValue = AXValueCreate(kAXValueTypeCFRange, &range);
-          AXUIElementSetAttributeValue(codeArea, kAXSelectedTextRangeAttribute, newValue);
-          
-          [UIElementUtilities setStringValue:snippet forAttribute:kAXValueAttribute ofUIElement:codeArea];
-        } else {
-          range.location -= newLineSeperated[1].length + 2;
-          range.length += newLineSeperated[1].length + 2;
-          
-          AXValueRef newValue = AXValueCreate(kAXValueTypeCFRange, &range);
-          AXUIElementSetAttributeValue(codeArea, kAXSelectedTextRangeAttribute, newValue);
-          
-          [UIElementUtilities setStringValue:snippet forAttribute:kAXSelectedTextAttribute ofUIElement:codeArea];
+        CFRange rangeToRead = CFRangeMake(startLocation, actualLength);
+        AXValueRef rangeToReadValue = AXValueCreate(kAXValueTypeCFRange, &rangeToRead);
+        CFTypeRef textRef = NULL;
+        AXError getTextError = AXUIElementCopyParameterizedAttributeValue(focusedElement, kAXStringForRangeParameterizedAttribute, rangeToReadValue, &textRef);
+        if (getTextError == kAXErrorSuccess && textRef) {
+          textBeforeCursor = (__bridge NSString *)textRef;
         }
+        CFRelease(rangeToReadValue);
+        
+        if (!textBeforeCursor) {
+          NSString *fullText = [UIElementUtilities valueOfAttribute:@"AXValue" ofUIElement:focusedElement];
+          if (fullText && [fullText isKindOfClass:[NSString class]]) {
+            if (location <= [fullText length]) {
+              textBeforeCursor = [fullText substringWithRange:NSMakeRange(startLocation, actualLength)];
+            }
+          }
+        }
+        
+        if (textBeforeCursor) {
+          NSString *separator = isAbbreviation ? callsign : [callsign stringByAppendingString:callsign];
+          NSRange rangeOfSeparator = [textBeforeCursor rangeOfString:separator options:NSBackwardsSearch];
+          
+          if (rangeOfSeparator.location != NSNotFound) {
+            CFIndex separatorAbsLocation = startLocation + rangeOfSeparator.location;
+            CFIndex replaceLength = location - separatorAbsLocation;
+            
+            CFRange replaceRange = CFRangeMake(separatorAbsLocation, replaceLength);
+            AXValueRef replaceRangeValue = AXValueCreate(kAXValueTypeCFRange, &replaceRange);
+            
+            AXUIElementSetAttributeValue(focusedElement, kAXSelectedTextRangeAttribute, replaceRangeValue);
+            CFRelease(replaceRangeValue);
+            
+            AXError setTextError = AXUIElementSetAttributeValue(focusedElement, kAXSelectedTextAttribute, (CFStringRef)snippet);
+            
+            if (setTextError != kAXErrorSuccess) {
+              if ([app isEqual: @"Code"]) {
+                [UIElementUtilities setStringValue:snippet forAttribute:kAXValueAttribute ofUIElement:focusedElement];
+              }
+            }
+          }
+        }
+        if (textRef) CFRelease(textRef);
+        CFRelease(selectedRangeValue);
       }
+      CFRelease(focusedElement);
     }
+    CFRelease(mainElement);
   }
 }
 
